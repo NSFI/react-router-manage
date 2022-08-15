@@ -9,7 +9,7 @@
 `react-router-manage` is based on `react-router` `V6`. It can realize the function of authentication, guard, add, delete and check of route by configuration.
 Because `react-router` `V5` upgrades to `V6` have a high cost, `react-router-manage` provides the API from the original `v5` section for compatible projects that use V 5 for smooth upgrades to V 6
 
-`react-router-manage` is used in various projects within netease. In order to give back to the community, we decided to open source the react router-manage library
+`react-router-manage` is used in many projects within Netease BizEase. In order to give back to the community, it has decided to open source, and is willing to build a useful react router management library with small partners in the community
 
 - 🛠 [**config router**] - Centralized router configuration, fast and convenient management.
 - ＋ [**addRoutes**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
