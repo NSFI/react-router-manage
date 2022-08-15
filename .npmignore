@@ -1,0 +1,17 @@
+demo/
+test/
+examples/
+coverage/
+.commitlintrc.js
+.eslintignore
+.eslintrc.js
+.gitattributes
+.gitignore
+.gitlab-ci.yml
+.huskyrc.js
+.npmignore
+babel.config.js
+CHANGELOG.md
+postcss.config.js
+tsconfig.json
+jest.config.js

@@ -1,0 +1,20 @@
+{
+  "files": ["src/index.tsx"],
+  "compilerOptions": {
+    "lib": ["ES2020", "DOM"],
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
+
+    "strict": true,
+    "jsx": "react",
+
+    "declaration": true,
+    "emitDeclarationOnly": true,
+
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */,
+    "outDir": "../../build/node_modules/react-router-manage",
+    "rootDir": ".",
+  }
+}

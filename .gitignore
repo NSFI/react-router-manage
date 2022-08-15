@@ -1,0 +1,24 @@
+# Node
+npm-debug.log
+node_modules
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# WebStorm
+.idea/
+
+#VSCode metadata
+.vscode
+
+coverage/
+
+
+# production
+/dist
+/es
+
+package-lock.json

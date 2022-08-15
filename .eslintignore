@@ -1,0 +1,11 @@
+# Ignore 
+/test
+/node_modules
+/dist
+/build
+/es
+babel.config.js
+jest.config.js
+postcss.config.js
+demo/webpack.config.js
+demo/test.js
