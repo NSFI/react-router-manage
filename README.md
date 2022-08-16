@@ -36,6 +36,7 @@ npm install react-router-manage --save
 | `routes`|  hierarchical configuration of routes |`RouteTypeI[]`| `required` |
 | `beforeEachMount` | each route is called before rendering |`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
 |`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
+| `LoadingComponent` |  Used for react `Suspend` component  to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any> | `not required` |
 
 **A simple global configuration**
 

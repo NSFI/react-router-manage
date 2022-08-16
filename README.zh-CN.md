@@ -36,6 +36,7 @@ npm install react-router-manage --save
 | `routes`| 路由的层级配置 |`RouteTypeI[]`| 必填 |
 | `beforeEachMount` |每个路由在渲染前调用|`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`|非必填|
 |`autoDocumentTitle`| 文档的title会根据路由切换而改变| `boolean` \| `(RouteTypeI[]) => string` | 非必填, 默认 `false` |
+| `LoadingComponent` | 用于Suspense加载异步组件时配置fallback或在有beforeEnter钩子的`next`时，显示加载中 | React.FunctionComponent<any> | `not required` |
 
 **一个简单的全局配置**
 
