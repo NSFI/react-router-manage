@@ -36,9 +36,9 @@ import type {
   RouteConfig,
   RouteTypeExtendsI,
   RouteTypeI,
-  RouterConfigI,
   RoutesMapInterface,
   RoutesStateStruct,
+  RouterBaseConfigI,
 } from './type';
 import { RouterActionEnum } from './type';
 import MRouterContext, {
@@ -49,13 +49,11 @@ import MRouterContext, {
   useUpdateRoutes,
 } from './Context/MRouterContext';
 import { useHistory, useHistoryMethods, useRouteHooksRef } from './Context/MRouterHistoryContext';
-import Spin from './components/Spin'
+import { changeable } from './changeable';
 
 export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI } from './type';
 
 export { defineRouterConfig } from './util';
-
-const LoadingCmp = <Spin tip="应用正在加载中…" />;
 
 const DEFAULT_PERMISSION_LIST: string[] = [];
 
@@ -141,7 +139,7 @@ function useRouter (): RoutesStateStruct {
 interface MRouterContextProviderI {
   permissionList?: string[]
   hasAuth: boolean
-  routerConfig: RouterConfigI
+  routerConfig: RouterBaseConfigI
   children?: (children: React.ReactNode) => React.ReactNode
 }
 
@@ -385,12 +383,13 @@ MRouterContextProviderI
         let _itemsRouteConfig: RouteConfig[] = [];
         const { _component: Component, path, items, children, _isHasAuth, props } = route;
         if (Component) {
+          const LoadingCmp = changeable.LoadingComponent;
           if (!_isHasAuth) {
-            // 无权限，则子级也无权限
+            /** Without permission, the child also has no permission */
             return {
               path: path.endsWith('*') ? path : `${path}/*`,
               element: (
-                <Suspense fallback={LoadingCmp}>
+                <Suspense fallback={<LoadingCmp />}>
                   <Component {...props} />
                 </Suspense>
               ),
@@ -454,7 +453,7 @@ interface MRouterPropsI {
   permissionList?: string[]
   wrapComponent?: React.FunctionComponent<any>
   hasAuth?: boolean
-  routerConfig: RouterConfigI
+  routerConfig: RouterBaseConfigI
   children?: (children: React.ReactNode) => React.ReactNode
 }
 
@@ -473,14 +472,20 @@ const MRouter: React.FC<MRouterPropsI> = ({
   }, []);
 
   if (__DEV__) {
-    // 判断传入的值
+    /** Determine whether routerConfig has ‘_isDefined’ attribute */
+    if (!routerConfig._isDefined) {
+      console.error(
+        `The routerConfig does not call defineRouterConfig definition, You should use 'const routerConfig = defineRouterConfig({...})'`
+      );
+    }
+    /** Judge incoming 'WrapComponent' and 'children' */
     if (WrapComponent && children) {
       console.warn(
-        'MRouter属性：children、wrapComponent为二选一属性，都存在时将使用children'
+        `MRouter attributes 'children' and 'WrapComponent' are optional attributes. If both exist, children will be used`
       );
     }
     if (children && typeof children !== 'function') {
-      console.error('MRoute属性：children 需要是一个函数， 当前不是函数  "%s"', children);
+      console.error('MRoute attributes children needs to be a function, not a function at present  "%s"', children);
     }
   }
 

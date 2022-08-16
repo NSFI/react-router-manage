@@ -35,7 +35,7 @@ npm install react-router-manage --save
 | `basename` |  the routing prefix of the route | `string` | `not required`, default is `/` |
 | `routes`|  hierarchical configuration of routes |`RouteTypeI[]`| `required` |
 | `beforeEachMount` | each route is called before rendering |`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
-|`autoDocumentTitle`| the title of the document changes depending on the routing switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
+|`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
 
 **A simple global configuration**
 

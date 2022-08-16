@@ -3,11 +3,18 @@ import type { ParsedQuery } from 'query-string';
 import type { BrowserHistory, Location } from 'history';
 import type React from 'react';
 
-export interface RouterConfigI {
+export interface RouterBaseConfigI {
   routes: RouteTypeI[]
   basename?: string
   beforeEachMount?: BeforeEachMountI
+  // the title of the document changes depending on the route switch	
   autoDocumentTitle?: boolean | ((currentPathRoutes: RouteTypeExtendsI[]) => string)
+  _isDefined: boolean; // 是否是defined的
+}
+
+export interface RouterConfigI extends Omit<RouterBaseConfigI, '_isDefined'> {
+  /** Lazy component or before next called */
+  LoadingComponent?: React.FunctionComponent<any>
   // beforeEachEnter?: BeforeEachEnterI;
 }
 

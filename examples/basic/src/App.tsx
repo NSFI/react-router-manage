@@ -27,7 +27,7 @@ const routerConfig = defineRouterConfig({
         }
       ]
     }
-  ]
+  ],
 });
 
 

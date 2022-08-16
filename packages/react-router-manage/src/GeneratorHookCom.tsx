@@ -1,11 +1,11 @@
 import React, { useLayoutEffect, useState } from 'react';
-import Spin from './components/Spin'
+import { Navigate } from 'react-router-dom';
 import NameRedirect from './components/NameRedirect';
 import type { BeforeEachMountI, BeforeEnterI, NextOptionsType, RouteTypeI } from './type';
 
 import { useRouter } from './index';
 import { isComponent, isString } from './util';
-import { Navigate } from 'react-router-dom';
+import { changeable } from './changeable';
 
 function getComponent (options?: NextOptionsType, Component?: React.ComponentType) {
   let ReplaceComponent: React.ComponentType<any> | undefined;
@@ -27,7 +27,6 @@ function getComponent (options?: NextOptionsType, Component?: React.ComponentTyp
   return ReplaceComponent;
 }
 
-const LoadingCmp = <Spin tip="应用正在加载中…" />;
 export const GeneratorHookCom: React.FC<{
   beforeEnter?: BeforeEnterI
   beforeEachMount?: BeforeEachMountI
@@ -88,8 +87,8 @@ export const GeneratorHookCom: React.FC<{
       isActive = false;
     };
   }, [Component, currentRoute, beforeEnter, beforeEachMount]);
-
-  return CurrentComponent.Component ? <CurrentComponent.Component /> : <>{LoadingCmp}</>;
+  const LoadingCmp = changeable.LoadingComponent;
+  return CurrentComponent.Component ? <CurrentComponent.Component /> : <LoadingCmp/>;
 };
 
 export default GeneratorHookCom;

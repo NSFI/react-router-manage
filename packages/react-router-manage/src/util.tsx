@@ -15,9 +15,11 @@ import type {
   RouteTypePropsI,
   RouterConfigI,
   RoutesMapInterface,
+  RouterBaseConfigI,
 } from './type';
 import GeneratorHookCom from './GeneratorHookCom';
 import NotFound from './components/NotFound';
+import { setChangeable } from './changeable';
 
 let incrementKey = 1;
 const getIncrementName = () => {
@@ -618,12 +620,20 @@ export function isString (str: any): str is string {
 }
 
 /**
- * 为了支持ts, 用户在写代码的时候有提示
+ * 1、To support ts, users are prompted when writing code
+ * 2、Modify global configuration
+ * 3、Add '_isDefined' attribute, Used by MRouter to defined whether the object has been called defineRouterConfig
  * @param routerConfig
- * @returns
+ * @returnsRouterBaseConfigI
  */
-export function defineRouterConfig (routerConfig: RouterConfigI): RouterConfigI {
-  return routerConfig;
+export function defineRouterConfig (routerConfig: RouterConfigI): RouterBaseConfigI {
+  const { LoadingComponent, ..._config } = routerConfig;
+  if (LoadingComponent) {
+    setChangeable({LoadingComponent})
+  }
+  /** add '_isDefined' attribute */
+  const config: RouterBaseConfigI = {..._config, _isDefined: true}
+  return config;
 }
 
 interface ArrayLike<T> extends Array<T> {
