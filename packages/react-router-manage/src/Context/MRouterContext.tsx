@@ -6,7 +6,7 @@ import type {
   RoutesMapInterface,
   UpdateRoutesI,
   MRouterContextObject,
-  YSRouterStateI
+  MRouterStateI
 } from '../type';
 import {
   RouterActionEnum
@@ -24,7 +24,7 @@ const MRouterContext = React.createContext<MRouterContextObject>({
 } as unknown as MRouterContextObject);
 MRouterContext.displayName = 'MRouterContext';
 
-export function MRouterReducer (state: YSRouterStateI, action: Action): YSRouterStateI {
+export function MRouterReducer (state: MRouterStateI, action: Action): MRouterStateI {
   const { type, payload } = action;
   switch (type) {
     case RouterActionEnum.ADD_ROUTES: {
@@ -60,7 +60,7 @@ export function MRouterReducer (state: YSRouterStateI, action: Action): YSRouter
   }
 }
 
-export function useRouterState (): YSRouterStateI {
+export function useRouterState (): MRouterStateI {
   return React.useContext(MRouterContext).state;
 }
 

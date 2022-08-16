@@ -1,13 +1,13 @@
-import type { RouteTypeI, YSRouterStateI } from './type';
+import type { RouteTypeI, MRouterStateI } from './type';
 import { cloneRoutes } from './util';
 
 /**
  * 添加路由操作
- * @param state YSRouterStateI
+ * @param state MRouterStateI
  * @param payload RouteTypeI[]
- * @returns YSRouterStateI
+ * @returns MRouterStateI
  */
-export function addRoutesAction (state: YSRouterStateI, payload: any): YSRouterStateI {
+export function addRoutesAction (state: MRouterStateI, payload: any): MRouterStateI {
   let hasChange = false;
   const newRoutes = payload as RouteTypeI[];
   newRoutes.forEach(_route => {
@@ -47,11 +47,11 @@ export function addRoutesAction (state: YSRouterStateI, payload: any): YSRouterS
 }
 /**
  * 更新路由操作
- * @param state YSRouterStateI
+ * @param state MRouterStateI
  * @param payload RouteTypeI[]
- * @returns YSRouterStateI
+ * @returns MRouterStateI
  */
-export function updateRoutesAction (state: YSRouterStateI, payload: any): YSRouterStateI {
+export function updateRoutesAction (state: MRouterStateI, payload: any): MRouterStateI {
   let hasChange = false;
   // const { basename } = state;
   const newRoutesPayload = payload as { routeName: string; routeData: Partial<RouteTypeI> }[];
@@ -97,11 +97,11 @@ export function updateRoutesAction (state: YSRouterStateI, payload: any): YSRout
 }
 /**
  * 删除路由操作
- * @param state YSRouterStateI
+ * @param state MRouterStateI
  * @param payload RouteTypeI[]
- * @returns YSRouterStateI
+ * @returns MRouterStateI
  */
-export function removeRoutesAction (state: YSRouterStateI, payload: any): YSRouterStateI {
+export function removeRoutesAction (state: MRouterStateI, payload: any): MRouterStateI {
   let hasChange = false;
   const routeNames = payload as string[];
   routeNames.forEach(routeName => {

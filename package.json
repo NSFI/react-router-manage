@@ -8,9 +8,10 @@
 		"format:check": "prettier --ignore-path .eslintignore --check .",
 		"publish": "node ./scripts/publish.js",
 		"size": "filesize",
-		"test": "jest",
+		"test": "npm run lint && jest --env=jsdom",
 		"version": "node ./scripts/version.js",
-		"watch": "rollup -c -w"
+		"watch": "rollup -c -w",
+		"prepublishOnly": "yarn run build"
 	},
 	"dependencies": {
 		"@ampproject/filesize": "^4.3.0",

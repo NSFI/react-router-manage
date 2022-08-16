@@ -116,7 +116,7 @@ export interface Action {
   dispatch?: React.Dispatch<Action>
 }
 
-export interface YSRouterStateI {
+export interface MRouterStateI {
   basename: string
 
   inputRoutes: RouteTypeInputI[]
@@ -140,7 +140,7 @@ export interface RemoveRoutesI {
 export interface UpdateRoutesI {
   (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]): void
 }
-export interface YSRouterMethodsI {
+export interface MRouterMethodsI {
   addRoutes: AddRoutesI
   updateCurrentRoute: (currentRoute: RouteTypeExtendsI) => void
   removeRoutes: RemoveRoutesI
@@ -148,9 +148,9 @@ export interface YSRouterMethodsI {
   [method: string]: any
 }
 export interface MRouterContextObject {
-  state: YSRouterStateI
+  state: MRouterStateI
   // 一些操作方法
-  methods: YSRouterMethodsI
+  methods: MRouterMethodsI
 }
 
 export interface RoutesBaseStateStruct {

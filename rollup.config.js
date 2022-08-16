@@ -61,8 +61,8 @@ function reactRouterManage() {
         copy({
           targets: [
             { src: `${SOURCE_DIR}/package.json`, dest: OUTPUT_DIR },
-            { src: `${SOURCE_DIR}/README.md`, dest: OUTPUT_DIR },
-            { src: `${SOURCE_DIR}/README.zh-CN.md`, dest: OUTPUT_DIR },
+            { src: `README.md`, dest: OUTPUT_DIR },
+            { src: `README.zh-CN.md`, dest: OUTPUT_DIR },
             { src: "LICENSE.md", dest: OUTPUT_DIR }
           ],
           verbose: true
@@ -159,7 +159,7 @@ function reactRouterManage() {
         sourcemap: !PRETTY,
         banner: createBanner("ys Router", version),
         // globals: { history: "HistoryLibrary", react: "React" },
-        name: "ysRouter"
+        name: "MRouter"
       },
       external: ["react-router-dom", "react"],
       plugins: [
@@ -187,7 +187,7 @@ function reactRouterManage() {
         sourcemap: !PRETTY,
         banner: createBanner("ys Router", version),
         // globals: { history: "HistoryLibrary", react: "React" },
-        name: "ysRouter"
+        name: "MRouter"
       },
       external: ["react-router-dom", "react"],
       plugins: [

@@ -65,7 +65,7 @@ export function cloneRoutes (_routeConfig: {
     return [];
   }
   if (!Array.isArray(routes)) {
-    Error('YSRouter route prop need to type Array<RouteTypeI>');
+    Error('MRouter route prop need to type Array<RouteTypeI>');
   }
   function _cloneRoutes (_routes: RouteTypeI[], parent?: RouteTypeInputI, _level = 1): RouteTypeInputI[] {
     return _routes.map(_route => {
