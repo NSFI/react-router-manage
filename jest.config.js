@@ -7,7 +7,6 @@ module.exports = {
   collectCoverageFrom: [
     'packages/**/*.{js,jsx,ts,tsx}',
     '!packages/**/*.d.ts',
-    '!packages/i18n/*.js',
   ],
   moduleFileExtensions: [
     'js', 'jsx', 'json', 'ts', 'tsx', 'md'
@@ -51,5 +50,8 @@ module.exports = {
   coverageDirectory: 'coverage',
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/'
-  ]
+  ],
+  globals: {
+    "__DEV__": true
+  }
 };
