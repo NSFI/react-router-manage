@@ -16,6 +16,7 @@ Because `react-router` `V5` upgrades to `V6` have a high cost, `react-router-man
 - ➖ [**removeRoutes**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
 - 🖇 [**updateRoutes**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
 - 🔐 [**permission**] - Permission control: configure the code of the route and automatically manage the permission of the route
+- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and `beforeEachMount`, route exit hook `useBeforeLeave`
 - 🌲 [**navigation**] - level navigation: supports level navigation, and automatically generates navigation bars for parent-child routes, such as breadcrumbs and menu navigation
 
 ## Installation
