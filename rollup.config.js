@@ -35,7 +35,7 @@ function reactRouterManage() {
   // JS modules for bundlers
   const modules = [
     {
-      input: `${SOURCE_DIR}/src/index.tsx`,
+      input: `${SOURCE_DIR}/index.tsx`,
       output: {
         file: `${OUTPUT_DIR}/index.js`,
         format: "esm",
@@ -74,7 +74,7 @@ function reactRouterManage() {
   // JS modules for <script type=module>
   // const webModules = [
   //   {
-  //     input: `${SOURCE_DIR}/src/index.tsx`,
+  //     input: `${SOURCE_DIR}/index.tsx`,
   //     output: {
   //       file: `${OUTPUT_DIR}/react-router-manage.development.js`,
   //       format: "esm",
@@ -104,7 +104,7 @@ function reactRouterManage() {
   //     ].concat(PRETTY ? prettier({ parser: "babel" }) : [])
   //   },
   //   {
-  //     input: `${SOURCE_DIR}/src/index.tsx`,
+  //     input: `${SOURCE_DIR}/index.tsx`,
   //     output: {
   //       file: `${OUTPUT_DIR}/react-router-manage.production.min.js`,
   //       format: "esm",
@@ -152,7 +152,7 @@ function reactRouterManage() {
   // UMD modules for <script> tags and CommonJS (node)
   const globals = [
     {
-      input: `${SOURCE_DIR}/src/index.tsx`,
+      input: `${SOURCE_DIR}/index.tsx`,
       output: {
         file: `${OUTPUT_DIR}/umd/ys-router.development.js`,
         format: "umd",
@@ -180,7 +180,7 @@ function reactRouterManage() {
       ].concat(PRETTY ? prettier({ parser: "babel" }) : [])
     },
     {
-      input: `${SOURCE_DIR}/src/index.tsx`,
+      input: `${SOURCE_DIR}/index.tsx`,
       output: {
         file: `${OUTPUT_DIR}/umd/ys-router.production.min.js`,
         format: "umd",
@@ -225,7 +225,7 @@ function reactRouterManage() {
   ];
 
   const declares = [{
-    input: `${SOURCE_DIR}/src/index.tsx`,
+    input: `${SOURCE_DIR}/index.tsx`,
     plugins: [dts()],
     output: {
         format: 'esm',
