@@ -1,7 +1,6 @@
 import * as React from "react";
-import {  Outlet, Link } from "react-router-dom";
 
-import { defineRouterConfig, MRouter as Router } from "react-router-manage";
+import { defineRouterConfig, MRouter as Router,  Outlet, Link } from "react-router-manage";
 
 const routerConfig = defineRouterConfig({
   routes: [
