@@ -84,9 +84,9 @@ function App () {
 | `beforeLeave` |  The callback called before leaving the route needs to be actively called | `(to: RouteTypeI \| undefined,from: RouteTypeI \| undefined, next: () => void): void` | not required |
 | `meta` | Some custom information can be put here,，you call use `currentRoute.meta` get meta info | `Record<string, any>` | not required |
 | `hidden` | display and hidden of navigation | `boolean`| not required, default is `false`|
-| `fullscreen` | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)*| `boolean` | not required |
-| `icon` | Icon for displaying navigation, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)* | `string` | not required |
-| `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)* | `real` \| `null` | not required, default is `real`|
+| `fullscreen` | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)*| `boolean` | not required |
+| `icon` | Icon for displaying navigation, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `string` | not required |
+| `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `real` \| `null` | not required, default is `real`|
 
 **NOTE**
 
