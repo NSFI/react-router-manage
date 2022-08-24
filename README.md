@@ -78,15 +78,15 @@ function App () {
 | `items` | the visual sub-level routes, used for navigation parent-child relationship, is actually the same level of route | `RouteTypeI[]` | not required|
 | `children`| sub-routing, rendering in `react-router V6` in `Outlet` component| `RouteTypeI[]` | not required |
 | `props` | when rendering the route, the props content is automatically injected,, `<Component {...props}/>` | `Record<string, any>` | not required |
-| `hidden` | display and hidden of navigation | `boolean`| not required, default is `false`|
 | `code` |  used for permission verification, will be compared `permissionList`| `string`\| `string[]`\| `(route: RouteTypeI) => boolean` | not required|
 | `redirect` |  route redirect to the specified route with priority over component | `string` | not required |
 | `beforeEnter` | render the method called by the routing money. if a component is passed in the call `next` function, the component will be rendered. if `next` function not call, The component configured by the route will not be rendered | `(to: RouteTypeI \| undefined, next: (options?: {name?: string; path?: string} | React.ComponentType<any>) => void): void` | not required |
 | `beforeLeave` |  The callback called before leaving the route needs to be actively called | `(to: RouteTypeI \| undefined,from: RouteTypeI \| undefined, next: () => void): void` | not required |
 | `meta` | Some custom information can be put here,，you call use `currentRoute.meta` get meta info | `Record<string, any>` | not required |
-| `fullscreen` | You can hidden navigation ui,  the current route is detected in `base-layout-router`, `fullscreen` set `true`,navigation is hidden| `boolean` | not required |
-| `icon` | Icon for displaying navigation | `string` | not required |
-| `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set | `real` \| `null` | not required, default is `real`|
+| `hidden` | display and hidden of navigation | `boolean`| not required, default is `false`|
+| `fullscreen` | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)*| `boolean` | not required |
+| `icon` | Icon for displaying navigation, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)* | `string` | not required |
+| `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, *the current configuration is use in [`router-base-nav`](#https://github.com/NSFI/router-base-nav)* | `real` \| `null` | not required, default is `real`|
 
 **NOTE**
 
