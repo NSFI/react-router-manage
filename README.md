@@ -11,12 +11,12 @@ Because `react-router` `V5` upgrades to `V6` have a high cost, `react-router-man
 
 `react-router-manage` is used in many projects within Netease BizEase. In order to give back to the community, it has decided to open source, and is willing to build a useful react router management library with friends in the community
 
-- 🛠 [**config router**] - Centralized router configuration, fast and convenient management.
-- ＋ [**addRoutes**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
-- ➖ [**removeRoutes**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
-- 🖇 [**updateRoutes**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
+- 🛠 [**[`config router`](#routerConfig)**] - Centralized router configuration, fast and convenient management.
+- ＋ [**[`addRoutes`](#useAddRoutes)**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
+- ➖ [**[`removeRoutes`](#useRemoveRoutes)**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
+- 🖇 [**[`updateRoutes`](#useUpdateRoutes)**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
 - 🔐 [**permission**] - Permission control: configure the code of the route and automatically manage the permission of the route
-- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and `beforeEachMount`, route exit hook `useBeforeLeave`
+- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeEachMount)**, route exit hook **[`useBeforeLeave`](#useBeforeLeave)**
 - 🌲 [**navigation**] - level navigation: supports level navigation, and automatically generates navigation bars for parent-child routes, such as breadcrumbs and menu navigation
 
 ## Installation
@@ -35,7 +35,7 @@ npm install react-router-manage --save
 |---|---|---|---|
 | `basename` |  the routing prefix of the route | `string` | `not required`, default is `/` |
 | **[`routes`](#routeConfig)**|  hierarchical configuration of routes |`RouteTypeI[]`| `required` |
-| `beforeEachMount` | each route is called before rendering |`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
+| **[`beforeEachMount`](#beforeEachMount)** | each route is called before rendering |`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
 |`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
 | `LoadingComponent` |  Used for react `Suspend` component  to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any> | `not required` |
 
@@ -372,7 +372,7 @@ const appRouterConfig = defineRouterConfig({
 
 | field name | describe | type |
 |---|---|---|
-| `currentRoute` | Current route object | `RouteTypeI` |
+| **[`currentRoute`](#currentRoute)** | Current route object | `RouteTypeI` |
 | `routesMap`| All routes corresponding to route name and path are stored in this object | `Record<string, RouteTypeI>`|
 | `navigate` | Used to jump route | `(to: string, {query: Record<string, any>; params: Record<string, any>; state: any}) => void}` |
 | `authRoutes` | Routes objects with permission after authentication| `RouteTypeI[]`|
@@ -414,7 +414,7 @@ function Item() {
 
 ```
 
-### `useBeforeLeave` Route guards in component
+### useBeforeLeave
 
 `useBeforeLeave` You need to call next to jump normally
 
@@ -443,7 +443,9 @@ const function Item() {
 
 ### Dynamic routes
 
-#### 1、`useAddRoutes` Add routes
+#### useAddRoutes
+
+`useAddRoutes` Add routes
 
 ```js
 const AddRoutesWrapComponent = ({children}) => {
@@ -465,7 +467,9 @@ const AddRoutesWrapComponent = ({children}) => {
 }
 ```
 
-#### 2、`useUpdateRoutes` update routes
+#### useUpdateRoutes
+
+`useUpdateRoutes` update routes
 
 ```js
 
@@ -489,7 +493,9 @@ const UpdateRoutesWrapComponent = ({children}) => {
 
 ```
 
-#### 3、`useRemoveRoutes` delete routes
+#### useRemoveRoutes
+
+`useRemoveRoutes` delete routes
 
 ```js
 
@@ -512,6 +518,8 @@ const RemoveRoutesWrapComponent = ({children}) => {
 | name | describe | type |
 |---|---|---|
 | `beforeEachMount` | Called before each route rendering, `next` Must be called to render the component |  `(to: RouteTypeI \| undefined, next: {name?: string; path?: string} | React.ComponentType<any>) =void` |
+
+#### beforeEachMount
 
 ```js
 
