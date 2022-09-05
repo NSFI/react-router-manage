@@ -5,14 +5,15 @@ import {
   MRouter,
   useAddRoutes,
   useRemoveRoutes,
-  useUpdateRoutes
+  useUpdateRoutes,
+  defineRouterConfig
 } from "../packages/react-router-manage/index";
 import { routes, Page } from "./routeConfig";
 
-const appRouterConfig = {
+const appRouterConfig = defineRouterConfig({
   basename: "/",
   routes: routes
-};
+});
 
 const AddRoutesWrapComponent = ({ children }) => {
   const addRoutes = useAddRoutes();
