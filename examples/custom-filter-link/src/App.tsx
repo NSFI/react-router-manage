@@ -1,16 +1,17 @@
 import * as React from "react";
+import VisuallyHidden from "@reach/visually-hidden";
+import { brands, filterByBrand, getSneakerById, SNEAKERS } from "./snkrs";
+
 import {
+  defineRouterConfig,
+  MRouter as Router,
   Outlet,
   Link,
   useSearchParams,
   useParams
-} from "react-router-dom";
-import type { LinkProps } from "react-router-dom";
-import VisuallyHidden from "@reach/visually-hidden";
+} from "react-router-manage";
 
-import { brands, filterByBrand, getSneakerById, SNEAKERS } from "./snkrs";
-
-import { defineRouterConfig, MRouter as Router } from "react-router-manage";
+import type { LinkProps } from "react-router-manage";
 
 const routerConfig = defineRouterConfig({
   routes: [
@@ -22,23 +23,22 @@ const routerConfig = defineRouterConfig({
         {
           path: "/sneakers",
           name: "SneakerGrid",
-          component: SneakerGrid,
+          component: SneakerGrid
         },
         {
           path: "/sneakers/:id",
           name: "sneakers",
-          component: SneakerView,
+          component: SneakerView
         },
         {
           path: "*",
           name: "all",
-          component: NoMatch,
+          component: NoMatch
         }
       ]
     }
   ]
 });
-
 
 export default function App() {
   return (
@@ -53,9 +53,7 @@ export default function App() {
         "active" by what is in the URL query string.
       </p>
 
-      <Router routerConfig={routerConfig}>
-            {(children) => children}
-      </Router>
+      <Router routerConfig={routerConfig}>{children => children}</Router>
     </div>
   );
 }

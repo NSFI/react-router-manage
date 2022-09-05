@@ -1,12 +1,13 @@
 import * as React from "react";
+import type { LinkProps } from "react-router-dom";
 import {
+  defineRouterConfig,
+  MRouter as Router,
   Outlet,
   Link,
   useMatch,
   useResolvedPath
-} from "react-router-dom";
-import type { LinkProps } from "react-router-dom";
-import { defineRouterConfig, MRouter as Router } from "react-router-manage";
+} from "react-router-manage";
 
 const routerConfig = defineRouterConfig({
   routes: [
@@ -18,24 +19,22 @@ const routerConfig = defineRouterConfig({
         {
           path: "/home",
           name: "home",
-          component: Home,
+          component: Home
         },
         {
           path: "/about",
           name: "about",
-          component: About,
+          component: About
         },
         {
           path: "*",
           name: "all",
-          component: NoMatch,
+          component: NoMatch
         }
       ]
     }
   ]
 });
-
-
 
 export default function App() {
   return (
@@ -49,9 +48,7 @@ export default function App() {
         <code>useMatch()</code> hooks.
       </p>
 
-      <Router routerConfig={routerConfig}>
-            {(children) => children}
-      </Router>
+      <Router routerConfig={routerConfig}>{children => children}</Router>
     </div>
   );
 }

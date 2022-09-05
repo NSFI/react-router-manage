@@ -1,25 +1,27 @@
 import * as React from "react";
 import * as JSURL from "jsurl";
-import type { NavigateOptions } from "react-router-dom";
-import {  Link, useSearchParams } from "react-router-dom";
-import { defineRouterConfig, MRouter as Router } from "react-router-manage";
+import type { NavigateOptions } from "react-router-manage";
+import {
+  defineRouterConfig,
+  MRouter as Router,
+  Link,
+  useSearchParams
+} from "react-router-manage";
 
 const routerConfig = defineRouterConfig({
   routes: [
     {
       path: "/",
       name: "home",
-      component: Home,
+      component: Home
     },
     {
-      path: '/*',
-      name: 'noMatch',
+      path: "/*",
+      name: "noMatch",
       component: NoMatch
     }
   ]
 });
-
-
 
 export default function App() {
   return (
@@ -39,9 +41,7 @@ export default function App() {
         exact same state as when you left it!
       </p>
 
-      <Router routerConfig={routerConfig}>
-            {(children) => children}
-      </Router>
+      <Router routerConfig={routerConfig}>{children => children}</Router>
     </div>
   );
 }

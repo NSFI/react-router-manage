@@ -1,15 +1,16 @@
 import * as React from "react";
+import { fakeAuthProvider } from "./auth";
 import {
+  defineRouterConfig,
+  MRouter as Router,
   Link,
   useNavigate,
   useLocation,
   Outlet
-} from "react-router-dom";
-import { fakeAuthProvider } from "./auth";
-import { defineRouterConfig, MRouter as Router } from "react-router-manage";
+} from "react-router-manage";
 
 const authInfo = {
-  isLogin: false,
+  isLogin: false
 };
 
 const routerConfig = defineRouterConfig({
@@ -22,12 +23,12 @@ const routerConfig = defineRouterConfig({
         {
           path: "home",
           name: "home",
-          component: PublicPage,
+          component: PublicPage
         },
         {
           path: "login",
           name: "login",
-          component: LoginPage,
+          component: LoginPage
         },
         {
           path: "protected",
@@ -37,7 +38,7 @@ const routerConfig = defineRouterConfig({
             if (authInfo.isLogin) {
               next();
             } else {
-              next({ path: "/login", });
+              next({ path: "/login" });
             }
           }
         }
@@ -72,7 +73,6 @@ export default function App() {
       <Router routerConfig={routerConfig}>
         {children => <div>{children}</div>}
       </Router>
-
     </AuthProvider>
   );
 }
