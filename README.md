@@ -34,8 +34,8 @@ npm install react-router-manage --save
 | field name | description | type | is required |
 |---|---|---|---|
 | `basename` |  the routing prefix of the route | `string` | `not required`, default is `/` |
-| **[`routes`](#routeConfig)**|  hierarchical configuration of routes |`RouteTypeI[]`| `required` |
-| **[`beforeEachMount`](#beforeEachMount)** | each route is called before rendering |`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
+| **[`routes`](#routeConfig)**|  hierarchical configuration of routes |[`RouteTypeI[]`](#RouteTypeI)| `required` |
+| **[`beforeEachMount`](#beforeEachMount)** | each route is called before rendering |`(to: [RouteTypeI](#RouteTypeI) \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
 |`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
 | `LoadingComponent` |  Used for react `Suspend` component  to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any> | `not required` |
 
@@ -67,7 +67,7 @@ function App () {
 
 ```
 
-### routeConfig
+### RouteTypeI
 
 | field name | description | type | is required |
 |---|---|---|---|
