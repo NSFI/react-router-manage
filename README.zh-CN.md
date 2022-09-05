@@ -11,10 +11,10 @@
 
 `react-router-manage`在网易云商内部多个项目中使用，为回馈社区，决定开源，愿和社区的小伙伴共建好用的react路由管理库
 
-- 🛠 [**config router**] - 集中配置路由，快捷、方便管理。
-- ＋ [**addRoutes**] - 动态增加路由：可使用hook`useAddRoutes`添加路由，自动刷新视图。
-- ➖ [**removeRoutes**] - 动态删除路由：可使用hook`useRemoveRoutes`删除路由，自动刷新视图。
-- 🖇 [**updateRoutes**] - 动态修改路由：可使用hook`useUpdateRoutes`修改路由。
+- 🛠 [**[`config router`](#routerConfig)**]  - 集中配置路由，快捷、方便管理。
+- ＋ [**[`addRoutes`](#useAddRoutes)**] - 动态增加路由：可使用hook`useAddRoutes`添加路由，自动刷新视图。
+- ➖ [**[`removeRoutes`](#useRemoveRoutes)**] - 动态删除路由：可使用hook`useRemoveRoutes`删除路由，自动刷新视图。
+- 🖇 [**[`updateRoutes`](#useUpdateRoutes)**] - 动态修改路由：可使用hook`useUpdateRoutes`修改路由。
 - 🔐 [**permission**] - 权限控制：配置路由的code，自动管理路由的权限
 - 👨‍✈️‍ [**Route guard**] - 提供路由进入时的回调 `beforeEnter` and `beforeEachMount`, 路由离开时的钩子 `useBeforeLeave`
 - 🌲 [**navigation**] - 层级导航：支持层级导航，自动实现父子级路由的导航栏生成，例如面包屑、菜单导航
@@ -29,13 +29,14 @@ npm install react-router-manage --save
 
 ## 配置项
 
-### 路由的全局配置 routerConfig
+### routerConfig
+路由的全局配置
 
 | 字段名 | 说明 | 类型 | 是否必填 |
 |---|---|---|---|
 | `basename` | 路由的路由前缀|`string` | 非必填，默认 `/` |
-| `routes`| 路由的层级配置 |`RouteTypeI[]`| 必填 |
-| `beforeEachMount` |每个路由在渲染前调用|`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`|非必填|
+| **[`routes`](#routeConfig)** | 路由的层级配置 | [`RouteTypeI[]`](#RouteTypeI) | 必填 |
+| **[`beforeEachMount`](#beforeEachMount)** |每个路由在渲染前调用|`(to: RouteTypeI \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`|非必填|
 |`autoDocumentTitle`| 文档的title会根据路由切换而改变| `boolean` \| `(RouteTypeI[]) => string` | 非必填, 默认 `false` |
 | `LoadingComponent` | 用于Suspense加载异步组件时配置fallback或在有beforeEnter钩子的`next`时，显示加载中 | React.FunctionComponent<any> | `not required` |
 
@@ -456,7 +457,9 @@ const function Item() {
 
 ### 动态路由
 
-#### 一、`useAddRoutes` 添加路由
+#### useAddRoutes
+
+`useAddRoutes` 添加路由
 
 ```js
 const AddRoutesWrapComponent = ({children}) => {
@@ -478,7 +481,9 @@ const AddRoutesWrapComponent = ({children}) => {
 }
 ```
 
-#### 二、`useUpdateRoutes` 更新
+#### useUpdateRoutes
+
+`useUpdateRoutes` 更新路由
 
 ```js
 
@@ -502,7 +507,9 @@ const UpdateRoutesWrapComponent = ({children}) => {
 
 ```
 
-#### 三、`useRemoveRoutes` 删除路由
+#### useRemoveRoutes
+
+`useRemoveRoutes` 删除路由
 
 ```js
 

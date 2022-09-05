@@ -34,7 +34,7 @@ npm install react-router-manage --save
 | field name | description | type | is required |
 |---|---|---|---|
 | `basename` |  the routing prefix of the route | `string` | `not required`, default is `/` |
-| **[`routes`](#routeConfig)**|  hierarchical configuration of routes |[`RouteTypeI[]`](#RouteTypeI)| `required` |
+| **[`routes`](#routeConfig)** |  hierarchical configuration of routes |[`RouteTypeI[]`](#RouteTypeI)| `required` |
 | **[`beforeEachMount`](#beforeEachMount)** | each route is called before rendering |`(to: [RouteTypeI](#RouteTypeI) \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void`| `not required` |
 |`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
 | `LoadingComponent` |  Used for react `Suspend` component  to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any> | `not required` |
@@ -357,14 +357,16 @@ const appRouterConfig = defineRouterConfig({
 
 | `hook` name | type | describe |
 |---|---|---|
-| `useAddRoutes` |  `() => (routes: RouteTypeI[]) => void` | Dynamically add routes |
-| `useUpdateRoutes` | `() => (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]) => void` | Dynamically update routes |
-| `useRemoveRoutes` | `() => (routeNames: string[]) => void` | Dynamically remove routes |
-| `useBeforeLeave` |(`fn: BeforeLeaveI) => void` | The guard when the route leaves needs to call next to jump normally |
-| `useRouter` | `() => RoutesStateStruct` | state of route storage |
+| **[`useAddRoutes`](#useAddRoutes)** |  `() => (routes: RouteTypeI[]) => void` | Dynamically add routes |
+| **[`useRemoveRoutes`](#useRemoveRoutes)** | `() => (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]) => void` | Dynamically update routes |
+| **[`useUpdateRoutes`](#useUpdateRoutes)** | `() => (routeNames: string[]) => void` | Dynamically remove routes |
+| **[`useBeforeLeave`](#useBeforeLeave)** |(`fn: BeforeLeaveI) => void` | The guard when the route leaves needs to call next to jump normally |
+| **[`useRouter`](#useRouter)** | `() => RoutesStateStruct` | state of route storage |
 | `useHistory` | `() => BrowserHistory` | get `history`，`react-router v6` There is no exposure. The user's V5 upgrade to V6 is too smooth. It is not recommended |
 
-### Route navigation by `useRouter`
+### useRouter
+
+Route navigation by `useRouter`
 
 `useRouter` state data can be obtained in all components
 
