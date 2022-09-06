@@ -2,7 +2,7 @@ import * as React from "react";
 
 import {
   defineRouterConfig,
-  MRouter as Router,
+  MHRouter as Router,
   Outlet,
   Link
 } from "react-router-manage";
@@ -69,7 +69,7 @@ function Layout() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>

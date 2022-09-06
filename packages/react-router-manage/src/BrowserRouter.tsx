@@ -10,7 +10,7 @@ import MRouterHistoryContext from './Context/MRouterHistoryContext';
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.
  */
-export function BrowserRouter ({
+export default function BrowserRouter ({
   basename,
   children,
   syncUpdateCurrentRoute,

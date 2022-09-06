@@ -28,7 +28,8 @@ import {
   getCurrentRouteCbsByEvent,
   getRealTo,
 } from './util';
-import { BrowserRouter } from './ReactRouterPolyfill';
+import BrowserRouter from './BrowserRouter';
+import HashRouter from './HashRouter';
 import type {
   BeforeLeaveI,
   ExtraNavigateOptions,
@@ -458,13 +459,16 @@ interface MRouterPropsI {
   routerConfig: RouterBaseConfigI
   children?: (children: React.ReactNode) => React.ReactNode
 }
-
-const MRouter: React.FC<MRouterPropsI> = ({
+interface CoreRouterPropsI extends MRouterPropsI {
+  RouterComponent: typeof BrowserRouter | typeof HashRouter
+}
+const CoreRouter: React.FC<CoreRouterPropsI> = ({
   permissionList,
   wrapComponent: WrapComponent,
   hasAuth = true,
   routerConfig,
   children,
+  RouterComponent,
 }) => {
   const syncUpdateCurrentRouteRef = useRef<{ updateCurrentRoute: (location: Location) => void }>(
     null!
@@ -504,7 +508,7 @@ const MRouter: React.FC<MRouterPropsI> = ({
   }, [WrapComponent, children]);
 
   return (
-    <BrowserRouter syncUpdateCurrentRoute={syncUpdateCurrentRoute}>
+    <RouterComponent syncUpdateCurrentRoute={syncUpdateCurrentRoute}>
       <MRouterContextProvider
         routerConfig={routerConfig}
         permissionList={permissionList}
@@ -513,12 +517,23 @@ const MRouter: React.FC<MRouterPropsI> = ({
       >
         {_children}
       </MRouterContextProvider>
-    </BrowserRouter>
+    </RouterComponent>
   );
 };
 
+const MRouter: React.FC<MRouterPropsI> =(props) =>{
+  return <CoreRouter {...props} RouterComponent={BrowserRouter} />
+}
+
+const MHRouter: React.FC<MRouterPropsI> =(props) =>{
+  console.log(111);
+  return <CoreRouter {...props} RouterComponent={HashRouter} />
+}
+
+
 export {
   MRouter,
+  MHRouter,
   useAddRoutes,
   useRemoveRoutes,
   useUpdateRoutes,
