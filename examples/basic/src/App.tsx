@@ -20,6 +20,11 @@ const routerConfig = defineRouterConfig({
           component: React.lazy(() => import("./Home"))
         },
         {
+          path: "dashboard",
+          name: "dashboard",
+          component: Dashboard
+        },
+        {
           path: "about",
           name: "about",
           component: About
