@@ -6,7 +6,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import prettier from "rollup-plugin-prettier";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
-import dts from 'rollup-plugin-dts';
+import dts from "rollup-plugin-dts";
 
 const PRETTY = !!process.env.PRETTY;
 
@@ -39,10 +39,17 @@ function reactRouterManage() {
       output: {
         file: `${OUTPUT_DIR}/index.js`,
         format: "esm",
-        sourcemap: !PRETTY,
+        sourcemap: false,
         banner: createBanner("react-router-manage", version)
       },
-      external: ["react-router-dom",'react-router','history', 'react-dom', "react", "ppfish", 'query-string'],
+      external: [
+        "react-router-dom",
+        "react-router",
+        "history",
+        "react-dom",
+        "react",
+        "query-string"
+      ],
       plugins: [
         nodeResolve({
           extensions: extensions
@@ -61,8 +68,8 @@ function reactRouterManage() {
         copy({
           targets: [
             { src: `${SOURCE_DIR}/package.json`, dest: OUTPUT_DIR },
+            { src: `${SOURCE_DIR}/.npmignore`, dest: OUTPUT_DIR },
             { src: `./README.md`, dest: OUTPUT_DIR },
-            { src: `./README.zh-CN.md`, dest: OUTPUT_DIR },
             { src: "LICENSE.md", dest: OUTPUT_DIR }
           ],
           verbose: true
@@ -224,14 +231,16 @@ function reactRouterManage() {
     }
   ];
 
-  const declares = [{
-    input: `${SOURCE_DIR}/index.tsx`,
-    plugins: [dts()],
-    output: {
-        format: 'esm',
-        file: 'build/node_modules/react-router-manage/index.d.ts',
-    },
-  }]
+  const declares = [
+    {
+      input: `${SOURCE_DIR}/index.tsx`,
+      plugins: [dts()],
+      output: {
+        format: "esm",
+        file: "build/node_modules/react-router-manage/index.d.ts"
+      }
+    }
+  ];
 
   return [...modules, ...declares];
 }

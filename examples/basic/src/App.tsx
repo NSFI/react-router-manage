@@ -1,6 +1,11 @@
 import * as React from "react";
 
-import { defineRouterConfig, MRouter as Router,  Outlet, Link } from "react-router-manage";
+import {
+  defineRouterConfig,
+  MRouter as Router,
+  Outlet,
+  Link
+} from "react-router-manage";
 
 const routerConfig = defineRouterConfig({
   routes: [
@@ -12,23 +17,22 @@ const routerConfig = defineRouterConfig({
         {
           path: "home",
           name: "home",
-          component: Home,
+          component: React.lazy(() => import("./Home"))
         },
         {
           path: "about",
           name: "about",
-          component: About,
+          component: About
         },
         {
           path: "*",
           name: "all",
-          component: NoMatch,
+          component: NoMatch
         }
       ]
     }
-  ],
+  ]
 });
-
 
 export default function App() {
   return (
@@ -47,10 +51,7 @@ export default function App() {
             parent route paths, and nested route elements render inside
             parent route elements. See the note about <Outlet> below. */}
 
-      <Router routerConfig={routerConfig}>
-            {(children) => children}
-      </Router>
-      
+      <Router routerConfig={routerConfig}>{children => children}</Router>
     </div>
   );
 }

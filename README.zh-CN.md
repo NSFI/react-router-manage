@@ -1,5 +1,20 @@
 # react-router-manage
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/react-router-manage">
+    <img src="https://img.shields.io/npm/v/react-router-manage.svg" />
+  </a>
+  <a href="https://www.npmjs.com/package/react-router-manage">
+    <img src="https://img.shields.io/npm/dm/react-router-manage.svg" alt="Downloads per month on npm."  />
+  </a>
+   <a href="https://npmcharts.com/compare/react-router-manage?minimal=true">
+    <img src="https://img.shields.io/npm/dt/react-router-manage.svg" alt="Total downloads on npm." />
+  </a>
+  <a href="http://packagequality.com/#?package=react-router-manage">
+    <img src="http://npm.packagequality.com/shield/react-router-manage.svg" />
+  </a>
+</p>
+
 <p align='center'>
   简体中文 | <a href='./README.md'>English</a>
 </p>
