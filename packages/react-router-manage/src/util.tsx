@@ -92,7 +92,7 @@ export function cloneRoutes (_routeConfig: {
 }
 
 /**
- * 计算一些状态数据
+ *cCalculate some state data
  * @param inputRoutes
  * @param permissionList
  * @returns
@@ -112,7 +112,7 @@ export function computedNewState (config: {
     beforeEachMount,
   });
   const flattenRoutes = flattenRoutesFn(authInputRoutes, undefined, true);
-  // 混入 notFound页面
+  // mixin into the notFound page
   mixinNotFoundPage(flattenRoutes, basename, authInputRoutes);
   const routesMap = routesMapFn(flattenRoutes);
   const currentRoute = getCurrentRoute(location.pathname, routesMap);
@@ -127,8 +127,8 @@ export function computedNewState (config: {
 }
 
 /**
- * 以递归的方式展平react router数组
- * all 是否包含子路由
+ * flatten the react router array recursively
+ * whether all is true, includes sub routes
  */
 export const flattenRoutesFn = (
   arr: RouteTypeExtendsI[],
@@ -154,7 +154,7 @@ export const flattenRoutesFn = (
   }, []);
 };
 
-// 名称 => 路由的映射
+// name => mapping of route
 export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapInterface => {
   const routesMap = flattenRoutes.reduce(
     (_routeMap: RoutesMapInterface, nextRoute: RouteTypeExtendsI) => {
@@ -162,8 +162,8 @@ export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapInterf
       if (_routeMap[name] || _routeMap[path]) {
         throw new Error('路由配置，name 或 path 不唯一');
       }
-      // 说明路由有params
-      // 存储在内部用的__paramsRoutes变量上
+      // the route has params
+      // stored internally '__paramsRoutes' variable
       if (path.includes(':')) {
         const _path = path.replace(/:(\w+)/g, () => {
           return '([^\\/]+)';
@@ -182,7 +182,7 @@ export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapInterf
   return routesMap;
 };
 
-// 将 /a/b/c/ 转为 /a/b/c
+// convert '/a/b/c/' to '/a/b/c'
 function getValidPathname (pathname: string) {
   if (!pathname) {
     return pathname;
@@ -193,16 +193,16 @@ function getValidPathname (pathname: string) {
   return pathname;
 }
 
-/** 通过路径找到当前的路由对象 */
+/** find the current route object through the path */
 export function getCurrentRoute (
   pathname = window.location.pathname,
   routesMap: RoutesMapInterface
 ) {
   // console.log(routesMap);
-  // 先从外层的routesMap找
+  // first look from the outermost routesMap
   pathname = getValidPathname(pathname);
   let currentRoute = routesMap[pathname];
-  // 如果没找到，再从routesMap.__paramsRoutesMap里找
+  // if can't find it, go to find to routesMap.__paramsRoutesMap
   if (!currentRoute) {
     const paths = Object.keys(routesMap.__paramsRoutesMap);
     let pathIndex = 0;
@@ -219,7 +219,7 @@ export function getCurrentRoute (
   if (!currentRoute) {
     // 有通配符的路径
     const paths = routesMap.__flattenRoutes.map(i => i.path).filter(i => i.endsWith('*'));
-    // 找出最长的那个
+    // find the longest one
     let longerPath = '';
     paths.forEach(path => {
       path = pathStartMarkTransform(path);
@@ -380,7 +380,7 @@ export function computeRoutesConfig (config: {
       props.beforeEnter = beforeEnter;
       props.beforeEachMount = beforeEachMount;
       props.Component = Component;
-      props.key = route.name; // 用户路由间切换，避免路由切换后因为Key相同没有正确渲染
+      props.key = route.name; // users switch between routes to avoid incorrect rendering due to the same key after route switching
       props._route = route;
     }
     const isHasAuth = getIsHasAuth({ code, permissionList, hasAuth, route });
@@ -398,9 +398,9 @@ export function computeRoutesConfig (config: {
 
     if (!isHasAuth) {
       /**
-             * 如果无权限，则子级也没有权限
-             * /a/b/c 则加入 /a/b/c/*
-             */
+       * if there is no permission, the children also has no permission
+       * /a/b/c 则加入 /a/b/c/*
+       */
       let noAuthItems: RouteTypeExtendsI[] = [];
       if (!path.endsWith('*')) {
         const _path = path.endsWith('/') ? `${path}*` : `${path}/*`;
@@ -522,7 +522,7 @@ function pathStartMarkTransform (path: string) {
 }
 
 /**
- * 跳转路由时，去除路由中的星好
+ * when jump route，Remove the '*'
  * @param to
  * @returns
  */
@@ -545,22 +545,22 @@ export const handleRedirectPath = (
   permissionList: string[],
   hasAuth: boolean
 ): string => {
-  // 返回第一个有权限菜单项
+  // Return to the first menu(route) item with permission
   const { items } = route;
   if (!items) {
     return '';
   }
-  // 没有配置权限，直接返回第一个
+  // No configuration permission, return to the first one child route
   if (!hasAuth) {
     return items[0].path;
   }
   let redirectPath = '';
-  // 找出第一个有权限的
+  // find the first one route with permission
   for (let i = 0; i < items?.length; i++) {
     const childRoute = items[i];
     const { code, path } = childRoute;
     if (!code) {
-      // code为假值则默认为有权限
+      // if code is false, the default is permission
       redirectPath = path;
       break;
     }
@@ -603,8 +603,9 @@ export function mixinNotFoundPage (
   flattenRoutes.push(notFoundPage);
 }
 
-// 判断是否是react组件
-// react组件特征是函数
+// determine whether it is a react component
+// react Components are characterized by functions
+
 export function isComponent (component: any): component is React.ComponentType<any> {
   if (component instanceof Function) {
     return true;

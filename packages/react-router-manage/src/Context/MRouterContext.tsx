@@ -64,7 +64,7 @@ export function useRouterState (): MRouterStateI {
   return React.useContext(MRouterContext).state;
 }
 
-/** 动态添加路由方法 */
+/** Dynamically add routing method */
 export function useAddRoutes (): AddRoutesI {
   return React.useContext(MRouterContext).methods.addRoutes;
 }

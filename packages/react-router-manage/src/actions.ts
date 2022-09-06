@@ -2,7 +2,7 @@ import type { RouteTypeI, MRouterStateI } from './type';
 import { cloneRoutes } from './util';
 
 /**
- * 添加路由操作
+ * add routes operation
  * @param state MRouterStateI
  * @param payload RouteTypeI[]
  * @returns MRouterStateI
@@ -46,7 +46,7 @@ export function addRoutesAction (state: MRouterStateI, payload: any): MRouterSta
   return state;
 }
 /**
- * 更新路由操作
+ * update routes operation
  * @param state MRouterStateI
  * @param payload RouteTypeI[]
  * @returns MRouterStateI
@@ -96,7 +96,7 @@ export function updateRoutesAction (state: MRouterStateI, payload: any): MRouter
   return state;
 }
 /**
- * 删除路由操作
+ * remove routes operation
  * @param state MRouterStateI
  * @param payload RouteTypeI[]
  * @returns MRouterStateI

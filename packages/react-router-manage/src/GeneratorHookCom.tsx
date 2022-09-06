@@ -12,14 +12,14 @@ function getComponent (options?: NextOptionsType, Component?: React.ComponentTyp
   if (!options) {
     return ReplaceComponent;
   }
-  // 如果传入的是组件
+  // if a component is passed in
   if (isComponent(options)) {
     ReplaceComponent = options;
-  } else if (isString(options.path)) { // 有path，则优先使用path
+  } else if (isString(options.path)) { // if there is path, path is preferred
     ReplaceComponent = function Redirect () {
       return <Navigate to={options.path!} />;
     };
-  } else if (isString(options.name)) { // 没有path，则使用name
+  } else if (isString(options.name)) { // ff there is no path, use name
     ReplaceComponent = function Redirect () {
       return <NameRedirect name={options.name!} component={Component} />;
     };
@@ -34,9 +34,9 @@ export const GeneratorHookCom: React.FC<{
   _route: RouteTypeI
 }> = ({ beforeEnter, Component, beforeEachMount }) => {
   /**
-     * 由于setCurrentComponent(Component)可能Component是个函数
-     * react 默认认为 preState 为函数则会执行函数而出错
-     * 所以转为一个对象
+     * since setCurrentComponent(Component) Component may be a function
+     * react by default, if the preState is a function, the function will be executed and an error will occur
+     * So here we put Component into an object
      */
   const [CurrentComponent, setCurrentComponent] = useState<{ Component: any }>({
     Component: undefined,
@@ -52,17 +52,18 @@ export const GeneratorHookCom: React.FC<{
           return;
         }
 
-        // 全局的
+        // global
         const EachReplaceComponent = getComponent(options, Component);
         if (beforeEnter) {
-          // 局部的
+          // local
           beforeEnter(currentRoute, enterOptions => {
             if (!isActive) {
               return;
             }
             const EnterReplaceComponent = getComponent(enterOptions, EachReplaceComponent || Component);
-            // 如果beforeEnter中next传入了组件，则以beforeEnter的为准
-            // 否则以beforeEachBeforeMount为准
+            // if the Component is passed in next in beforeEnter, the beforeEnter shall prevail
+
+            // Otherwise, beforeEachBeforeMount shall prevail
             setCurrentComponent({ Component: EnterReplaceComponent || EachReplaceComponent || Component });
           });
         } else {
@@ -70,7 +71,7 @@ export const GeneratorHookCom: React.FC<{
         }
       });
     } else {
-      // 局部的
+      // local
       if (beforeEnter) {
         beforeEnter(currentRoute, enterOptions => {
           if (!isActive) {

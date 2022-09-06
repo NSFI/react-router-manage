@@ -23,11 +23,11 @@ export type CodeType = string | string[] | FnCodeType;
 export type FnCodeType = ((route: RouteTypeI) => boolean);
 
 export type NextOptionsType = {
-  name?: string // 如果name配置则会跳转到路由配置对应的路由
-  path?: string // 路径
-} | React.ComponentType<any>; // 如果配置组件，则会渲染该组件
+  name?: string // if name is configured, it will jump to the route corresponding to the route configuration
+  path?: string // path
+} | React.ComponentType<any>; // iff a component is configured, it will be rendered
 
-// 全局路由进入狗子
+// global route entry hook
 export interface BeforeEachMountI {
   (to: RouteTypeI, next: (nextOptionsType?: NextOptionsType) => void): void
 }
@@ -65,20 +65,19 @@ export interface RouteTypeI {
 
   beforeEnter?: BeforeEnterI
   beforeLeave?: BeforeLeaveI
-  items?: RouteTypeI[] // 同一级路由
-  children?: RouteTypeI[] // 多级路由的子路由, 例如：一级路由下的二级路由
+  items?: RouteTypeI[] // same level route
+  children?: RouteTypeI[] // sub route of multi-level route, such as level-2 route under level-1 route
   title?: string
   hidden?: boolean
   icon?: string
-  // isDynamic?: boolean // 是否是动态路由
-  code?: CodeType // 每个菜单项一个code,属于同一个菜单项的路由code相同
-  parentName?: string // 父级名称
-  fullscreen?: boolean // 是否全屏
+  code?: CodeType // each menu item has a code, and the route code of the same menu item is the same
+  parentName?: string // parent route name
+  fullscreen?: boolean // if is true, the navigation bar will be hidden
   props?: RouteTypePropsI
   redirect?: string
   type?: 'real' | 'null'
 
-  meta?: Record<string, any> // 一些其他信息，可自定义
+  meta?: Record<string, any> // some other information can be customized
 }
 
 export interface RouteTypeInputI extends RouteTypeI {
@@ -90,14 +89,14 @@ export interface RouteTypeInputI extends RouteTypeI {
 }
 
 export interface RouteTypeExtendsI extends RouteTypeInputI {
-  parent?: RouteTypeExtendsI // 父级路由
+  parent?: RouteTypeExtendsI // parent route name
 
-  meta: Record<string, any> // 一些其他信息，可自定义
+  meta: Record<string, any> // some other information can be customized
   items?: RouteTypeExtendsI[]
   children?: RouteTypeExtendsI[]
   _route?: RouteTypeInputI
   _component?: RouteComponentType
-  _isHasAuth?: boolean // true 有权限； false无权限
+  _isHasAuth?: boolean // true has permission; false: no permission
   _itemsAndChildren?: RouteTypeExtendsI[]
 
 }
@@ -149,19 +148,19 @@ export interface MRouterMethodsI {
 }
 export interface MRouterContextObject {
   state: MRouterStateI
-  // 一些操作方法
+  // Some operation methods
   methods: MRouterMethodsI
 }
 
 export interface RoutesBaseStateStruct {
   routesMap: RoutesMapInterface
   routes: RouteTypeI[]
-  // 扁平路由
+  // flat routing
   flattenRoutes: RouteTypeI[]
 }
 export interface ExtraNavigateOptions extends NavigateOptions {
-  params?: Record<string, any> // 路由的地址参数 例如 :id
-  query?: Record<string, any> // 路由参数
+  params?: Record<string, any> // url parameters of the route, for example: id
+  query?: Record<string, any> // url query
 }
 export interface NavigateFunction {
   (to: To, options?: ExtraNavigateOptions): void

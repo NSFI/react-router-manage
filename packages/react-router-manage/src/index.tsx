@@ -174,7 +174,7 @@ MRouterContextProviderI
     });
   }, [basename, beforeEachMount, hasAuth, inputRoutes, permissionList]);
 
-  // 初始化
+  // initialization
   const [state, dispatch] = useReducer(MRouterReducer, {
     ...initialState,
     inputRoutes,
@@ -183,8 +183,10 @@ MRouterContextProviderI
     basename,
   });
 
-  // 监听路由变化，设置currentRoute
-  // 把更新currentRoute放到 history.listen 进行批量更新,酱烧更新次数
+  /**
+   * listen router change，set currentRoute
+   *  Put the updated currentRoute in history listen updates in batches to reduce the number of updates
+   */
   useImperativeHandle(ref, () => {
     return {
       updateCurrentRoute (location) {
@@ -209,8 +211,8 @@ MRouterContextProviderI
   });
 
   useLayoutEffect(() => {
-    // 过滤无权限的路由
-    // 用户判断初始化或者更新，如果相当，则只需计算currentRoute
+    // filter routes without permission
+    // used to judge initialization or update. If they are equal, only currentRoute needs to be calculated
     if (
       inputRoutes === state.inputRoutes
           && state.permissionList === permissionList
@@ -299,7 +301,7 @@ MRouterContextProviderI
   );
 
   useLayoutEffect(() => {
-    // 拦截 useNavigator中使用到history中的方法
+    // Intercept the methods used in history in useNavigator
     history.go = (delta: number) => {
       allExecuteEventCbs(() => {
         const res = oldHistoryMethods.go(delta);
