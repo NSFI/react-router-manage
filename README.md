@@ -853,11 +853,6 @@ export function App () {
 
 
 ```
-
-## Possible supported content
-
-- Currently, only the `history` mode is supported. If you need the `hash` mode, you can mention `issus` or contact me
-
 ## Developing
 
 - Keepalive support

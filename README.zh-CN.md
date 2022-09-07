@@ -875,7 +875,3 @@ export function App () {
 - KeepAlive的支持
 - 示例代码的完善
 - 路由切换过渡动画
-
-## 可能支持的内容
-
-- 目前只支持 `history` 模式，如需要需要`hash`模式，可以提`issus`,或联系我
