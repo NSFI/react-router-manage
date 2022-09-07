@@ -55,7 +55,14 @@ npm install react-router-manage --save
 |`autoDocumentTitle`| the title of the document changes depending on the route switch| `boolean` \| `(RouteTypeI[]) => string` |  `not required`, default is `false` |
 | `LoadingComponent` |  Used for react `Suspend` component  to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any> | `not required` |
 
-**A simple global configuration**
+#### router modes
+
+There are currently two router modes:
+
+- `history`
+- `hash`
+
+**A simple global configuration(`history` mode)**
 
 ``` tsx
 import React from 'react';
@@ -78,6 +85,34 @@ function App () {
     <MRouter routeConfig={routeConfig}>
       {(children) => children}
     </MRouter>
+  )
+}
+
+```
+
+**A simple global configuration(`hash` mode)**
+
+``` tsx
+import React from 'react';
+import { MHRouter, defineRouterConfig } from 'react-router-manage';
+
+const routerConfig = defineRouterConfig({
+  basename: '/',
+  routes: [{...}], // Please check the routes configuration below
+  // autoDocumentTitle: true, // if true，the transform is automatically set document.title,
+  // autoDocumentTitle: (routes) => return `网易云商-${routes.map((i) => i.title).join('-')}`, // custom configuration document.title
+
+  // beforeEachMount: (to, next) => { // configure the global route entry guard. You can see the introduction of the global route guard below
+  //   console.log(to)
+  //   next();
+  // }
+})
+
+function App () {
+  return (
+    <MHRouter routeConfig={routeConfig}>
+      {(children) => children}
+    </MHRouter>
   )
 }
 
@@ -819,12 +854,12 @@ export function App () {
 
 ```
 
+## Possible supported content
+
+- Currently, only the `history` mode is supported. If you need the `hash` mode, you can mention `issus` or contact me
+
 ## Developing
 
 - Keepalive support
 - Improvement of sample code
 - Route switching transition animation
-
-## Possible supported content
-
-- Currently, only the `history` mode is supported. If you need the `hash` mode, you can mention `issus` or contact me

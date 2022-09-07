@@ -55,8 +55,14 @@ npm install react-router-manage --save
 |`autoDocumentTitle`| 文档的title会根据路由切换而改变| `boolean` \| `(RouteTypeI[]) => string` | 非必填, 默认 `false` |
 | `LoadingComponent` | 用于Suspense加载异步组件时配置fallback或在有beforeEnter钩子的`next`时，显示加载中 | React.FunctionComponent<any> | `not required` |
 
-**一个简单的全局配置**
 
+#### 路由模式
+
+路由模式目前有两种
+- `history模式`
+- `hash模式`
+
+**一个简单的全局配置（`history模式`）**
 ``` tsx
 import React from 'react';
 import { MRouter, defineRouterConfig } from 'react-router-manage';
@@ -78,6 +84,33 @@ function App () {
     <MRouter routeConfig={routeConfig}>
       {(children) => children}
     </MRouter>
+  )
+}
+
+```
+
+**一个简单的全局配置（`hash模式`）**
+``` tsx
+import React from 'react';
+import { MHRouter, defineRouterConfig } from 'react-router-manage';
+
+const routerConfig = defineRouterConfig({
+  basename: '/',
+  routes: [{...}], // 请查看下方路由配置 routes
+  // autoDocumentTitle: true, // 设置true，会自动设置变换document.title,
+  // autoDocumentTitle: (routes) => return `网易云商-${routes.map((i) => i.title).join('-')}`, // 自定已配置document.title的设置
+
+  // beforeEachMount: (to, next) => { // 配置全局的路由进入守卫，可查看下方全局路由守卫介绍
+  //   console.log(to)
+  //   next();
+  // }
+})
+
+function App () {
+  return (
+    <MHRouter routeConfig={routeConfig}>
+      {(children) => children}
+    </MHRouter>
   )
 }
 
