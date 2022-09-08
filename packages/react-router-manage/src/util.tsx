@@ -1,5 +1,6 @@
 import React from 'react';
 import type { To } from 'react-router';
+import type { Location } from 'history';
 import { Navigate } from 'react-router';
 import NoAuth from './components/NoAuth';
 import type {
@@ -102,9 +103,10 @@ export function computedNewState (config: {
   permissionList?: string[]
   hasAuth: boolean
   beforeEachMount?: BeforeEachMountI
-  basename: string
+  basename: string;
+  location: Location;
 }) {
-  const { inputRoutes, permissionList, hasAuth, beforeEachMount, basename } = config;
+  const { inputRoutes, permissionList, hasAuth, beforeEachMount, basename, location } = config;
   const authInputRoutes = computeRoutesConfig({
     routes: inputRoutes,
     permissionList,

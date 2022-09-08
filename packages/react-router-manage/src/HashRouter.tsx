@@ -22,7 +22,6 @@ export default function HashRouter({
     historyRef.current = createHashHistory({ window });
     routeHooksRef.current = [];
   }
-  console.log(historyRef);
   const historyContext = useMemo(() => {
     return {
       history: historyRef.current as HashHistory,

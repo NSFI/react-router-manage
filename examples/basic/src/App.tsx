@@ -2,9 +2,9 @@ import * as React from "react";
 
 import {
   defineRouterConfig,
-  MHRouter as Router,
+  MRouter as Router,
   Outlet,
-  Link
+  Link,
 } from "react-router-manage";
 
 const routerConfig = defineRouterConfig({

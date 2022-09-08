@@ -6,17 +6,17 @@ import React, {
   useLayoutEffect,
   useMemo,
   useReducer,
-  useRef,
-} from 'react';
-import type { Location, To } from 'react-router-dom';
+  useRef
+} from "react";
+import type { Location, To } from "react-router-dom";
 import {
   generatePath,
   useLocation,
   useNavigate as useOldNavigate,
   useParams,
-  useRoutes,
-} from 'react-router';
-import { parse, stringify } from 'query-string';
+  useRoutes
+} from "react-router";
+import { parse, stringify } from "query-string";
 
 import {
   cloneRoutes,
@@ -26,10 +26,10 @@ import {
   getCurrentPathRoutes,
   getCurrentRoute,
   getCurrentRouteCbsByEvent,
-  getRealTo,
-} from './util';
-import BrowserRouter from './BrowserRouter';
-import HashRouter from './HashRouter';
+  getRealTo
+} from "./util";
+import BrowserRouter from "./BrowserRouter";
+import HashRouter from "./HashRouter";
 import type {
   BeforeLeaveI,
   ExtraNavigateOptions,
@@ -39,34 +39,38 @@ import type {
   RouteTypeI,
   RoutesMapInterface,
   RoutesStateStruct,
-  RouterBaseConfigI,
-} from './type';
-import { RouterActionEnum } from './type';
+  RouterBaseConfigI
+} from "./type";
+import { RouterActionEnum } from "./type";
 import MRouterContext, {
   MRouterReducer,
   useAddRoutes,
   useRemoveRoutes,
   useRouterState,
-  useUpdateRoutes,
-} from './Context/MRouterContext';
-import { useHistory, useHistoryMethods, useRouteHooksRef } from './Context/MRouterHistoryContext';
-import { changeable } from './changeable';
+  useUpdateRoutes
+} from "./Context/MRouterContext";
+import {
+  useHistory,
+  useHistoryMethods,
+  useRouteHooksRef
+} from "./Context/MRouterHistoryContext";
+import { changeable } from "./changeable";
 
-export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI } from './type';
+export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI } from "./type";
 
-export { defineRouterConfig } from './util';
+export { defineRouterConfig } from "./util";
 
 const DEFAULT_PERMISSION_LIST: string[] = [];
 
-function useBeforeLeave (fn: BeforeLeaveI): void {
+function useBeforeLeave(fn: BeforeLeaveI): void {
   const pathname = window.location.pathname;
   const routeHooksRef = useRouteHooksRef();
   useLayoutEffect(() => {
     const hooks = routeHooksRef.current;
     const routeHook = {
-      name: 'BeforeRouterLeave',
+      name: "BeforeRouterLeave",
       pathname,
-      fn,
+      fn
     } as RouteCbI;
     hooks.push(routeHook);
     return () => {
@@ -76,22 +80,22 @@ function useBeforeLeave (fn: BeforeLeaveI): void {
   }, [fn, pathname, routeHooksRef]);
 }
 export interface NavigateFunction {
-  (to: To, options?: ExtraNavigateOptions): void
-  (delta: number): void
+  (to: To, options?: ExtraNavigateOptions): void;
+  (delta: number): void;
 }
 
 const useNavigate = (): NavigateFunction => {
   const oldNavigate = useOldNavigate();
   const newCallback = useCallback(
     (to, options: ExtraNavigateOptions = {}) => {
-      if (options?.params && typeof to === 'string') {
+      if (options?.params && typeof to === "string") {
         to = generatePath(to, options.params);
       }
       // query写入地址栏
-      if (options?.query && typeof to === 'string') {
+      if (options?.query && typeof to === "string") {
         let path = to;
         const queryStr = stringify(options.query);
-        if (path.includes('?')) {
+        if (path.includes("?")) {
           path = `${path}&${queryStr}`;
         } else {
           path = `${path}?${queryStr}`;
@@ -106,11 +110,16 @@ const useNavigate = (): NavigateFunction => {
   return newCallback;
 };
 
-function useRouter (): RoutesStateStruct {
+function useRouter(): RoutesStateStruct {
   const location = useLocation();
   const routesMapRef = useRef<RoutesMapInterface>({} as RoutesMapInterface);
-  const { routesMap, inputRoutes, currentRoute, flattenRoutes, authInputRoutes }
-      = useRouterState();
+  const {
+    routesMap,
+    inputRoutes,
+    currentRoute,
+    flattenRoutes,
+    authInputRoutes
+  } = useRouterState();
 
   if (routesMapRef.current !== routesMap) {
     routesMapRef.current = routesMap;
@@ -133,35 +142,46 @@ function useRouter (): RoutesStateStruct {
     authRoutes: authInputRoutes,
     currentRoute,
     flattenRoutes,
-    location,
+    location
   };
 }
 
 interface MRouterContextProviderI {
-  permissionList?: string[]
-  hasAuth: boolean
-  routerConfig: RouterBaseConfigI
-  children?: (children: React.ReactNode) => React.ReactNode
+  permissionList?: string[];
+  hasAuth: boolean;
+  routerConfig: RouterBaseConfigI;
+  children?: (children: React.ReactNode) => React.ReactNode;
 }
 
 interface InternalMRouterContextProviderRef {
-  updateCurrentRoute: (location: Location) => void
+  updateCurrentRoute: (location: Location) => void;
 }
 
 const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
-InternalMRouterContextProviderRef,
-MRouterContextProviderI
-> = ({ permissionList = DEFAULT_PERMISSION_LIST, routerConfig, hasAuth, children }, ref) => {
+  InternalMRouterContextProviderRef,
+  MRouterContextProviderI
+> = (
+  { permissionList = DEFAULT_PERMISSION_LIST, routerConfig, hasAuth, children },
+  ref
+) => {
   const history = useHistory();
+  const location = useLocation();
+  const locationRef = useRef(location);
+
   const oldHistoryMethods = useHistoryMethods();
   const routeHooksRef = useRouteHooksRef();
 
-  const { routes = [], basename = '/', beforeEachMount, autoDocumentTitle = false } = routerConfig;
+  const {
+    routes = [],
+    basename = "/",
+    beforeEachMount,
+    autoDocumentTitle = false
+  } = routerConfig;
 
   const inputRoutes = useMemo(() => {
     return cloneRoutes({
       routes,
-      basename,
+      basename
     });
   }, [basename, routes]);
 
@@ -172,6 +192,7 @@ MRouterContextProviderI
       hasAuth,
       beforeEachMount,
       basename,
+      location: locationRef.current,
     });
   }, [basename, beforeEachMount, hasAuth, inputRoutes, permissionList]);
 
@@ -181,7 +202,7 @@ MRouterContextProviderI
     inputRoutes,
     permissionList,
     hasAuth,
-    basename,
+    basename
   });
 
   /**
@@ -190,7 +211,7 @@ MRouterContextProviderI
    */
   useImperativeHandle(ref, () => {
     return {
-      updateCurrentRoute (location) {
+      updateCurrentRoute(location) {
         const { pathname } = location;
         const prevRoute = state.currentRoute;
         const currentRoute = getCurrentRoute(pathname, state.routesMap);
@@ -204,10 +225,10 @@ MRouterContextProviderI
           payload: {
             currentRoute,
             currentPathRoutes,
-            prevRoute,
-          },
+            prevRoute
+          }
         });
-      },
+      }
     };
   });
 
@@ -215,18 +236,25 @@ MRouterContextProviderI
     // filter routes without permission
     // used to judge initialization or update. If they are equal, only currentRoute needs to be calculated
     if (
-      inputRoutes === state.inputRoutes
-          && state.permissionList === permissionList
-          && hasAuth === state.hasAuth
+      inputRoutes === state.inputRoutes &&
+      state.permissionList === permissionList &&
+      hasAuth === state.hasAuth
     ) {
       return;
     }
-    const { authInputRoutes, flattenRoutes, routesMap, currentRoute, currentPathRoutes } = computedNewState({
+    const {
+      authInputRoutes,
+      flattenRoutes,
+      routesMap,
+      currentRoute,
+      currentPathRoutes
+    } = computedNewState({
       inputRoutes,
       permissionList,
       hasAuth,
       beforeEachMount,
       basename,
+      location
     });
     dispatch({
       type: RouterActionEnum.UPDATE_STATE,
@@ -237,8 +265,8 @@ MRouterContextProviderI
         flattenRoutes,
         currentRoute,
         currentPathRoutes,
-        basename,
-      },
+        basename
+      }
     });
   }, [
     state.inputRoutes,
@@ -249,6 +277,7 @@ MRouterContextProviderI
     state.hasAuth,
     basename,
     beforeEachMount,
+    location,
   ]);
 
   // auto setting document.title
@@ -256,12 +285,14 @@ MRouterContextProviderI
     if (!autoDocumentTitle) {
       return;
     }
-    let title = '';
-    if (typeof autoDocumentTitle === 'boolean') {
-      title = state.currentPathRoutes.map(i => {
-        return i.title;
-      }).join('-');
-    } else if (typeof autoDocumentTitle === 'function') {
+    let title = "";
+    if (typeof autoDocumentTitle === "boolean") {
+      title = state.currentPathRoutes
+        .map(i => {
+          return i.title;
+        })
+        .join("-");
+    } else if (typeof autoDocumentTitle === "function") {
       title = autoDocumentTitle(state.currentPathRoutes);
     }
     document.title = title;
@@ -269,20 +300,20 @@ MRouterContextProviderI
 
   const allExecuteEventCbs = useCallback(
     (historyCb: () => void, to?: To) => {
-      if (typeof to !== 'string') {
+      if (typeof to !== "string") {
         to = to?.pathname;
       }
       const pathname = window.location.pathname;
       const beforeRouterLeaveCbs = getCurrentRouteCbsByEvent(
-        'BeforeRouterLeave',
+        "BeforeRouterLeave",
         pathname,
         routeHooksRef.current
       );
       if (state.currentRoute?.beforeLeave) {
         beforeRouterLeaveCbs.unshift({
-          name: 'BeforeRouterLeave',
+          name: "BeforeRouterLeave",
           pathname: state.currentRoute.path,
-          fn: state.currentRoute.beforeLeave as BeforeLeaveI,
+          fn: state.currentRoute.beforeLeave as BeforeLeaveI
         });
       }
       if (beforeRouterLeaveCbs.length) {
@@ -292,13 +323,18 @@ MRouterContextProviderI
           callbacks: beforeRouterLeaveCbs,
           finish: () => {
             return historyCb();
-          },
+          }
         });
       } else {
         return historyCb();
       }
     },
-    [routeHooksRef, state.currentRoute.beforeLeave, state.currentRoute.path, state.routesMap]
+    [
+      routeHooksRef,
+      state.currentRoute.beforeLeave,
+      state.currentRoute.path,
+      state.routesMap
+    ]
   );
 
   useLayoutEffect(() => {
@@ -348,14 +384,14 @@ MRouterContextProviderI
   const addRoutes = useCallback((newRoutes: RouteTypeI[]) => {
     dispatch({
       type: RouterActionEnum.ADD_ROUTES,
-      payload: newRoutes,
+      payload: newRoutes
     });
   }, []);
 
   const removeRoutes = useCallback((routeNames: string[]) => {
     dispatch({
       type: RouterActionEnum.REMOVE_ROUTES,
-      payload: routeNames,
+      payload: routeNames
     });
   }, []);
 
@@ -363,7 +399,7 @@ MRouterContextProviderI
     (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]) => {
       dispatch({
         type: RouterActionEnum.UPDATE_ROUTES,
-        payload: routes,
+        payload: routes
       });
     },
     []
@@ -375,27 +411,34 @@ MRouterContextProviderI
     }
     dispatch({
       type: RouterActionEnum.UPDATE_CURRENT_ROUTE,
-      payload: currentRoute,
+      payload: currentRoute
     });
   }, []);
 
   const routesConfig = useMemo(() => {
-    function _computeRoutesConfig (routes: RouteTypeExtendsI[]) {
+    function _computeRoutesConfig(routes: RouteTypeExtendsI[]) {
       const _routes = routes.map(route => {
         let _routeConfig: RouteConfig | undefined;
         let _itemsRouteConfig: RouteConfig[] = [];
-        const { _component: Component, path, items, children, _isHasAuth, props } = route;
+        const {
+          _component: Component,
+          path,
+          items,
+          children,
+          _isHasAuth,
+          props
+        } = route;
         if (Component) {
           const LoadingCmp = changeable.LoadingComponent;
           if (!_isHasAuth) {
             /** Without permission, the child also has no permission */
             return {
-              path: path.endsWith('*') ? path : `${path}/*`,
+              path: path.endsWith("*") ? path : `${path}/*`,
               element: (
                 <Suspense fallback={<LoadingCmp />}>
                   <Component {...props} />
                 </Suspense>
-              ),
+              )
             } as RouteConfig;
           }
           _routeConfig = {
@@ -404,7 +447,7 @@ MRouterContextProviderI
               <Suspense fallback={LoadingCmp}>
                 <Component {...props} />
               </Suspense>
-            ),
+            )
           } as RouteConfig;
           if (children) {
             _routeConfig.children = _computeRoutesConfig(children);
@@ -439,8 +482,8 @@ MRouterContextProviderI
           addRoutes,
           updateCurrentRoute,
           removeRoutes,
-          updateRoutes,
-        },
+          updateRoutes
+        }
       }}
     >
       {renders}
@@ -450,17 +493,17 @@ MRouterContextProviderI
 
 const MRouterContextProvider = React.forwardRef(InternalMRouterContextProvider);
 
-MRouterContextProvider.displayName = 'MRouterContextProvider';
+MRouterContextProvider.displayName = "MRouterContextProvider";
 
 interface MRouterPropsI {
-  permissionList?: string[]
-  wrapComponent?: React.FunctionComponent<any>
-  hasAuth?: boolean
-  routerConfig: RouterBaseConfigI
-  children?: (children: React.ReactNode) => React.ReactNode
+  permissionList?: string[];
+  wrapComponent?: React.FunctionComponent<any>;
+  hasAuth?: boolean;
+  routerConfig: RouterBaseConfigI;
+  children?: (children: React.ReactNode) => React.ReactNode;
 }
 interface CoreRouterPropsI extends MRouterPropsI {
-  RouterComponent: typeof BrowserRouter | typeof HashRouter
+  RouterComponent: typeof BrowserRouter | typeof HashRouter;
 }
 const CoreRouter: React.FC<CoreRouterPropsI> = ({
   permissionList,
@@ -468,11 +511,11 @@ const CoreRouter: React.FC<CoreRouterPropsI> = ({
   hasAuth = true,
   routerConfig,
   children,
-  RouterComponent,
+  RouterComponent
 }) => {
-  const syncUpdateCurrentRouteRef = useRef<{ updateCurrentRoute: (location: Location) => void }>(
-    null!
-  );
+  const syncUpdateCurrentRouteRef = useRef<{
+    updateCurrentRoute: (location: Location) => void;
+  }>(null!);
   const syncUpdateCurrentRoute = useCallback(location => {
     syncUpdateCurrentRouteRef.current?.updateCurrentRoute?.(location);
   }, []);
@@ -490,18 +533,21 @@ const CoreRouter: React.FC<CoreRouterPropsI> = ({
         `MRouter attributes 'children' and 'WrapComponent' are optional attributes. If both exist, children will be used`
       );
     }
-    if (children && typeof children !== 'function') {
-      console.error('MRoute attributes children needs to be a function, not a function at present  "%s"', children);
+    if (children && typeof children !== "function") {
+      console.error(
+        'MRoute attributes children needs to be a function, not a function at present  "%s"',
+        children
+      );
     }
   }
 
   const _children = useMemo(() => {
-    if (children && typeof children === 'function') {
+    if (children && typeof children === "function") {
       return children;
     }
     if (WrapComponent) {
-      WrapComponent.displayName = 'WrapComponent';
-      return function wrapComponent (children: React.ReactNode) {
+      WrapComponent.displayName = "WrapComponent";
+      return function wrapComponent(children: React.ReactNode) {
         return <WrapComponent>{children}</WrapComponent>;
       };
     }
@@ -521,15 +567,13 @@ const CoreRouter: React.FC<CoreRouterPropsI> = ({
   );
 };
 
-const MRouter: React.FC<MRouterPropsI> =(props) =>{
-  return <CoreRouter {...props} RouterComponent={BrowserRouter} />
-}
+const MRouter: React.FC<MRouterPropsI> = props => {
+  return <CoreRouter {...props} RouterComponent={BrowserRouter} />;
+};
 
-const MHRouter: React.FC<MRouterPropsI> =(props) =>{
-  console.log(111);
-  return <CoreRouter {...props} RouterComponent={HashRouter} />
-}
-
+const MHRouter: React.FC<MRouterPropsI> = props => {
+  return <CoreRouter {...props} RouterComponent={HashRouter} />;
+};
 
 export {
   MRouter,
@@ -540,5 +584,5 @@ export {
   useBeforeLeave,
   useRouter,
   useHistory,
-  useNavigate,
+  useNavigate
 };
