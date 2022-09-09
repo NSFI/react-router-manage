@@ -34,6 +34,8 @@
 - 👨‍✈️‍ [**Route guard**] - 提供路由进入时的回调 `beforeEnter` and `beforeEachMount`, 路由离开时的钩子 `useBeforeLeave`
 - 🌲 [**navigation**] - 层级导航：支持层级导航，自动实现父子级路由的导航栏生成，例如面包屑、菜单导航
 
+*目前在react严格模式下还存在一些问题，先避免使用严格模式*
+
 ## 安装
 
 ```sh
