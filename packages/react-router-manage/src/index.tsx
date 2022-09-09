@@ -192,7 +192,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       hasAuth,
       beforeEachMount,
       basename,
-      location: locationRef.current,
+      location: locationRef.current
     });
   }, [basename, beforeEachMount, hasAuth, inputRoutes, permissionList]);
 
@@ -277,7 +277,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     state.hasAuth,
     basename,
     beforeEachMount,
-    location,
+    location
   ]);
 
   // auto setting document.title
