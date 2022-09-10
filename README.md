@@ -35,8 +35,6 @@ Because `react-router` `v5` upgrades to `v6` have a high cost, `react-router-man
 - 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeEachMount)**, route exit hook **[`useBeforeLeave`](#useBeforeLeave)**
 - 🌲 [**navigation**] - level navigation: supports level navigation, and automatically generates navigation bars for parent-child routes, such as breadcrumbs and menu navigation
 
-*At present, there are still some problems in react strict mode. First, avoid using strict mode*
-
 ## Installation
 
 ```sh
