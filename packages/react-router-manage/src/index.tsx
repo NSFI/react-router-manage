@@ -37,7 +37,7 @@ import type {
   RouteConfig,
   RouteTypeExtendsI,
   RouteTypeI,
-  RoutesMapInterface,
+  RoutesMapI,
   RoutesStateStruct,
   RouterBaseConfigI
 } from "./type";
@@ -112,7 +112,7 @@ const useNavigate = (): NavigateFunction => {
 
 function useRouter(): RoutesStateStruct {
   const location = useLocation();
-  const routesMapRef = useRef<RoutesMapInterface>({} as RoutesMapInterface);
+  const routesMapRef = useRef<RoutesMapI>({} as RoutesMapI);
   const {
     routesMap,
     inputRoutes,
@@ -185,6 +185,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     });
   }, [basename, routes]);
 
+  const inputRoutesRef = useRef(inputRoutes);
+
   const initialState = useMemo(() => {
     return computedNewState({
       inputRoutes,
@@ -235,13 +237,26 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
   useLayoutEffect(() => {
     // filter routes without permission
     // used to judge initialization or update. If they are equal, only currentRoute needs to be calculated
+
     if (
-      inputRoutes === state.inputRoutes &&
       state.permissionList === permissionList &&
-      hasAuth === state.hasAuth
+      hasAuth === state.hasAuth &&
+      state.inputRoutes === inputRoutes
     ) {
       return;
     }
+
+    // if inputRoutes change, the incoming inputRoutes shall prevail
+    let _inputRoutes = state.inputRoutes;
+    if (inputRoutesRef.current === inputRoutes) {
+      // Equal, indicating that state.inputRoutes has changed
+      _inputRoutes = state.inputRoutes;
+    } else {
+      // if not Equal, record the value of inputRoutes for next comparison
+      inputRoutesRef.current = inputRoutes;
+      _inputRoutes = inputRoutes;
+    }
+
     const {
       authInputRoutes,
       flattenRoutes,
@@ -249,13 +264,14 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       currentRoute,
       currentPathRoutes
     } = computedNewState({
-      inputRoutes,
+      inputRoutes: _inputRoutes,
       permissionList,
       hasAuth,
       beforeEachMount,
       basename,
       location
     });
+
     dispatch({
       type: RouterActionEnum.UPDATE_STATE,
       payload: {

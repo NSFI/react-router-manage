@@ -15,7 +15,7 @@ import type {
   RouteTypeInputI,
   RouteTypePropsI,
   RouterConfigI,
-  RoutesMapInterface,
+  RoutesMapI,
   RouterBaseConfigI,
 } from './type';
 import GeneratorHookCom from './GeneratorHookCom';
@@ -157,9 +157,9 @@ export const flattenRoutesFn = (
 };
 
 // name => mapping of route
-export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapInterface => {
+export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapI => {
   const routesMap = flattenRoutes.reduce(
-    (_routeMap: RoutesMapInterface, nextRoute: RouteTypeExtendsI) => {
+    (_routeMap: RoutesMapI, nextRoute: RouteTypeExtendsI) => {
       const { name, path } = nextRoute;
       if (_routeMap[name] || _routeMap[path]) {
         throw new Error('路由配置，name 或 path 不唯一');
@@ -178,7 +178,7 @@ export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapInterf
     {
       __paramsRoutesMap: {},
       __flattenRoutes: [] as RouteTypeExtendsI[],
-    } as RoutesMapInterface
+    } as RoutesMapI
   );
   routesMap.__flattenRoutes = flattenRoutes;
   return routesMap;
@@ -198,7 +198,7 @@ function getValidPathname (pathname: string) {
 /** find the current route object through the path */
 export function getCurrentRoute (
   pathname = window.location.pathname,
-  routesMap: RoutesMapInterface
+  routesMap: RoutesMapI
 ) {
   // console.log(routesMap);
   // first look from the outermost routesMap

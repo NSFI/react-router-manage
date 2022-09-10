@@ -3,7 +3,7 @@ import { addRoutesAction, removeRoutesAction, updateRoutesAction } from '../acti
 import type {
   Action,
   AddRoutesI,
-  RoutesMapInterface,
+  RoutesMapI,
   UpdateRoutesI,
   MRouterContextObject,
   MRouterStateI
@@ -17,7 +17,7 @@ const MRouterContext = React.createContext<MRouterContextObject>({
     inputRoutes: [],
     authInputRoutes: [],
     permissionList: [],
-    routesMap: {} as RoutesMapInterface,
+    routesMap: {} as RoutesMapI,
     flattenRoutes: [],
   },
   methods: {},
