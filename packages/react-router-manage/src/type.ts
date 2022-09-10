@@ -121,7 +121,7 @@ export interface MRouterStateI {
   inputRoutes: RouteTypeInputI[]
   authInputRoutes: RouteTypeExtendsI[]
 
-  routesMap: RoutesMapInterface
+  routesMap: RoutesMapI
   flattenRoutes: RouteTypeExtendsI[]
   currentRoute: RouteTypeExtendsI
   currentPathRoutes: RouteTypeExtendsI[]
@@ -153,7 +153,7 @@ export interface MRouterContextObject {
 }
 
 export interface RoutesBaseStateStruct {
-  routesMap: RoutesMapInterface
+  routesMap: RoutesMapI
   routes: RouteTypeI[]
   // flat routing
   flattenRoutes: RouteTypeI[]
@@ -201,9 +201,9 @@ export interface RouteHistoryObject {
   routeHooks: RouteCbI[]
   routeHooksRef: React.MutableRefObject<RouteCbI[]>
 }
-export interface BaseRoutesMapInterface extends Record<string, RouteTypeExtendsI> {}
+export interface BaseRoutesMapI extends Record<string, RouteTypeExtendsI> {}
 
-export type RoutesMapInterface = BaseRoutesMapInterface & {
+export type RoutesMapI = BaseRoutesMapI & {
   __paramsRoutesMap: Record<string, RouteTypeExtendsI>
   __flattenRoutes: RouteTypeExtendsI[]
 };

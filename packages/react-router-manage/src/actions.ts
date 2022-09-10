@@ -1,5 +1,42 @@
-import type { RouteTypeI, MRouterStateI } from "./type";
+import type {
+  RouteTypeI,
+  MRouterStateI,
+  RouteTypeInputI,
+  BaseRoutesMapI
+} from "./type";
 import { cloneRoutes } from "./util";
+
+function newInputRoutesState(inputRoutes?: RouteTypeInputI[]): {
+  inputRoutes: RouteTypeInputI[];
+  routesMap: Record<string, RouteTypeInputI>;
+} {
+  const routesMap: Record<string, RouteTypeInputI> = {};
+  function _cloneInputRoutes(
+    inputRoutes?: RouteTypeInputI[],
+    parent?: RouteTypeInputI,
+  ): RouteTypeInputI[] {
+    if (!inputRoutes) {
+      return [];
+    }
+    return inputRoutes.map(i => {
+     
+      const _route: RouteTypeInputI= {
+        ...i,
+        items: [],
+        children: [],
+        parent: parent,
+      };
+      _route.items= _cloneInputRoutes(i.items, _route)
+      _route.children= _cloneInputRoutes(i.children, _route)
+      routesMap[i.name] = _route;
+      return _route;
+    }, []);
+  }
+  return {
+    inputRoutes: _cloneInputRoutes(inputRoutes),
+    routesMap: routesMap
+  };
+}
 
 /**
  * add routes operation
@@ -13,14 +50,17 @@ export function addRoutesAction(
 ): MRouterStateI {
   let hasChange = false;
   const newRoutes = payload as RouteTypeI[];
+  const {routesMap, inputRoutes } = newInputRoutesState(state.inputRoutes);
+
   newRoutes.forEach(_route => {
     const { path, name, parentName } = _route;
-    if (state.routesMap[path] || state.routesMap[name]) {
+    
+    if (routesMap[path] || routesMap[name]) {
       throw new Error(`新增路由 ${name} ${path} 已经存在，请修改`);
     }
+   
     if (parentName) {
-      const parentRoute = state.routesMap[parentName];
-      const _parentRoute = parentRoute?._route;
+      const _parentRoute = routesMap[parentName];
       if (_parentRoute) {
         const route = cloneRoutes({
           routes: [_route],
@@ -37,14 +77,14 @@ export function addRoutesAction(
         routes: [_route],
         _level: 0
       });
-      state.inputRoutes.push(route[0]);
+      inputRoutes.push(route[0]);
       hasChange = true;
     }
   });
   if (hasChange) {
     return {
       ...state,
-      inputRoutes: [...state.inputRoutes]
+      inputRoutes: [...inputRoutes]
     };
   }
   return state;
@@ -65,8 +105,9 @@ export function updateRoutesAction(
     routeName: string;
     routeData: Partial<RouteTypeI>;
   }[];
+  const {routesMap, inputRoutes } = newInputRoutesState(state.inputRoutes);
   newRoutesPayload.forEach(({ routeName, routeData }) => {
-    const route = state.routesMap[routeName]?._route;
+    const route = routesMap[routeName];
     if (route) {
       // 如果parent存在，则不是根节点
       const parent = route.parent;
@@ -100,11 +141,11 @@ export function updateRoutesAction(
       }
     }
   });
- 
+
   if (hasChange) {
     return {
       ...state,
-      inputRoutes: [...state.inputRoutes]
+      inputRoutes: [...inputRoutes]
     };
   }
   return state;
@@ -121,23 +162,23 @@ export function removeRoutesAction(
 ): MRouterStateI {
   let hasChange = false;
   const routeNames = payload as string[];
+  const {routesMap, inputRoutes } = newInputRoutesState(state.inputRoutes);
   routeNames.forEach(routeName => {
-    const route = state.routesMap[routeName];
-    const _route = route?._route;
+    const _route = routesMap[routeName];
     if (_route) {
       // 如果parent存在，则不是根节点
       const parent = _route.parent;
       if (!parent) {
-        const index = state.inputRoutes.indexOf(_route);
+        const index = inputRoutes.indexOf(_route);
         if (index > -1) {
-          state.inputRoutes.splice(state.inputRoutes.indexOf(_route), 1);
+          inputRoutes.splice(index, 1);
           hasChange = true;
         }
       }
       if (parent && parent.items) {
         const index = parent.items.indexOf(_route);
         if (index > -1) {
-          parent.items.splice(parent.items.indexOf(_route), 1);
+          parent.items.splice(index, 1);
           hasChange = true;
         }
       }
@@ -146,7 +187,7 @@ export function removeRoutesAction(
   if (hasChange) {
     return {
       ...state,
-      inputRoutes: [...state.inputRoutes]
+      inputRoutes: [...inputRoutes]
     };
   } else {
     return state;

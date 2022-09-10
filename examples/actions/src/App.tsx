@@ -3,7 +3,8 @@ import {
   MRouter,
   useRouter,
   useAddRoutes,
-  useRemoveRoutes
+  useRemoveRoutes,
+  useUpdateRoutes
 } from "react-router-manage";
 import { Link } from "react-router-dom";
 import React, { useCallback, useMemo } from "react";
@@ -123,6 +124,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { currentRoute, routesMap } = useRouter();
   const addRoutes = useAddRoutes();
   const removeRoutes = useRemoveRoutes();
+  const updateRoutes = useUpdateRoutes();
 
   const hasNavRoutes = useMemo(() => {
     return routesMap.index.items || [];
@@ -147,15 +149,31 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     },
     [removeRoutes]
   );
+
+  const onEdit = useCallback(
+    i => {
+       const text = window.prompt('please enter the title you want to modify', i.title) || i.title
+       updateRoutes([{
+        routeName: i.name,
+        routeData: {
+          title: text
+        }
+       }])
+    },
+    [updateRoutes]
+  );
   return (
     <div>
       <ul>
         {hasNavRoutes.map(i => {
           return (
-            <li key={i.name}>
+            <li key={i.name} style={{ marginBottom: 5 }}>
               <Link to={i.path}>jump to {i.title} page</Link>
               <button style={{ marginLeft: 5 }} onClick={() => onDelete(i)}>
-                删除
+                delete
+              </button>
+              <button style={{ marginLeft: 5 }} onClick={() => onEdit(i)}>
+                edit name
               </button>
             </li>
           );
