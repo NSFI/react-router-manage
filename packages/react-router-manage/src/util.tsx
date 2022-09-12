@@ -17,6 +17,8 @@ import type {
   RouterConfigI,
   RoutesMapI,
   RouterBaseConfigI,
+  NewStateQueryI,
+  NewStateI,
 } from './type';
 import GeneratorHookCom from './GeneratorHookCom';
 import NotFound from './components/NotFound';
@@ -98,14 +100,7 @@ export function cloneRoutes (_routeConfig: {
  * @param permissionList
  * @returns
  */
-export function computedNewState (config: {
-  inputRoutes: RouteTypeInputI[]
-  permissionList?: string[]
-  hasAuth: boolean
-  beforeEachMount?: BeforeEachMountI
-  basename: string;
-  location: Location;
-}) {
+export function computedNewState (config: NewStateQueryI):NewStateI {
   const { inputRoutes, permissionList, hasAuth, beforeEachMount, basename, location } = config;
   const authInputRoutes = computeRoutesConfig({
     routes: inputRoutes,
@@ -125,6 +120,7 @@ export function computedNewState (config: {
     routesMap,
     currentRoute,
     currentPathRoutes,
+    beforeEachMount,
   };
 }
 

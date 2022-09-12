@@ -6,7 +6,8 @@ import React, {
   useLayoutEffect,
   useMemo,
   useReducer,
-  useRef
+  useRef,
+  useState
 } from "react";
 import type { Location, To } from "react-router-dom";
 import {
@@ -39,7 +40,9 @@ import type {
   RouteTypeI,
   RoutesMapI,
   RoutesStateStruct,
-  RouterBaseConfigI
+  RouterBaseConfigI,
+  RouteTypeInputI,
+  NewStateI
 } from "./type";
 import { RouterActionEnum } from "./type";
 import MRouterContext, {
@@ -157,6 +160,24 @@ interface InternalMRouterContextProviderRef {
   updateCurrentRoute: (location: Location) => void;
 }
 
+function getInitialState({
+  inputRoutes,
+  hasAuth,
+  permissionList,
+  beforeEachMount,
+  basename,
+  location
+}: any) {
+  return computedNewState({
+    inputRoutes,
+    permissionList,
+    hasAuth,
+    beforeEachMount,
+    basename,
+    location
+  });
+}
+
 const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
   InternalMRouterContextProviderRef,
   MRouterContextProviderI
@@ -187,16 +208,29 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
 
   const inputRoutesRef = useRef(inputRoutes);
 
-  const initialState = useMemo(() => {
-    return computedNewState({
+  const [initialState] = useState(
+    computedNewState({
       inputRoutes,
       permissionList,
       hasAuth,
       beforeEachMount,
       basename,
       location: locationRef.current
-    });
-  }, [basename, beforeEachMount, hasAuth, inputRoutes, permissionList]);
+    })
+  );
+
+  const getNewStateByNewInputRoutesRef = useRef<(_inputRoutes: RouteTypeInputI[]) => NewStateI>(null!);
+  const _getNewStateByNewInputRoutes = useCallback((_inputRoutes: RouteTypeInputI[]) => {
+    return  computedNewState({
+      inputRoutes: _inputRoutes,
+      permissionList,
+      hasAuth,
+      beforeEachMount,
+      basename,
+      location: location
+    })
+  }, [basename, beforeEachMount, hasAuth, location, permissionList])
+  getNewStateByNewInputRoutesRef.current = _getNewStateByNewInputRoutes;
 
   // initialization
   const [state, dispatch] = useReducer(MRouterReducer, {
@@ -204,7 +238,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     inputRoutes,
     permissionList,
     hasAuth,
-    basename
+    basename,
+    _getNewStateByNewInputRoutes: getNewStateByNewInputRoutesRef.current
   });
 
   /**
@@ -249,8 +284,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     // if inputRoutes change, the incoming inputRoutes shall prevail
     let _inputRoutes = state.inputRoutes;
     if (inputRoutesRef.current === inputRoutes) {
-      // Equal, indicating that state.inputRoutes has changed
-      _inputRoutes = state.inputRoutes;
+      // Equal, indicating that state.inputRoutes has changed, is add remove and update routes 
+      return;
     } else {
       // if not Equal, record the value of inputRoutes for next comparison
       inputRoutesRef.current = inputRoutes;
@@ -281,7 +316,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
         flattenRoutes,
         currentRoute,
         currentPathRoutes,
-        basename
+        basename,
+        beforeEachMount,
       }
     });
   }, [
@@ -490,6 +526,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     return children ? children(routesChildren) : routesChildren;
   }, [children, routesChildren]);
 
+
   return (
     <MRouterContext.Provider
       value={{
@@ -498,7 +535,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
           addRoutes,
           updateCurrentRoute,
           removeRoutes,
-          updateRoutes
+          updateRoutes,
         }
       }}
     >
