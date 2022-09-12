@@ -45,6 +45,7 @@ npm install react-router-manage --save
 ## 示例
 
 - [基本示例](https://codesandbox.io/s/react-router-manage-basic-c7h2vp)
+- [子级路由的配置，即：**`Outlet`**路由的配置](https://codesandbox.io/s/react-router-manage-children-obi6t2)
 - [路由操作`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 
 ## 配置项

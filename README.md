@@ -46,6 +46,7 @@ npm install react-router-manage --save
 ## DEMO
 
 - [basic](https://codesandbox.io/s/react-router-manage-basic-c7h2vp)
+- [config children routes, eg: **`Outlet`** children level routes](https://codesandbox.io/s/react-router-manage-children-obi6t2)
 - [routes operation `useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 
 ## Configuration items
