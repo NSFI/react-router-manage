@@ -66,6 +66,9 @@ function Dashboard() {
           </div>
         );
       })}
+      <div>
+        <Link to={"/dashboard/d4"}>dashboard4(not found)</Link>
+      </div>
       <hr />
       <h3> children content </h3>
       <Outlet />
