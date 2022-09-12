@@ -42,6 +42,10 @@ npm install react-router-manage --save
 
 ```
 
+## 示例
+
+- 路由操作 [`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
+
 ## 配置项
 
 ### routerConfig
