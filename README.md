@@ -45,7 +45,8 @@ npm install react-router-manage --save
 
 ## DEMO
 
-- routes operation [`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
+- [basic](https://codesandbox.io/s/react-router-manage-basic-c7h2vp)
+- [routes operation `useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 
 ## Configuration items
 
