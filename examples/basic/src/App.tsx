@@ -3,65 +3,10 @@ import * as React from "react";
 import {
   defineRouterConfig,
   MRouter as Router,
-  Outlet,
-  Link,
+  Link
 } from "react-router-manage";
 
-const routerConfig = defineRouterConfig({
-  routes: [
-    {
-      path: "/",
-      name: "layout",
-      component: Layout,
-      children: [
-        {
-          path: "home",
-          name: "home",
-          component: React.lazy(() => import("./Home"))
-        },
-        {
-          path: "dashboard",
-          name: "dashboard",
-          component: Dashboard
-        },
-        {
-          path: "about",
-          name: "about",
-          component: About
-        },
-        {
-          path: "*",
-          name: "all",
-          component: NoMatch
-        }
-      ]
-    }
-  ]
-});
-
-export default function App() {
-  return (
-    <div>
-      <h1>Basic Example</h1>
-
-      <p>
-        This example demonstrates some of the core features of React Router
-        including nested <code>&lt;Route&gt;</code>s,{" "}
-        <code>&lt;Outlet&gt;</code>s, <code>&lt;Link&gt;</code>s, and using a
-        "*" route (aka "splat route") to render a "not found" page when someone
-        visits an unrecognized URL.
-      </p>
-
-      {/* Routes nest inside one another. Nested route paths build upon
-            parent route paths, and nested route elements render inside
-            parent route elements. See the note about <Outlet> below. */}
-
-      <Router routerConfig={routerConfig}>{children => children}</Router>
-    </div>
-  );
-}
-
-function Layout() {
+function Layout({ children }) {
   return (
     <div>
       {/* A "layout route" is a good place to put markup you want to
@@ -85,10 +30,7 @@ function Layout() {
 
       <hr />
 
-      {/* An <Outlet> renders whatever child route is currently active,
-          so you can think about this <Outlet> as a placeholder for
-          the child routes we defined above. */}
-      <Outlet />
+      {children}
     </div>
   );
 }
@@ -124,6 +66,62 @@ function NoMatch() {
       <p>
         <Link to="/">Go to the home page</Link>
       </p>
+    </div>
+  );
+}
+
+const routerConfig = defineRouterConfig({
+  routes: [
+    {
+      path: "/",
+      name: "layout",
+      // component: Layout,
+      items: [
+        {
+          path: "home",
+          name: "home",
+          component: React.lazy(() => import("./Home"))
+        },
+        {
+          path: "dashboard",
+          name: "dashboard",
+          component: Dashboard
+        },
+        {
+          path: "about",
+          name: "about",
+          component: About
+        },
+        {
+          path: "*",
+          name: "all",
+          component: NoMatch
+        }
+      ]
+    }
+  ]
+});
+
+export default function App() {
+  return (
+    <div>
+      <h1>Basic Example</h1>
+
+      <p>
+        This example demonstrates some of the core features of React Router
+        including nested <code>&lt;Route&gt;</code>,{" "}
+        <code>
+          &lt;routerConfig <code>items</code> property config&gt;
+        </code>
+        , <code>&lt;Link&gt;</code>, and using a "*" route (aka "splat route")
+        to render a "not found" page when someone visits an unrecognized URL.
+      </p>
+
+      {/* Routes nest inside one another. Nested route paths build upon
+            parent route paths, and nested route elements render inside
+            parent route elements. See the note about <Outlet> below. */}
+
+      <Router routerConfig={routerConfig} wrapComponent={Layout} />
     </div>
   );
 }
