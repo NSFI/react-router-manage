@@ -44,6 +44,7 @@ npm install react-router-manage --save
 
 - [基本示例](https://codesandbox.io/s/react-router-manage-basic-c7h2vp)
 - [子级路由的配置，即：**`Outlet`** 路由的配置](https://codesandbox.io/s/react-router-manage-children-obi6t2)
+- [全局路由守卫`beforeEachMount`](https://codesandbox.io/s/react-router-manage-beforeeachmount-247k3l)
 - [路由操作`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 
 ## 配置项
@@ -146,7 +147,7 @@ function App () {
 - 如果在`code`里配置了一个函数，由于在路由初始化会批量调用，请不要进行异步调用，如果需要建议使用`beforeEnter`达到同样效果
 - 如果父级路由没有配置 `component，` 跳转到该路由则会寻找items,children下第一个有权限的路由，若找不到，则会显示无权限页面
 - 如果`redirect`和`component`同时进行了配置，则`component`会被忽略
-- `beforeEnter` 和 `beforeEachMount` 中 `next`可传入一个组件，若传入则会渲染该组件
+- `beforeEnter` 和 `beforeEachMount` 中 `next`可传入一个组件，若传入则会渲染该组件, *如果在react使用严格模式，则函数可能会调用两次，这个是正常情况*
 
 #### items 与 children
 

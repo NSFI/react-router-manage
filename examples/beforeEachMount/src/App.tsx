@@ -135,7 +135,7 @@ const routerConfig = defineRouterConfig({
 export default function App() {
   return (
     <div>
-      <h1>Basic Example</h1>
+      <h1>beforeEachMount Example</h1>
 
       <p>
         This example demonstrates some of the core features of React Router
@@ -145,6 +145,10 @@ export default function App() {
         </code>
         , <code>&lt;Link&gt;</code>, and using a "*" route (aka "splat route")
         to render a "not found" page when someone visits an unrecognized URL.
+      </p>
+
+      <p>
+      if <code>StrictMode</code> is used in react, the <code>beforeEachMount</code> function may be called twice, which is normal
       </p>
 
       {/* Routes nest inside one another. Nested route paths build upon

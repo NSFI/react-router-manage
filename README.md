@@ -45,6 +45,7 @@ npm install react-router-manage --save
 
 - [basic](https://codesandbox.io/s/react-router-manage-basic-c7h2vp)
 - [config children routes, eg: **`Outlet`** children level routes](https://codesandbox.io/s/react-router-manage-children-obi6t2)
+- [global guard `beforeEachMount`](https://codesandbox.io/s/react-router-manage-beforeeachmount-247k3l)
 - [routes operation `useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 
 ## Configuration items
@@ -148,7 +149,7 @@ function App () {
 - If a function is configured in `code`, since it will be called in batch during route initialization, please do not call asynchronously. If necessary, i recommended to use 'beforeEnter' to achieve the same effect
 - If `component` is not configured for the parent route, jump to the route to find the first route with permission under items and children. If it's not found, the page without permission will be displayed
 - If `redirect` and `component` are configured at the same time, the `component` will be ignored
-- If `beforeEnter` and `beforeEachMount`, `next` function called a `component`, the Component will be rendered
+- If `beforeEnter` and `beforeEachMount`, `next` function called a `component`, the Component will be rendered, *if `StrictMode` is used in react, the function may be called twice, which is normal*
 
 #### `items` and `children`
 
