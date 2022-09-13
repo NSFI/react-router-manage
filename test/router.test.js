@@ -3,12 +3,30 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import {
   MRouter,
-  defineRouterConfig
+  defineRouterConfig,
+  useRouter
 } from "../packages/react-router-manage/index";
 import { routes, Page } from "./routeConfig";
 
 const WrapComponent = ({ children }) => {
-  return <div data-testid="__router-children">{children}</div>;
+  const { currentRoute } = useRouter();
+  return (
+    <div data-testid="__router-children">
+      <div>{currentRoute.path}</div>
+      <div>{children}</div>
+    </div>
+  );
+};
+
+const WrapComponent2 = ({ children }) => {
+  const { currentRoute, flattenRoutes, basename } = useRouter();
+  // console.log(flattenRoutes)
+  return (
+    <div data-testid="__router-children">
+      <div>{currentRoute.path}</div>
+      <div>{children}</div>
+    </div>
+  );
 };
 
 const appRouterConfig = defineRouterConfig({
@@ -141,20 +159,6 @@ describe("MRouter 测试", () => {
     expect(result).toBeInTheDocument();
   });
 
-  it("配置了权限有权限正常渲染", () => {
-    history.pushState({}, "", "/a/page1");
-    render(
-      <MRouter
-        wrapComponent={WrapComponent}
-        routerConfig={beforeEachJumpConfig}
-        permissionList={permissionList}
-      ></MRouter>
-    );
-
-    const result = screen.getByText(/页面1/);
-    expect(result).toBeInTheDocument();
-  });
-
   it("配置了权限无权限显示无权限页面", () => {
     history.pushState({}, "", "/a/page2");
     render(
@@ -169,11 +173,25 @@ describe("MRouter 测试", () => {
     expect(result).toBeInTheDocument();
   });
 
+  it("配置了权限有权限正常渲染", () => {
+    history.pushState({}, "", "/a/page1");
+    render(
+      <MRouter
+        wrapComponent={WrapComponent}
+        routerConfig={beforeEachJumpConfig}
+        permissionList={permissionList}
+      ></MRouter>
+    );
+
+    const result = screen.getByText(/页面1/);
+    expect(result).toBeInTheDocument();
+  });
+
   it("配置了basename", () => {
     history.pushState({}, "", "/app/a/page1");
     render(
       <MRouter
-        wrapComponent={WrapComponent}
+        wrapComponent={WrapComponent2}
         routerConfig={appRouterConfig2}
         permissionList={permissionList}
       ></MRouter>

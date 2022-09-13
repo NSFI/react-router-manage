@@ -12,6 +12,7 @@ export interface RouterBaseConfigI {
     | boolean
     | ((currentPathRoutes: RouteTypeExtendsI[]) => string);
   _isDefined: boolean; // 是否是defined的
+  _defineId: number;
 }
 
 export interface RouterConfigI extends Omit<RouterBaseConfigI, "_isDefined"> {
@@ -170,6 +171,7 @@ export interface RoutesBaseStateStruct {
   routes: RouteTypeI[];
   // flat routing
   flattenRoutes: RouteTypeI[];
+  basename?: string;
 }
 export interface ExtraNavigateOptions extends NavigateOptions {
   params?: Record<string, any>; // url parameters of the route, for example: id

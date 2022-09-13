@@ -43,8 +43,7 @@ import type {
   RoutesStateStruct,
   RouterBaseConfigI,
   RouteTypeInputI,
-  NewStateI,
-  NewStateQueryI
+  NewStateI
 } from "./type";
 import { RouterActionEnum } from "./type";
 import MRouterContext, {
@@ -123,7 +122,8 @@ function useRouter(): RoutesStateStruct {
     inputRoutes,
     currentRoute,
     flattenRoutes,
-    authInputRoutes
+    authInputRoutes,
+    basename
   } = useRouterState();
 
   if (routesMapRef.current !== routesMap) {
@@ -147,7 +147,8 @@ function useRouter(): RoutesStateStruct {
     authRoutes: authInputRoutes,
     currentRoute,
     flattenRoutes,
-    location
+    location,
+    basename
   };
 }
 
@@ -199,7 +200,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       hasAuth,
       beforeEachMount,
       basename,
-      location: locationRef.current
+      location: locationRef.current,
+      _defineId: routerConfig._defineId
     })
   );
 
@@ -261,19 +263,24 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
   useLayoutEffect(() => {
     // filter routes without permission
     // used to judge initialization or update. If they are equal, only currentRoute needs to be calculated
-
     if (
       state.permissionList === permissionList &&
       hasAuth === state.hasAuth &&
-      state.inputRoutes === inputRoutes
+      state.inputRoutes === inputRoutes &&
+      state.beforeEachMount === beforeEachMount
     ) {
       return;
     }
-
     // if inputRoutes change, the incoming inputRoutes shall prevail
     let _inputRoutes = state.inputRoutes;
-    if (inputRoutesRef.current === inputRoutes) {
+    if (
+      inputRoutesRef.current === inputRoutes &&
+      state.permissionList === permissionList &&
+      hasAuth === state.hasAuth &&
+      state.beforeEachMount === beforeEachMount
+    ) {
       // Equal, indicating that state.inputRoutes has changed, is add remove and update routes
+      inputRoutesRef.current = state.inputRoutes;
       return;
     } else {
       // if not Equal, record the value of inputRoutes for next comparison
