@@ -78,16 +78,23 @@ function Login() {
   );
 }
 
+function NoJump() {
+  return <h2>you can't jump</h2>
+}
+
 const routerConfig = defineRouterConfig({
-  // beforeEachMount: (to, next) => {
-  //   if (to.name === "dashboard") {
-  //     setTimeout(() => {
-  //       next();
-  //     }, 3000);
-  //   } else {
-  //     // next()
-  //   }
-  // },
+  beforeEachMount: (to, next) => {
+    if(to.name === 'home') {
+      next();
+      return;
+    }
+    const isCallJump = window.confirm('is can jump?')
+    if (isCallJump) {
+      next();
+    }else {
+      next(NoJump)
+    }
+  },
   basename: "/app",
   routes: [
     {
@@ -134,7 +141,7 @@ export default function App() {
         This example demonstrates some of the core features of React Router
         including nested <code>&lt;Route&gt;</code>,{" "}
         <code>
-          &lt;routerConfig <code>items</code> property config&gt;
+          &lt;routerConfig <code>beforeEachMount</code> property config&gt;
         </code>
         , <code>&lt;Link&gt;</code>, and using a "*" route (aka "splat route")
         to render a "not found" page when someone visits an unrecognized URL.
