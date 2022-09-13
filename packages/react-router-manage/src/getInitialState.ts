@@ -2,17 +2,20 @@ import { NewStateI, NewStateQueryI } from "./type";
 import { computedNewState } from "./util";
 
 // Initialized data to prevent double calculation
-let initialState: NewStateI | undefined = undefined;
+// defineRouterConfig may be called multiple times in the same application
+let initialStateMap = new Map<number, NewStateI>();
 function getInitialState({
   inputRoutes,
   hasAuth,
   permissionList,
   beforeEachMount,
   basename,
-  location
-}: NewStateQueryI): NewStateI {
-  if (initialState) {
-    return initialState;
+  location,
+  _defineId
+}: NewStateQueryI & { _defineId: number }): NewStateI {
+  const prevInitialData = initialStateMap.get(_defineId);
+  if (prevInitialData) {
+    return prevInitialData;
   }
   const _initialState = computedNewState({
     inputRoutes,
@@ -22,9 +25,8 @@ function getInitialState({
     basename,
     location
   });
-  initialState = _initialState;
+  initialStateMap.set(_defineId, _initialState);
   return _initialState;
 }
-
 
 export default getInitialState;

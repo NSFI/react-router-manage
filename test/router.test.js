@@ -3,12 +3,30 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import {
   MRouter,
-  defineRouterConfig
+  defineRouterConfig,
+  useRouter
 } from "../packages/react-router-manage/index";
 import { routes, Page } from "./routeConfig";
 
 const WrapComponent = ({ children }) => {
-  return <div data-testid="__router-children">{children}</div>;
+  const { currentRoute } = useRouter();
+  return (
+    <div data-testid="__router-children">
+      <div>{currentRoute.path}</div>
+      <div>{children}</div>
+    </div>
+  );
+};
+
+const WrapComponent2 = ({ children }) => {
+  const { currentRoute, flattenRoutes, basename } = useRouter();
+  // console.log(flattenRoutes)
+  return (
+    <div data-testid="__router-children">
+      <div>{currentRoute.path}</div>
+      <div>{children}</div>
+    </div>
+  );
 };
 
 const appRouterConfig = defineRouterConfig({
@@ -173,7 +191,7 @@ describe("MRouter 测试", () => {
     history.pushState({}, "", "/app/a/page1");
     render(
       <MRouter
-        wrapComponent={WrapComponent}
+        wrapComponent={WrapComponent2}
         routerConfig={appRouterConfig2}
         permissionList={permissionList}
       ></MRouter>

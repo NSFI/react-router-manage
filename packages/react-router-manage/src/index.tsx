@@ -123,7 +123,8 @@ function useRouter(): RoutesStateStruct {
     inputRoutes,
     currentRoute,
     flattenRoutes,
-    authInputRoutes
+    authInputRoutes,
+    basename
   } = useRouterState();
 
   if (routesMapRef.current !== routesMap) {
@@ -147,7 +148,8 @@ function useRouter(): RoutesStateStruct {
     authRoutes: authInputRoutes,
     currentRoute,
     flattenRoutes,
-    location
+    location,
+    basename
   };
 }
 
@@ -199,7 +201,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       hasAuth,
       beforeEachMount,
       basename,
-      location: locationRef.current
+      location: locationRef.current,
+      _defineId: routerConfig._defineId
     })
   );
 

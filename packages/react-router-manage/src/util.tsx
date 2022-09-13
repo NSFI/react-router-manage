@@ -114,6 +114,7 @@ export function computedNewState (config: NewStateQueryI):NewStateI {
   const routesMap = routesMapFn(flattenRoutes);
   const currentRoute = getCurrentRoute(location.pathname, routesMap);
   const currentPathRoutes = getCurrentPathRoutes(currentRoute);
+ 
   return {
     authInputRoutes,
     flattenRoutes,
@@ -625,13 +626,15 @@ export function isString (str: any): str is string {
  * @param routerConfig
  * @returnsRouterBaseConfigI
  */
+let _defineId = 0;
 export function defineRouterConfig (routerConfig: RouterConfigI): RouterBaseConfigI {
   const { LoadingComponent, ..._config } = routerConfig;
+  _defineId = _defineId + 1;
   if (LoadingComponent) {
     setChangeable({LoadingComponent})
   }
   /** add '_isDefined' attribute */
-  const config: RouterBaseConfigI = {..._config, _isDefined: true}
+  const config: RouterBaseConfigI = {..._config, _isDefined: true, _defineId: _defineId}
   return config;
 }
 
