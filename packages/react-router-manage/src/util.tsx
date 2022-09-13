@@ -1,6 +1,5 @@
 import React from 'react';
 import type { To } from 'react-router';
-import type { Location } from 'history';
 import { Navigate } from 'react-router';
 import NoAuth from './components/NoAuth';
 import type {
@@ -159,7 +158,8 @@ export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapI => {
     (_routeMap: RoutesMapI, nextRoute: RouteTypeExtendsI) => {
       const { name, path } = nextRoute;
       if (_routeMap[name] || _routeMap[path]) {
-        throw new Error('路由配置，name 或 path 不唯一');
+
+        throw new Error(`route config name or path isn't unique, route name: "${name}", route path: "${path}"`);
       }
       // the route has params
       // stored internally '__paramsRoutes' variable
