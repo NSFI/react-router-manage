@@ -108,12 +108,14 @@ export const routes = [
             name: "PAGE2_1",
             title: "页面2-1",
             path: "page2_1",
+            code: "admin",
             items: [
               {
                 name: "PAGE2_1_1",
                 title: "页面2-1-1",
                 path: "page2_1_1",
-                component: Page
+                component: Page,
+                code: "admin",
               },
               {
                 name: "PAGE2_1_2",

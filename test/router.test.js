@@ -159,20 +159,6 @@ describe("MRouter 测试", () => {
     expect(result).toBeInTheDocument();
   });
 
-  it("配置了权限有权限正常渲染", () => {
-    history.pushState({}, "", "/a/page1");
-    render(
-      <MRouter
-        wrapComponent={WrapComponent}
-        routerConfig={beforeEachJumpConfig}
-        permissionList={permissionList}
-      ></MRouter>
-    );
-
-    const result = screen.getByText(/页面1/);
-    expect(result).toBeInTheDocument();
-  });
-
   it("配置了权限无权限显示无权限页面", () => {
     history.pushState({}, "", "/a/page2");
     render(
@@ -184,6 +170,20 @@ describe("MRouter 测试", () => {
     );
 
     const result = screen.getByText(/无权限/);
+    expect(result).toBeInTheDocument();
+  });
+
+  it("配置了权限有权限正常渲染", () => {
+    history.pushState({}, "", "/a/page1");
+    render(
+      <MRouter
+        wrapComponent={WrapComponent}
+        routerConfig={beforeEachJumpConfig}
+        permissionList={permissionList}
+      ></MRouter>
+    );
+
+    const result = screen.getByText(/页面1/);
     expect(result).toBeInTheDocument();
   });
 
