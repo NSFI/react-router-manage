@@ -280,7 +280,6 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       state.beforeEachMount === beforeEachMount
     ) {
       // Equal, indicating that state.inputRoutes has changed, is add remove and update routes
-      inputRoutesRef.current = state.inputRoutes;
       return;
     } else {
       // if not Equal, record the value of inputRoutes for next comparison
