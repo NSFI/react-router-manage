@@ -21,7 +21,7 @@ export default function BrowserRouter({
   const historyRef = React.useRef<BrowserHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
-    historyRef.current = createBrowserHistory({ window });
+    historyRef.current = createBrowserHistory({ window, v5Compat: true });
     routeHooksRef.current = [];
   }
 
@@ -47,7 +47,7 @@ export default function BrowserRouter({
 
   React.useLayoutEffect(() => {
     let mounted = true;
-    history.listen(routeData => {
+    const removeListenFn = history.listen(routeData => {
       const { location } = routeData;
       if (!mounted) {
         return;
@@ -59,6 +59,7 @@ export default function BrowserRouter({
     });
     return () => {
       mounted = false;
+      removeListenFn();
     };
   }, [history, syncUpdateCurrentRoute]);
   return (

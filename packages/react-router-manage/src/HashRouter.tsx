@@ -20,7 +20,7 @@ export default function HashRouter({
   const historyRef = React.useRef<HashHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
-    historyRef.current = createHashHistory({ window });
+    historyRef.current = createHashHistory({ window, v5Compat: true });
     routeHooksRef.current = [];
   }
   const historyContext = useMemo(() => {

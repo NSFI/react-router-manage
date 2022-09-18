@@ -250,100 +250,100 @@ module.exports = function rollup() {
       },
       plugins: [].concat(PRETTY ? prettier({ parser: "babel" }) : []),
     },
-    {
-      input: `${SOURCE_DIR}/server.tsx`,
-      output: [
-        {
-          // the server file needs to go in the package root directory
-          // TODO: Change this in v7
-          file: `${SOURCE_DIR}/server.js`,
-          format: "cjs",
-        },
-        {
-          file: `${OUTPUT_DIR}/server.js`,
-          format: "cjs",
-        },
-      ],
-      external: [
-        "url",
-        "history",
-        "react",
-        "react-dom/server",
-        "react-router-dom",
-        "@remix-run/router",
-        "react-router-manage",
-      ],
-      plugins: [
-        extensions({ extensions: [".ts", ".tsx"] }),
-        babel({
-          babelHelpers: "bundled",
-          exclude: /node_modules/,
-          presets: [
-            ["@babel/preset-env", { loose: true, targets: { node: true } }],
-            "@babel/preset-react",
-            "@babel/preset-typescript",
-          ],
-          plugins: ["babel-plugin-dev-expression"],
-          extensions: [".ts", ".tsx"],
-        }),
-        typescript({
-          tsconfig: path.join(__dirname, "tsconfig.json"),
-          include: ["server.tsx"],
-          exclude: ["__tests__"],
-          noEmitOnError: true,
-        }),
-        // compiler()
-      ].concat(PRETTY ? prettier({ parser: "babel" }) : []),
-    },
-    {
-      input: `${SOURCE_DIR}/server.tsx`,
-      output: [
-        {
-          // the server file needs to go in the package root directory
-          // TODO: Change this in v7
-          file: `${SOURCE_DIR}/server.mjs`,
-          format: "esm",
-        },
-        {
-          file: `${OUTPUT_DIR}/server.mjs`,
-          format: "esm",
-        },
-      ],
-      external: [
-        "url",
-        "history",
-        "react",
-        "react-dom/server",
-        "react-router-dom",
-        "@remix-run/router",
-        "react-router-manage",
-      ],
-      plugins: [
-        extensions({ extensions: [".ts", ".tsx"] }),
-        babel({
-          babelHelpers: "bundled",
-          exclude: /node_modules/,
-          presets: [
-            [
-              "@babel/preset-modules",
-              {
-                // Don't spoof `.name` for Arrow Functions, which breaks when minified anyway.
-                loose: true,
-              },
-            ],
-            "@babel/preset-react",
-            "@babel/preset-typescript",
-          ],
-          plugins: ["babel-plugin-dev-expression"],
-          extensions: [".ts", ".tsx"],
-        }),
-        // compiler()
-      ].concat(PRETTY ? prettier({ parser: "babel" }) : []),
-    },
+    // {
+    //   input: `${SOURCE_DIR}/server.tsx`,
+    //   output: [
+    //     {
+    //       // the server file needs to go in the package root directory
+    //       // TODO: Change this in v7
+    //       file: `${SOURCE_DIR}/server.js`,
+    //       format: "cjs",
+    //     },
+    //     {
+    //       file: `${OUTPUT_DIR}/server.js`,
+    //       format: "cjs",
+    //     },
+    //   ],
+    //   external: [
+    //     "url",
+    //     "history",
+    //     "react",
+    //     "react-dom/server",
+    //     "react-router-dom",
+    //     "@remix-run/router",
+    //     "react-router-manage",
+    //   ],
+    //   plugins: [
+    //     extensions({ extensions: [".ts", ".tsx"] }),
+    //     babel({
+    //       babelHelpers: "bundled",
+    //       exclude: /node_modules/,
+    //       presets: [
+    //         ["@babel/preset-env", { loose: true, targets: { node: true } }],
+    //         "@babel/preset-react",
+    //         "@babel/preset-typescript",
+    //       ],
+    //       plugins: ["babel-plugin-dev-expression"],
+    //       extensions: [".ts", ".tsx"],
+    //     }),
+    //     typescript({
+    //       tsconfig: path.join(__dirname, "tsconfig.json"),
+    //       include: ["server.tsx"],
+    //       exclude: ["__tests__"],
+    //       noEmitOnError: true,
+    //     }),
+    //     // compiler()
+    //   ].concat(PRETTY ? prettier({ parser: "babel" }) : []),
+    // },
+    // {
+    //   input: `${SOURCE_DIR}/server.tsx`,
+    //   output: [
+    //     {
+    //       // the server file needs to go in the package root directory
+    //       // TODO: Change this in v7
+    //       file: `${SOURCE_DIR}/server.mjs`,
+    //       format: "esm",
+    //     },
+    //     {
+    //       file: `${OUTPUT_DIR}/server.mjs`,
+    //       format: "esm",
+    //     },
+    //   ],
+    //   external: [
+    //     "url",
+    //     "history",
+    //     "react",
+    //     "react-dom/server",
+    //     "react-router-dom",
+    //     "@remix-run/router",
+    //     "react-router-manage",
+    //   ],
+    //   plugins: [
+    //     extensions({ extensions: [".ts", ".tsx"] }),
+    //     babel({
+    //       babelHelpers: "bundled",
+    //       exclude: /node_modules/,
+    //       presets: [
+    //         [
+    //           "@babel/preset-modules",
+    //           {
+    //             // Don't spoof `.name` for Arrow Functions, which breaks when minified anyway.
+    //             loose: true,
+    //           },
+    //         ],
+    //         "@babel/preset-react",
+    //         "@babel/preset-typescript",
+    //       ],
+    //       plugins: ["babel-plugin-dev-expression"],
+    //       extensions: [".ts", ".tsx"],
+    //     }),
+    //     // compiler()
+    //   ].concat(PRETTY ? prettier({ parser: "babel" }) : []),
+    // },
   ];
 
 
-  return [...modules, ...webModules, ...globals];
+  return [...modules, ...webModules, ...globals, ...node];
 };
 
 /**
