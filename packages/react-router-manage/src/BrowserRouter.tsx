@@ -1,20 +1,23 @@
-import React, { useMemo } from 'react';
-import { unstable_batchedUpdates } from 'react-dom';
-import type { BrowserRouterProps, Location } from 'react-router-dom';
-import { Router } from 'react-router-dom';
-import type { BrowserHistory } from 'history';
-import { createBrowserHistory } from 'history';
-import type { RouteCbI, RouteHistoryObject } from './type';
-import MRouterHistoryContext from './Context/MRouterHistoryContext';
+import * as React from "react";
+import { useMemo } from "react";
+import { unstable_batchedUpdates } from "react-dom";
+import type { BrowserRouterProps, Location } from "react-router-dom";
+import { Router } from "react-router-dom";
+import type { BrowserHistory } from "@remix-run/router";
+import { createBrowserHistory } from "@remix-run/router";
+import type { RouteCbI, RouteHistoryObject } from "./type";
+import MRouterHistoryContext from "./Context/MRouterHistoryContext";
 
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.
  */
-export default function BrowserRouter ({
+export default function BrowserRouter({
   basename,
   children,
-  syncUpdateCurrentRoute,
-}: BrowserRouterProps & { syncUpdateCurrentRoute: (location: Location) => void }) {
+  syncUpdateCurrentRoute
+}: BrowserRouterProps & {
+  syncUpdateCurrentRoute: (location: Location) => void;
+}) {
   const historyRef = React.useRef<BrowserHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
@@ -30,10 +33,8 @@ export default function BrowserRouter ({
       historyMethods: {
         push: historyRef.current.push,
         replace: historyRef.current.replace,
-        go: historyRef.current.go,
-        back: historyRef.current.back,
-        forward: historyRef.current.forward,
-      },
+        go: historyRef.current.go
+      }
     } as RouteHistoryObject;
   }, []);
 
@@ -41,7 +42,7 @@ export default function BrowserRouter ({
 
   const [state, setState] = React.useState({
     action: history.action,
-    location: history.location,
+    location: history.location
   });
 
   React.useLayoutEffect(() => {

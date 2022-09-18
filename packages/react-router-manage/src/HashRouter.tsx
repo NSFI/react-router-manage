@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import * as React from "react";
+import { useMemo } from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import type { BrowserRouterProps, Location } from "react-router-dom";
 import { Router } from "react-router-dom";
-import { HashHistory, createHashHistory } from "history";
+import { HashHistory, createHashHistory } from "@remix-run/router";
 import type { RouteCbI, RouteHistoryObject } from "./type";
 import MRouterHistoryContext from "./Context/MRouterHistoryContext";
 
@@ -30,9 +31,7 @@ export default function HashRouter({
       historyMethods: {
         push: historyRef.current.push,
         replace: historyRef.current.replace,
-        go: historyRef.current.go,
-        back: historyRef.current.back,
-        forward: historyRef.current.forward
+        go: historyRef.current.go
       }
     } as RouteHistoryObject;
   }, []);

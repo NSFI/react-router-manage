@@ -1,26 +1,41 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import NameRedirect from './components/NameRedirect';
-import type { BeforeEachMountI, BeforeEnterI, NextOptionsType, RouteTypeI } from './type';
+import * as React from "react";
+import { useLayoutEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import NameRedirect from "./components/NameRedirect";
+import type {
+  BeforeEachMountI,
+  BeforeEnterI,
+  NextOptionsType,
+  RouteTypeI
+} from "./type";
 
-import { useRouter } from './index';
-import { isComponent, isString } from './util';
-import { changeable } from './changeable';
+import { useRouter } from "./index";
+import { isComponent, isString } from "./util";
+import { changeable } from "./changeable";
 
-function getComponent (options?: NextOptionsType, Component?: React.ComponentType) {
+function getComponent(
+  options?: NextOptionsType,
+  Component?: React.ComponentType
+) {
   let ReplaceComponent: React.ComponentType<any> | undefined;
   if (!options) {
     return ReplaceComponent;
   }
   // if a component is passed in
   if (isComponent(options)) {
-    ReplaceComponent = options;
-  } else if (isString(options.path)) { // if there is path, path is preferred
-    ReplaceComponent = function Redirect () {
+    ReplaceComponent = options as React.ComponentType<any>;
+    // @ts-ignore
+  } else if (isString(options.path)) {
+    // if there is path, path is preferred
+    ReplaceComponent = function Redirect() {
+      // @ts-ignore
       return <Navigate to={options.path!} />;
     };
-  } else if (isString(options.name)) { // ff there is no path, use name
-    ReplaceComponent = function Redirect () {
+     // @ts-ignore
+  } else if (isString(options.name)) {
+    // if there is no path, use name
+    ReplaceComponent = function Redirect() {
+      // @ts-ignore
       return <NameRedirect name={options.name!} component={Component} />;
     };
   }
@@ -28,18 +43,18 @@ function getComponent (options?: NextOptionsType, Component?: React.ComponentTyp
 }
 
 export const GeneratorHookCom: React.FC<{
-  beforeEnter?: BeforeEnterI
-  beforeEachMount?: BeforeEachMountI
-  Component: any
-  _route: RouteTypeI
+  beforeEnter?: BeforeEnterI;
+  beforeEachMount?: BeforeEachMountI;
+  Component: any;
+  _route: RouteTypeI;
 }> = ({ beforeEnter, Component, beforeEachMount }) => {
   /**
-     * since setCurrentComponent(Component) Component may be a function
-     * react by default, if the preState is a function, the function will be executed and an error will occur
-     * So here we put Component into an object
-     */
+   * since setCurrentComponent(Component) Component may be a function
+   * react by default, if the preState is a function, the function will be executed and an error will occur
+   * So here we put Component into an object
+   */
   const [CurrentComponent, setCurrentComponent] = useState<{ Component: any }>({
-    Component: undefined,
+    Component: undefined
   });
   const { currentRoute } = useRouter();
   useLayoutEffect(() => {
@@ -60,11 +75,17 @@ export const GeneratorHookCom: React.FC<{
             if (!isActive) {
               return;
             }
-            const EnterReplaceComponent = getComponent(enterOptions, EachReplaceComponent || Component);
+            const EnterReplaceComponent = getComponent(
+              enterOptions,
+              EachReplaceComponent || Component
+            );
             // if the Component is passed in next in beforeEnter, the beforeEnter shall prevail
 
             // Otherwise, beforeEachBeforeMount shall prevail
-            setCurrentComponent({ Component: EnterReplaceComponent || EachReplaceComponent || Component });
+            setCurrentComponent({
+              Component:
+                EnterReplaceComponent || EachReplaceComponent || Component
+            });
           });
         } else {
           setCurrentComponent({ Component: EachReplaceComponent || Component });
@@ -79,7 +100,7 @@ export const GeneratorHookCom: React.FC<{
           }
           const EnterReplaceComponent = getComponent(enterOptions, Component);
           setCurrentComponent({
-            Component: EnterReplaceComponent || Component,
+            Component: EnterReplaceComponent || Component
           });
         });
       }
@@ -89,7 +110,11 @@ export const GeneratorHookCom: React.FC<{
     };
   }, [Component, currentRoute, beforeEnter, beforeEachMount]);
   const LoadingCmp = changeable.LoadingComponent;
-  return CurrentComponent.Component ? <CurrentComponent.Component /> : <LoadingCmp/>;
+  return CurrentComponent.Component ? (
+    <CurrentComponent.Component />
+  ) : (
+    <LoadingCmp />
+  );
 };
 
 export default GeneratorHookCom;

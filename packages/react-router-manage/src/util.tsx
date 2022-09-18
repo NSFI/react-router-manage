@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { To } from 'react-router';
 import { Navigate } from 'react-router';
 import NoAuth from './components/NoAuth';

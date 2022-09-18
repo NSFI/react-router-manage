@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { addRoutesAction, removeRoutesAction, updateRoutesAction } from '../actions';
 import type {
   Action,

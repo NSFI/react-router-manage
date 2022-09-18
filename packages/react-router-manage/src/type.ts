@@ -1,7 +1,7 @@
 import type { NavigateOptions, To } from "react-router-dom";
 import type { ParsedQuery } from "query-string";
 import type { BrowserHistory, Location } from "history";
-import type React from "react";
+import * as React from "react";
 
 export interface RouterBaseConfigI {
   routes: RouteTypeI[];

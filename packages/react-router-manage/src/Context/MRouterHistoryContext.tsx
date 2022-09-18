@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { RouteHistoryObject } from '../type';
 
 const MRouterHistoryContext = React.createContext<RouteHistoryObject>(null!);
