@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"scripts": {
-		"build": "rimraf build && rollup -c",
+		"build": "cross-env PRETTY=true rollup -c",
 		"clean": "git clean -fdX .",
 		"lint": "eslint --cache .",
 		"format": "prettier --ignore-path .eslintignore --write .",
@@ -47,6 +47,7 @@
 		"babel-plugin-transform-remove-debugger": "^6.9.4",
 		"chalk": "^4.1.1",
 		"cheerio": "^1.0.0-rc.10",
+		"cross-env": "^7.0.3",
 		"eslint": "^7.30.0",
 		"eslint-config-react-app": "^6.0.0",
 		"eslint-plugin-flowtype": "^5.8.0",

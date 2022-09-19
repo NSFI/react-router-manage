@@ -6,6 +6,7 @@ const prettier = require("rollup-plugin-prettier");
 const replace = require("@rollup/plugin-replace");
 const { terser } = require("rollup-plugin-terser");
 const typescript = require("@rollup/plugin-typescript");
+const dts = require('rollup-plugin-dts')
 const {
   createBanner,
   getBuildDirectories,
@@ -342,8 +343,19 @@ module.exports = function rollup() {
     // },
   ];
 
+  // ts declare
+  const declares = [
+    {
+      input: `${SOURCE_DIR}/index.tsx`,
+      plugins: [dts.default()],
+      output: {
+        format: "esm",
+        file: `${OUTPUT_DIR}/index.d.ts`,
+      },
+    },
+  ];
 
-  return [...modules, ...webModules, ...globals, ...node];
+  return [...modules, ...webModules, ...globals, ...node, ...declares];
 };
 
 /**

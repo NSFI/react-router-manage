@@ -1,7 +1,18 @@
 import type { NavigateOptions, To } from "react-router-dom";
 import type { ParsedQuery } from "query-string";
-import type { BrowserHistory, Location } from "history";
+import type { BrowserHistory, HashHistory, Location } from "@remix-run/router";
 import * as React from "react";
+
+
+// because react-router v6.4 hasn't api 'history.back' and 'history.forward'
+export interface OldBrowserHistory extends BrowserHistory {
+  back: () => void; 
+  forward: () => void;
+}
+export interface OldHashHistory extends HashHistory {
+  back: () => void; 
+  forward: () => void;
+}
 
 export interface RouterBaseConfigI {
   routes: RouteTypeI[];
@@ -205,7 +216,7 @@ export interface RouteConfig {
 }
 
 export interface RouteHistoryObject {
-  history: BrowserHistory;
+  history: OldBrowserHistory;
   historyMethods: {
     push(to: To, state?: any): void;
     replace(to: To, state?: any): void;
