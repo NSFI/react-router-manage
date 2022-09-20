@@ -15,7 +15,7 @@ export interface RouterBaseConfigI {
   _defineId: number;
 }
 
-export interface RouterConfigI extends Omit<RouterBaseConfigI, "_isDefined"> {
+export interface RouterConfigI extends Omit<RouterBaseConfigI, "_isDefined" | "_defineId"> {
   /** Lazy component or before next called */
   LoadingComponent?: React.FunctionComponent<any>;
   // beforeEachEnter?: BeforeEachEnterI;
