@@ -1,17 +1,19 @@
 {
 	"private": true,
 	"scripts": {
-		"build": "cross-env PRETTY=true rollup -c",
+		"build": "rimraf './packages/*/dist' && cross-env PRETTY=true rollup -c",
 		"clean": "git clean -fdX .",
-		"lint": "eslint --cache .",
 		"format": "prettier --ignore-path .eslintignore --write .",
 		"format:check": "prettier --ignore-path .eslintignore --check .",
-		"publish": "node ./scripts/publish.js",
+		"postinstall": "patch-package",
+		"lint": "eslint --cache .",
+		"prerelease": "yarn build",
+		"release": "changeset publish",
 		"size": "filesize",
-		"test": "jest --env=jsdom",
-		"version": "node ./scripts/version.js",
-		"watch": "rollup -c -w",
-		"prepublishOnly": "yarn run build"
+		"test": "jest",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"watch": "rollup -c -w"
 	},
 	"dependencies": {
 		"@ampproject/filesize": "^4.3.0",
@@ -25,6 +27,7 @@
 		"@babel/preset-react": "^7.8.3",
 		"@babel/preset-typescript": "^7.16.7",
 		"@babel/register": "^7.8.3",
+		"@changesets/cli": "^2.24.4",
 		"@rollup/plugin-babel": "^5.3.1",
 		"@rollup/plugin-commonjs": "^22.0.1",
 		"@rollup/plugin-node-resolve": "^13.3.0",
