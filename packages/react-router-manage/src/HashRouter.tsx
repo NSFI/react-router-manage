@@ -1,9 +1,10 @@
-import React, { useMemo } from "react";
+import * as React from "react";
+import { useMemo } from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import type { BrowserRouterProps, Location } from "react-router-dom";
 import { Router } from "react-router-dom";
-import { HashHistory, createHashHistory } from "history";
-import type { RouteCbI, RouteHistoryObject } from "./type";
+import { createHashHistory } from "@remix-run/router";
+import type { OldHashHistory, RouteCbI, RouteHistoryObject } from "./type";
 import MRouterHistoryContext from "./Context/MRouterHistoryContext";
 
 /**
@@ -16,23 +17,26 @@ export default function HashRouter({
 }: BrowserRouterProps & {
   syncUpdateCurrentRoute: (location: Location) => void;
 }) {
-  const historyRef = React.useRef<HashHistory>(null!);
+  const historyRef = React.useRef<OldHashHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
-    historyRef.current = createHashHistory({ window });
+    const history = createHashHistory({ window, v5Compat: true });
+    historyRef.current = {
+      ...history,
+      back: () => history.go(-1),
+      forward: () => history.go(1)
+    };
     routeHooksRef.current = [];
   }
   const historyContext = useMemo(() => {
     return {
-      history: historyRef.current as HashHistory,
+      history: historyRef.current as OldHashHistory,
       routeHooks: routeHooksRef.current as RouteCbI[],
       routeHooksRef,
       historyMethods: {
         push: historyRef.current.push,
         replace: historyRef.current.replace,
-        go: historyRef.current.go,
-        back: historyRef.current.back,
-        forward: historyRef.current.forward
+        go: historyRef.current.go
       }
     } as RouteHistoryObject;
   }, []);

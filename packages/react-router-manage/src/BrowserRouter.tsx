@@ -1,30 +1,37 @@
-import React, { useMemo } from 'react';
-import { unstable_batchedUpdates } from 'react-dom';
-import type { BrowserRouterProps, Location } from 'react-router-dom';
-import { Router } from 'react-router-dom';
-import type { BrowserHistory } from 'history';
-import { createBrowserHistory } from 'history';
-import type { RouteCbI, RouteHistoryObject } from './type';
-import MRouterHistoryContext from './Context/MRouterHistoryContext';
+import * as React from "react";
+import { useMemo } from "react";
+import { unstable_batchedUpdates } from "react-dom";
+import type { BrowserRouterProps, Location } from "react-router-dom";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from "@remix-run/router";
+import type { OldBrowserHistory, RouteCbI, RouteHistoryObject } from "./type";
+import MRouterHistoryContext from "./Context/MRouterHistoryContext";
 
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.
  */
-export default function BrowserRouter ({
+export default function BrowserRouter({
   basename,
   children,
-  syncUpdateCurrentRoute,
-}: BrowserRouterProps & { syncUpdateCurrentRoute: (location: Location) => void }) {
-  const historyRef = React.useRef<BrowserHistory>(null!);
+  syncUpdateCurrentRoute
+}: BrowserRouterProps & {
+  syncUpdateCurrentRoute: (location: Location) => void;
+}) {
+  const historyRef = React.useRef<OldBrowserHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
-    historyRef.current = createBrowserHistory({ window });
+    const history = createBrowserHistory({ window, v5Compat: true });
+    historyRef.current = {
+      ...history,
+      back: () => history.go(-1),
+      forward: () => history.go(1)
+    };
     routeHooksRef.current = [];
   }
 
   const historyContext = useMemo(() => {
     return {
-      history: historyRef.current as BrowserHistory,
+      history: historyRef.current as OldBrowserHistory,
       routeHooks: routeHooksRef.current as RouteCbI[],
       routeHooksRef,
       historyMethods: {
@@ -32,8 +39,8 @@ export default function BrowserRouter ({
         replace: historyRef.current.replace,
         go: historyRef.current.go,
         back: historyRef.current.back,
-        forward: historyRef.current.forward,
-      },
+        forward: historyRef.current.forward
+      }
     } as RouteHistoryObject;
   }, []);
 
@@ -41,12 +48,12 @@ export default function BrowserRouter ({
 
   const [state, setState] = React.useState({
     action: history.action,
-    location: history.location,
+    location: history.location
   });
 
   React.useLayoutEffect(() => {
     let mounted = true;
-    history.listen(routeData => {
+    const removeListenFn = history.listen(routeData => {
       const { location } = routeData;
       if (!mounted) {
         return;
@@ -58,6 +65,7 @@ export default function BrowserRouter ({
     });
     return () => {
       mounted = false;
+      removeListenFn();
     };
   }, [history, syncUpdateCurrentRoute]);
   return (

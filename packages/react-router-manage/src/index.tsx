@@ -1,4 +1,5 @@
-import React, {
+import * as React from 'react';
+import {
   Suspense,
   useCallback,
   useEffect,
@@ -324,7 +325,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     state.hasAuth,
     basename,
     beforeEachMount,
-    location
+    location,
+    state.beforeEachMount
   ]);
 
   // auto setting document.title
@@ -413,7 +415,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
 
     history.back = () => {
       allExecuteEventCbs(() => {
-        const res = oldHistoryMethods.back();
+        const res = oldHistoryMethods.go(-1);
         // history.back = oldHistoryMethods.back;
         return res;
       });
@@ -421,7 +423,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
 
     history.forward = () => {
       allExecuteEventCbs(() => {
-        const res = oldHistoryMethods.forward();
+        const res = oldHistoryMethods.go(1);
         // history.forward = oldHistoryMethods.forward;
         return res;
       });

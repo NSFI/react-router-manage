@@ -18,7 +18,7 @@ coverage/
 
 
 # production
-/dist
+/packages/*/dist/
 /es
 
 package-lock.json

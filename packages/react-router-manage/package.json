@@ -1,6 +1,6 @@
 {
   "name": "react-router-manage",
-  "version": "1.0.11",
+  "version": "1.1.0-beta.3",
   "author": "wenxinping@corp.netease.com",
   "description": "react-router-manage extends react-router(v6), it Including authentication, configuration, addition, deletion and modification",
   "repository": {
@@ -9,19 +9,23 @@
     "directory": "packages/react-router-manage"
   },
   "license": "MIT",
-  "main": "./index.js",
-  "module": "./index.js",
-  "types": "./index.d.ts",
+  "main": "./dist/main.js",
+  "unpkg": "./dist/umd/react-router-dom.production.min.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "peerDependencies": {
     "react": ">=16.8",
     "react-dom": ">=16.8"
   },
   "dependencies": {
-    "history": "^5.2.0",
     "query-string": "^7.1.1",
-    "react-router": "6.3.0",
-    "react-router-dom": "6.3.0"
+    "react-router": "^6.4.0",
+    "react-router-dom": "^6.4.0"
   },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
   "sideEffects": false,
   "keywords": [
     "react",
@@ -33,6 +37,7 @@
     "routing",
     "history",
     "guard",
-    "react router guard"
+    "react router guard",
+    "路由管理"
   ]
 }
