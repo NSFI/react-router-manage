@@ -12,6 +12,8 @@
 		"size": "filesize",
 		"test": "jest",
 		"changeset": "changeset",
+		"beta": "changeset pre enter beta",
+		"exit": "changeset pre exit",
 		"version": "changeset version",
 		"watch": "rollup -c -w"
 	},
@@ -64,6 +66,7 @@
 		"jsonfile": "^6.1.0",
 		"metro-react-native-babel-preset": "^0.57.0",
 		"node-fetch": "^2.6.1",
+		"patch-package": "^6.4.7",
 		"ppfish": "^2.2.0",
 		"prettier": "^2.4.1",
 		"prompt-confirm": "^2.0.4",
