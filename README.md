@@ -866,4 +866,4 @@ export function App () {
 
 ## About
 
-`react-router-manage` is used in many projects within Netease BizEase. In order to give back to the community, it has decided to open source, and is willing to build a useful react router management library with friends in the community
+`react-router-manage` is used in many projects within [Netease BizEase](https://growthease.com/). In order to give back to the community, it has decided to open source, and is willing to build a useful react router management library with friends in the community
