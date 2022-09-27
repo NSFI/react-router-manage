@@ -18,6 +18,8 @@ import type {
   RouterBaseConfigI,
   NewStateQueryI,
   NewStateI,
+  RoutesMapInterI,
+  RoutePathCallNullTypeI,
 } from './type';
 import GeneratorHookCom from './GeneratorHookCom';
 import NotFound from './components/NotFound';
@@ -30,7 +32,7 @@ const getIncrementName = () => {
   return name;
 };
 
-function getWholePath (path: string, basename = '/', parentPath?: string): string {
+function getWholePath (path = '', basename = '/', parentPath?: string): string {
   if (path.startsWith(basename)) {
     return path;
   }
@@ -69,7 +71,7 @@ export function cloneRoutes (_routeConfig: {
   if (!Array.isArray(routes)) {
     Error('MRouter route prop need to type Array<RouteTypeI>');
   }
-  function _cloneRoutes (_routes: RouteTypeI[], parent?: RouteTypeInputI, _level = 1): RouteTypeInputI[] {
+  function _cloneRoutes (_routes: RouteTypeI[] | RoutePathCallNullTypeI[], parent?: RouteTypeInputI, _level = 1): RouteTypeInputI[] {
     return _routes.map(_route => {
       const { path, items, children, ...resets } = _route;
       const wholePath = getWholePath(path, basename, parent?.path);
@@ -154,30 +156,74 @@ export const flattenRoutesFn = (
 
 // name => mapping of route
 export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapI => {
-  const routesMap = flattenRoutes.reduce(
-    (_routeMap: RoutesMapI, nextRoute: RouteTypeExtendsI) => {
+  const routesInterMap = flattenRoutes.reduce(
+    (_routesInterMap: RoutesMapInterI, nextRoute: RouteTypeExtendsI) => {
       const { name, path } = nextRoute;
-      if (_routeMap[name] || _routeMap[path]) {
 
-        throw new Error(`route config name or path isn't unique, route name: "${name}", route path: "${path}"`);
+      if (_routesInterMap[name]) {
+        throw new Error(`Router config 'name' isn't unique, route name: "${name}", route path: "${path}"`);
       }
+
+     
       // the route has params
       // stored internally '__paramsRoutes' variable
       if (path.includes(':')) {
         const _path = path.replace(/:(\w+)/g, () => {
           return '([^\\/]+)';
         });
-        _routeMap.__paramsRoutesMap[_path] = nextRoute;
+        _routesInterMap.__paramsRoutesMap[_path] = nextRoute;
       }
-      _routeMap[name] = _routeMap[path] = nextRoute;
-      return _routeMap;
+      
+      const existPathRoute =  _routesInterMap[path] as RouteTypeExtendsI[];
+      if (existPathRoute) {
+        // 判断上一个是不是真正的路由父级
+        const parentAbs = existPathRoute[existPathRoute.length - 1];
+        if (parentAbs?.name && parentAbs.name === nextRoute.parentAbs?.name) {
+          _routesInterMap[path] = [...existPathRoute, nextRoute]
+        } else {
+          throw new Error(`There are routes at the same level with the same path, route name: "${name}", route path: "${path}"`);
+        }
+      } else {
+        _routesInterMap[path] = [nextRoute]
+      }
+
+      _routesInterMap[name] = nextRoute;
+      return _routesInterMap;
     },
     {
       __paramsRoutesMap: {},
       __flattenRoutes: [] as RouteTypeExtendsI[],
-    } as RoutesMapI
+    } as RoutesMapInterI
   );
-  routesMap.__flattenRoutes = flattenRoutes;
+  routesInterMap.__flattenRoutes = flattenRoutes;
+
+  const routesMap = {} as RoutesMapI;
+  const keys = Object.keys(routesInterMap).filter(i => !['__paramsRoutesMap', '__flattenRoutes'].includes(i));
+  keys.forEach(key => {
+    Object.defineProperty(routesMap, key, {
+      get: () => {
+        const route = routesInterMap[key];
+        if (Array.isArray(route)) {
+          return route[route.length - 1]
+        }
+        return route
+      }
+    })
+  })
+
+  Object.defineProperty(routesMap, '__flattenRoutes', {
+    get: () => {
+      return flattenRoutes;
+    }
+  })
+
+  Object.defineProperty(routesMap, '__paramsRoutesMap', {
+    get: () => {
+      return routesInterMap['__paramsRoutesMap'];
+    }
+  })
+
+  
   return routesMap;
 };
 
@@ -354,9 +400,10 @@ export function computeRoutesConfig (config: {
   permissionList?: string[]
   hasAuth: boolean
   beforeEachMount?: BeforeEachMountI
-  parent?: RouteTypeExtendsI
+  parent?: RouteTypeExtendsI,
+  parentAbs?: RouteTypeExtendsI,
 }): RouteTypeExtendsI[] {
-  const { routes, permissionList = [], hasAuth, beforeEachMount, parent } = config;
+  const { routes, permissionList = [], hasAuth, beforeEachMount, parent, parentAbs } = config;
   return routes.map(route => {
     const {
       component: Component,
@@ -387,6 +434,7 @@ export function computeRoutesConfig (config: {
     const newRoute: RouteTypeExtendsI = {
       ...route,
       parent,
+      parentAbs,
       props,
       meta: meta || {},
       items: [],
@@ -438,6 +486,7 @@ export function computeRoutesConfig (config: {
         hasAuth,
         beforeEachMount,
         parent: newRoute,
+        parentAbs: newRoute,
       });
     }
     // 处理同级路由
@@ -448,6 +497,7 @@ export function computeRoutesConfig (config: {
         hasAuth,
         beforeEachMount,
         parent: newRoute,
+        parentAbs: parentAbs,
       });
     }
     const _itemsAndChildren = [..._items, ..._children];

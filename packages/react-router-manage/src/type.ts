@@ -3,14 +3,13 @@ import type { ParsedQuery } from "query-string";
 import type { BrowserHistory, HashHistory, Location } from "@remix-run/router";
 import * as React from "react";
 
-
 // because react-router v6.4 hasn't api 'history.back' and 'history.forward'
 export interface OldBrowserHistory extends BrowserHistory {
-  back: () => void; 
+  back: () => void;
   forward: () => void;
 }
 export interface OldHashHistory extends HashHistory {
-  back: () => void; 
+  back: () => void;
   forward: () => void;
 }
 
@@ -26,7 +25,8 @@ export interface RouterBaseConfigI {
   _defineId: number;
 }
 
-export interface RouterConfigI extends Omit<RouterBaseConfigI, "_isDefined" | "_defineId"> {
+export interface RouterConfigI
+  extends Omit<RouterBaseConfigI, "_isDefined" | "_defineId"> {
   /** Lazy component or before next called */
   LoadingComponent?: React.FunctionComponent<any>;
   // beforeEachEnter?: BeforeEachEnterI;
@@ -77,15 +77,27 @@ export interface RouteTypePropsI {
 }
 
 export type RouteComponentType = React.LazyExoticComponent<any> | React.FC<any>;
+
+type Simplify<T> = {
+  [P in keyof T]: T[P];
+}
+
+type SetOptional<T, K extends keyof T> = Simplify<
+  Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>
+>
+
+export type RoutePathCallNullTypeI = SetOptional<RouteTypeI, 'path'>
+
 export interface RouteTypeI {
   name: string;
   path: string;
+  // index?: boolean;
   component?: RouteComponentType;
 
   beforeEnter?: BeforeEnterI;
   beforeLeave?: BeforeLeaveI;
   items?: RouteTypeI[]; // same level route
-  children?: RouteTypeI[]; // sub route of multi-level route, such as level-2 route under level-1 route
+  children?: RoutePathCallNullTypeI[]; // sub route of multi-level route, such as level-2 route under level-1 route
   title?: string;
   hidden?: boolean;
   icon?: string;
@@ -100,8 +112,9 @@ export interface RouteTypeI {
 }
 
 export interface RouteTypeInputI extends RouteTypeI {
-  _relativePath: string;
+  _relativePath?: string;
   _level: number;
+  path: string;
   items?: RouteTypeInputI[];
   children?: RouteTypeInputI[];
   parent?: RouteTypeInputI;
@@ -109,6 +122,7 @@ export interface RouteTypeInputI extends RouteTypeI {
 
 export interface RouteTypeExtendsI extends RouteTypeInputI {
   parent?: RouteTypeExtendsI; // parent route name
+  parentAbs?: RouteTypeExtendsI;
 
   meta: Record<string, any>; // some other information can be customized
   items?: RouteTypeExtendsI[];
@@ -149,9 +163,7 @@ export interface MRouterStateI {
 
   beforeEachMount?: BeforeEachMountI;
 
-  _getNewStateByNewInputRoutes: (
-    _inputRoutes: RouteTypeInputI[]
-  ) => NewStateI;
+  _getNewStateByNewInputRoutes: (_inputRoutes: RouteTypeInputI[]) => NewStateI;
 }
 
 export interface AddRoutesI {
@@ -227,7 +239,16 @@ export interface RouteHistoryObject {
   routeHooks: RouteCbI[];
   routeHooksRef: React.MutableRefObject<RouteCbI[]>;
 }
+
 export interface BaseRoutesMapI extends Record<string, RouteTypeExtendsI> {}
+
+export type RoutesMapInterI = Record<
+  string,
+  RouteTypeExtendsI | RouteTypeExtendsI[]
+> & {
+  __paramsRoutesMap: Record<string, RouteTypeExtendsI | RouteTypeExtendsI[]>;
+  __flattenRoutes: RouteTypeExtendsI[];
+};
 
 export type RoutesMapI = BaseRoutesMapI & {
   __paramsRoutesMap: Record<string, RouteTypeExtendsI>;
