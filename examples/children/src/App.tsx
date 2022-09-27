@@ -113,7 +113,6 @@ const routerConfig = defineRouterConfig({
               name: "d1",
               title: "dashboard1",
               component: Children,
-              path: "d1"
             },
             {
               name: "d2",
