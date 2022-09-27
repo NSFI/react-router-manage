@@ -128,7 +128,7 @@ function App () {
 | field name | description | type | is required |
 |---|---|---|---|
 | `name` | the name of the route, **the name is globally unique and non-repeatable, and is used to obtain the route info** |`string` | required |
-| `path`|  the path of the route, **the combined full path is globally unique and can not be repeated**| `string` | required |
+| `path`|  the path of the route, **the combined full path is globally unique and can not be repeated。 But if it is a nested sub route, it can not be configured, it is equivalent to setting the `index` attribute in the react-route `Route` component**| `string` | required |
 | `title` | the Chinese name or other name of the route, the name of the display, used to automatically generate navigation and breadcrumbs | `string`| not required |
 | `component` | current route matching component, **if it is not configured, it will jumps to the next level of privileged route**| `React.Component` \| `React.FunctionComponent` | not required|
 | `items` | the visual sub-level routes, used for navigation parent-child relationship, is actually the same level of route | `RouteTypeI[]` | not required|
