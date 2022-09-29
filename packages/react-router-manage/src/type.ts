@@ -247,7 +247,6 @@ export type RoutesMapInterI = Record<
   RouteTypeExtendsI | RouteTypeExtendsI[]
 > & {
   __paramsRoutesMap: Record<string, RouteTypeExtendsI | RouteTypeExtendsI[]>;
-  __flattenRoutes: RouteTypeExtendsI[];
 };
 
 export type RoutesMapI = BaseRoutesMapI & {
