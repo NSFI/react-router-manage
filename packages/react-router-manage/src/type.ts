@@ -251,7 +251,7 @@ export type RoutesMapInterI = Record<
 
 export type RoutesMapI = BaseRoutesMapI & {
   __paramsRoutesMap: Record<string, RouteTypeExtendsI>;
-  __flattenRoutes: RouteTypeExtendsI[];
+  __flattenRoutes: RouteBranchI[];
 };
 
 export interface NewStateQueryI {
@@ -270,4 +270,10 @@ export interface NewStateI {
   currentRoute: RouteTypeExtendsI;
   currentPathRoutes: RouteTypeExtendsI[];
   beforeEachMount?: BeforeEachMountI | undefined;
+}
+
+export interface RouteBranchI {
+  path: string;
+  score: number;
+  route: RouteTypeExtendsI
 }

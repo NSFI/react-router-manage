@@ -1,6 +1,6 @@
 import * as React from 'react';
 import type { To } from 'react-router';
-import { Navigate } from 'react-router';
+import { Navigate, matchPath } from 'react-router';
 import NoAuth from '../components/NoAuth';
 import type {
     BeforeEachMountI,
@@ -20,6 +20,7 @@ import type {
     NewStateI,
     RoutesMapInterI,
     RoutePathCallNullTypeI,
+    RouteBranchI,
 } from '../type';
 import GeneratorHookCom from '../GeneratorHookCom';
 import NotFound from '../components/NotFound';
@@ -96,6 +97,12 @@ export function cloneRoutes(_routeConfig: {
     return _cloneRoutes(routes, parent, _level);
 }
 
+function rankRouteBranches(branches: RouteBranchI[]): void {
+    branches.sort((a, b) =>
+        b.score - a.score
+    );
+}
+
 /**
  *cCalculate some state data
  * @param inputRoutes
@@ -111,6 +118,7 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
         beforeEachMount,
     });
     const flattenRoutes = flattenRoutesFn(authInputRoutes, undefined, true);
+    rankRouteBranches(flattenRoutes);
     // mixin into the notFound page
     mixinNotFoundPage(flattenRoutes, basename, authInputRoutes);
     const routesMap = routesMapFn(flattenRoutes);
@@ -119,13 +127,52 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
 
     return {
         authInputRoutes,
-        flattenRoutes,
+        flattenRoutes: flattenRoutes.map(i => i.route),
         routesMap,
         currentRoute,
         currentPathRoutes,
         beforeEachMount,
     };
 }
+
+
+/**
+ * flattenRoutes score use react-router methods
+ */
+
+const paramRe = /^:\w+$/;
+const dynamicSegmentValue = 3;
+const indexRouteValue = 2;
+const emptySegmentValue = 1;
+const staticSegmentValue = 10;
+const splatPenalty = -2;
+const isSplat = (s: string) => s === "*";
+
+function computeScore(path: string, index: boolean | undefined): number {
+    let segments = path.split("/");
+    let initialScore = segments.length;
+    if (segments.some(isSplat)) {
+        initialScore += splatPenalty;
+    }
+
+    if (index) {
+        initialScore += indexRouteValue;
+    }
+
+    return segments
+        .filter((s) => !isSplat(s))
+        .reduce(
+            (score, segment) =>
+                score +
+                (paramRe.test(segment)
+                    ? dynamicSegmentValue
+                    : segment === ""
+                        ? emptySegmentValue
+                        : staticSegmentValue),
+            initialScore
+        );
+}
+
 
 /**
  * flatten the react router array recursively
@@ -134,14 +181,19 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
 export const flattenRoutesFn = (
     arr: RouteTypeExtendsI[],
     parent?: RouteTypeExtendsI,
-    all?: boolean
-): RouteTypeExtendsI[] => {
-    return arr.reduce((prev: RouteTypeExtendsI[], nextRoute: RouteTypeExtendsI) => {
+    all?: boolean,
+): RouteBranchI[] => {
+    return arr.reduce((prev: RouteBranchI[], nextRoute: RouteTypeExtendsI, currentIndex) => {
         if (parent) {
             nextRoute.parent = parent;
         }
+        const routeBranch: RouteBranchI = {
+            path: nextRoute.path,
+            route: nextRoute,
+            score: computeScore(nextRoute.path, false),
+        }
         if (Array.isArray(nextRoute.items) || Array.isArray(nextRoute.children)) {
-            let _routes = prev.concat(nextRoute);
+            let _routes = prev.concat(routeBranch);
             if (Array.isArray(nextRoute.items)) {
                 _routes = _routes.concat(flattenRoutesFn(nextRoute.items, nextRoute, all));
             }
@@ -150,15 +202,17 @@ export const flattenRoutesFn = (
             }
             return _routes;
         } else {
-            return prev.concat(nextRoute);
+
+            return prev.concat(routeBranch);
         }
     }, []);
 };
 
 // name => mapping of route
-export const routesMapFn = (flattenRoutes: RouteTypeExtendsI[]): RoutesMapI => {
+export const routesMapFn = (flattenRoutes: RouteBranchI[]): RoutesMapI => {
     const routesInterMap = flattenRoutes.reduce(
-        (_routesInterMap: RoutesMapInterI, nextRoute: RouteTypeExtendsI) => {
+        (_routesInterMap: RoutesMapInterI, routeBranch: RouteBranchI) => {
+            const { route: nextRoute } = routeBranch;
             const { name, path } = nextRoute;
 
             if (_routesInterMap[name]) {
@@ -241,6 +295,7 @@ export function getCurrentRoute(
     // console.log(routesMap);
     // first look from the outermost routesMap
     pathname = getValidPathname(pathname);
+
     let currentRoute = routesMap[pathname];
     // if can't find it, go to find to routesMap.__paramsRoutesMap
     if (!currentRoute) {
@@ -258,44 +313,19 @@ export function getCurrentRoute(
     // TODO 找通配符的 后续优化
     if (!currentRoute) {
         // 有通配符的路径
-        const paths = routesMap.__flattenRoutes.map(i => i.path).filter(i => i.endsWith('*'));
-        debugger;
-        // find the longest one
-        let longerPath = '';
-        paths.forEach(path => {
-            path = pathStartMarkTransform(path);
-            if (!pathname.startsWith(path)) {
-                return;
+        const { __flattenRoutes } = routesMap;
+        const branch = __flattenRoutes.find(branch => {
+            let match = matchPath(
+                { path: branch.path },
+                pathname
+            );
+            if (match) {
+                return true
             }
-            if (path in routesMap && path.length > longerPath.length) {
-                longerPath = path;
-            }
-            // 匹配 /a/b/c*
-            let _path = `${path}*`;
-            if (_path in routesMap && _path.length > longerPath.length) {
-                longerPath = _path;
-            }
-            // 匹配 /a/b/c/*
-            _path = `${path}/*`;
-
-            if (_path in routesMap && _path.length > longerPath.length) {
-                longerPath = _path;
-            }
-
-            // 匹配 /a/b/c*
-            _path = `${pathname}*`;
-            if (_path in routesMap && _path.length > longerPath.length) {
-                longerPath = _path;
-            }
-            // 匹配 /a/b/c/*
-            _path = `${pathname}/*`;
-
-            if (_path in routesMap && _path.length > longerPath.length) {
-                longerPath = _path;
-            }
-        });
-        if (longerPath) {
-            currentRoute = routesMap[longerPath];
+            return false
+        })
+        if (branch) {
+            return branch.route
         }
     }
     // if (!currentRoute) {
@@ -619,7 +649,7 @@ export const handleRedirectPath = (
 };
 
 export function mixinNotFoundPage(
-    flattenRoutes: RouteTypeExtendsI[],
+    flattenRoutes: RouteBranchI[],
     basename: string,
     authInputRoutes: RouteTypeExtendsI[]
 ) {
@@ -645,7 +675,11 @@ export function mixinNotFoundPage(
         _level: 0,
     };
     authInputRoutes.push(notFoundPage);
-    flattenRoutes.push(notFoundPage);
+    flattenRoutes.push({
+        path: notFoundPath,
+        score: flattenRoutes.length,
+        route: notFoundPage,
+    });
 }
 
 // determine whether it is a react component

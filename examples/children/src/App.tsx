@@ -89,7 +89,6 @@ function NoMatch() {
 
 function ParamsDetail() {
   const { params, currentRoute } = useRouter();
-  console.log(currentRoute)
   return <div>{params.id}</div>;
 }
 function Params() {
@@ -164,11 +163,11 @@ const routerConfig = defineRouterConfig({
           name: "about",
           component: About
         },
-        // {
-        //   path: "*",
-        //   name: "all",
-        //   component: NoMatch
-        // }
+        {
+          path: "*",
+          name: "all",
+          component: NoMatch
+        }
       ]
     }
   ]
