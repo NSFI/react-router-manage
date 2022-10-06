@@ -7,6 +7,7 @@ module.exports = {
   collectCoverageFrom: [
     'packages/**/*.{js,jsx,ts,tsx}',
     '!packages/**/*.d.ts',
+    '!packages/**/dist/**/*',
   ],
   moduleFileExtensions: [
     'js', 'jsx', 'json', 'ts', 'tsx', 'md'
