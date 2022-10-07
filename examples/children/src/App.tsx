@@ -87,6 +87,27 @@ function NoMatch() {
   );
 }
 
+function ParamsDetail() {
+  const { params, currentRoute } = useRouter();
+  return <div>{params.id}</div>;
+}
+function Params() {
+  const { routesMap } = useRouter();
+  const route = routesMap?.paramsDetail?.path;
+  return (
+    <div>
+    <ul>
+      <li>
+        <Link to={route?.replace(':id', '12345')}>params为12345</Link>
+      </li>
+      <li>
+        <Link to={route?.replace(':id', '34567')} >params为34567</Link>
+      </li>
+    </ul>
+    <Outlet />
+    </div>
+  );
+}
 function Children() {
   const { currentRoute } = useRouter();
   return <div>this is dashboard child route: {currentRoute.title}</div>;
@@ -112,14 +133,22 @@ const routerConfig = defineRouterConfig({
             {
               name: "d1",
               title: "dashboard1",
-              component: Children,
-              path: "d1"
+              component: Children
+              // path: "d1"
             },
             {
               name: "d2",
-              title: "dashboard12",
-              component: Children,
-              path: "d2"
+              title: "params",
+              component: Params,
+              path: "d2",
+              children: [
+                {
+                  name: "paramsDetail",
+                  title: "paramsDetail",
+                  component: ParamsDetail,
+                  path: ":id"
+                }
+              ]
             },
             {
               name: "d3",

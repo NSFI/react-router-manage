@@ -126,15 +126,15 @@ function App () {
 | 字段名 | 说明 | 类型 | 是否必填 |
 |---|---|---|---|
 | `name` | 路由的名称, **名称全局唯一、不能重复，用于获取路由** |`string` | 必填 |
-| `path`| 路由的路径，**组合后的完整路径全局唯一、不能重复**| `string` | 必填 |
+| `path`| 路由的路径，**组合后的完整路径全局唯一、不能重复，但是如果是嵌套的子路由，可以不配置, 相当于`Route`组件中设置`index`属性**| `string` | 必填 |
 | `title` | 路由的中文名称，显示的名称，用于自动生成导航和面包屑中| `string`| 非必填 |
-| `component` |路由匹配的组件, **如果没有配置，则会跳到下一级有权限的路由**| `React.Component` \| `React.FunctionComponent` | 非必填|
+| `component` |路由匹配的组件, **如果没有配置，则会跳到下一级有权限的路由**| `React.Component` \| `React.FunctionComponent` | 非必填 |
 | `items` | 视觉上的子级路由，用于导航时的父子级关系，实际为同一级路由| `RouteTypeI[]` | 非必填|
 | `children`| 子级路由、在v6版本中渲染在 `Outlet`组件中| `RouteTypeI[]` | 非必填|
 | `props` | 渲染组建时候会自动注入Props里面的内容, `<Component {...props}/>` | `Record<string, any>` | 非必填 |
 | `hidden` | 导航的显示与隐藏| `boolean`| 非必填, 默认 `false`|
-| `code` | 用于权限校验，会对比`permissionList`里的值| `string`\| `string[]`\| `(route: RouteTypeI) => boolean` | 非必填，默认无|
-| `redirect` | 路由重定向到指定路由，优先级高于component | `string` | 非必填，默认无|
+| `code` | 用于权限校验，会对比`permissionList`里的值| `string`\| `string[]`\| `(route: RouteTypeI) => boolean` | 非必填，默认无 |
+| `redirect` | 路由重定向到指定路由，优先级高于component | `string` | 非必填，默认无 |
 | `beforeEnter` | 渲染该路由钱调用的方法，如果调用`next`中传入了组件，则会渲染该组件，路由配置的组件则不会渲染 | `(to: RouteTypeI \| undefined, next: (options?: {name?: string; path?: string} | React.ComponentType<any>) => void): void` | 非必填， 默认无 |
 | `beforeLeave` | 离开路由前调用的回调，需主动调用`next` | `(to: RouteTypeI \| undefined,from: RouteTypeI \| undefined, next: () => void): void` | 非必填 |
 | `meta` | 一些自定义的信息可以放这里，`currentRoute.meta可以获取到该字段` | `Record<string, any>` | 非必填 |
@@ -677,201 +677,6 @@ const appRouterConfig = {
         }
     }
 }
-
-```
-
-## 较为完整的示例
-
-**具体的示例可查看examples**
-clone本项目后到对应的示例，然后`npm run start`
-
-```js
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
-import { MRouter, useRouter } from 'react-router-manage';
-
-import './index.less';
-
-const users = [{ id: 1, name: '张三' }, { id: 2, name: '李四' }];
-
-const usersInfo = {
-  1: {
-    name: '张三',
-    age: 18,
-    address: '网易一期'
-  },
-  2: {
-    name: '李四',
-    age: 28,
-    address: '网易二期'
-  }
-};
-
-const usersArticle = {
-  1: [
-    { name: '为什么的理发师的积分拉时代峻峰打分卡水电费拉屎京东卡' },
-    { name: 'dfasdfasdfasd打法是的发送到大是大非a' },
-    { name: '为什么的理发师的积分大赛的发生拉时代峻峰打分卡水电费拉屎京东卡' },
-    { name: '打法是的发送到发撒旦法大法师打发二分干' },
-  ],
-  2: [{
-    name: '钢铁是怎打法是的发送到发样炼成的1'
-  }, {
-    name: '大是大大懂法守法是非'
-  }, {
-    name: '钢铁是怎样大是大非炼成的1'
-  }]
-};
-
-const Users = () => {
-  const { navigate, routesMap, currentRoute } = useRouter();
-  return <div className='users'>
-    <div className="list">
-      <div className="user">
-        <div className="user-id">用户ID</div>
-        <div className='user-name'>用户姓名</div>
-        <div style={{ textAlign: 'center' }}>
-         操作
-        </div>
-      </div>
-      {
-        users.map(user => {
-          return <div key={user.id} className="user">
-            <div className='user-id'>{user.id}</div>
-            <div className='user-name'>{user.name}</div>
-            <div>
-              <a onClick={() => navigate(routesMap.userProfile.path, { query: { id: user.id } })} style={{ marginRight: 16 }}>查看用户信息</a>
-              <a onClick={() => navigate(routesMap.userArticle.path, { query: { id: user.id } })}>查看用户发布的文章</a>
-            </div>
-          </div>;
-        })
-      }
-    </div>
-    <div className='info'>
-      <Outlet />
-    </div>
-  </div>;
-};
-
-const UserProfile = () => {
-  const { navigate, routesMap, query } = useRouter();
-  const id = query.id as '1' | '2';
-  const user = usersInfo[id];
-
-  return <div>
-    <h2>用户信息</h2>
-    {
-      user
-        ? <div>
-          <div>用户ID: {query.id}</div>
-          <div>用户年龄：{user.age}</div>
-          <div>用户姓名：{user.name}</div>
-          <div>办公地址：{user.address}</div>
-        </div>
-        : '用户信息不存在'
-    }
-
-  </div>;
-};
-
-const UserArticles = () => {
-  const { query } = useRouter();
-  const id = query.id as '1' | '2';
-  const articles = usersArticle[id];
-  return <div>
-    <h2>文章信息</h2>
-    {
-      articles && articles.length
-        ? articles.map((s, index) => {
-          return <div key={index}><a onClick={() => {
-            alert(s.name);
-          }}>{s.name}</a></div>;
-        })
-        : '用户信息不存在'
-    }
-
-  </div>;
-};
-
-const Profile = () => {
-  return <div className='profile'>
-    <h2>个人中心</h2>
-    <p>
-            网易云商是网易智企旗下的服务营销一体化平台，通过打通企业线上、线下的服务触点，帮助企业洞察市场和消费者，实现自动化营销和精细化客户运营，
-        以智能化的优质服务提升用户体验，不断巩固并提升企业与消费者的关系，最终助力企业的业务增长。
-        旗下包含六大产品体系：问卷调研、消费者洞察、营销自动化、SCRM、智能客服、外呼机器人。
-    <p>
-          问卷调研：真实专业的用户调研与体验管理平台，提供覆盖亿级用户、颠覆传统调研的精准市场研究服务，洞察消费者真实态度，让营销决策更科学。
-        消费者洞察：罗兰贝格和网易联合出品的数字化品牌定位工具“数字罗盘”Digital Profiler ，揭示消费者选品奥秘，洞察其底层价值观，让品牌战略更有效。
-        营销自动化：整合企业全域数据，分析建立深度用户画像，提供丰富的营销工具，自动执行精细化分群运营策略，全程数据监测还原真实用户旅程，让企业营销更简单。
-        SCRM：赋能销售获客转化的一站式 SCRM，从全渠道拓客到多触点沟通，从私域互动转化到客户精细管理，为你计划好每一步销售动作，步步为”赢“，让销售转化更高效。
-        网易云商六大产品能力
-        网易云商六大产品能力
-        智能客服：智能驱动的客户服务 SaaS 系统，融合智能机器人、在线客服、售前机器人、呼叫中心、工单等功能，提升企业服务效率，让客户服务更优质
-      </p>
-    </p>
-  </div>;
-};
-
-const appRouterConfig = defineRouterConfig({
-  basename: '/',
-  routes: [
-    {
-      name: 'user', // 每个路由对应一个全局唯一的name
-      path: 'user', // 路径会自动在内部转换为 /user, 由于这里没有配置component，进入 /user 会重定向到 /user/list
-      title: '用户中心', // 路由名字
-      items: [
-        {
-          name: 'userList',
-          path: 'list', // 路径会自动在内部转换为 /user/list
-          component: Users,
-          title: '用户列表',
-          children: [
-            {
-              name: 'userProfile',
-              path: 'profile',
-              title: '用户信息',
-              component: UserProfile,
-            },
-            {
-              name: 'userArticle',
-              path: 'article',
-              title: '用户文章列表',
-              component: UserArticles,
-            }
-          ]
-        },
-        {
-          name: 'profile',
-          path: 'profile', // 路径会自动在内部转换为 /user/list
-          component: Profile,
-          title: '个人中心',
-        },
-      ]
-    }
-  ],
-});
-
-export function App () {
-  return (
-    <MRouter
-      routerConfig={appRouterConfig}
-    >
-      {
-        children => {
-          return <div>
-            <h1 className='title'>基本示例</h1>
-            <div className='nav'>
-              <Link to="/user/list" style={{ marginRight: 20 }}>跳转到用户列表</Link>
-              <Link to="/user/profile">跳转到个人中心</Link>
-            </div>
-            {children}
-          </div>;
-        }
-      }
-    </MRouter>);
-}
-
 
 ```
 
