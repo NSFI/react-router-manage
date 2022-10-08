@@ -46,6 +46,7 @@ npm install react-router-manage --save
 - [子级路由的配置，即：**`Outlet`** 路由的配置](https://codesandbox.io/s/react-router-manage-children-obi6t2)
 - [全局路由守卫`beforeEachMount`](https://codesandbox.io/s/react-router-manage-beforeeachmount-247k3l)
 - [路由操作`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
+- [认证-基础示例](https://codesandbox.io/s/react-router-manage-auth-nww6rp)
 
 ## 配置项
 
