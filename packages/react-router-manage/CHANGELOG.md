@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.3
+
+### Patch Changes
+
+- fix the problem of lazy component warning
+
 ## 1.1.2
 
 ### Patch Changes
