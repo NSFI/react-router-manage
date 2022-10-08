@@ -493,7 +493,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
           _routeConfig = {
             path,
             element: (
-              <Suspense fallback={LoadingCmp}>
+              <Suspense fallback={<LoadingCmp />}>
                 <Component {...props} />
               </Suspense>
             )
