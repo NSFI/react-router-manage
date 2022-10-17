@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.4-beta.0
+
+### Patch Changes
+
+- core add permissionMode `parent` and `children` supports permission
+
 ## 1.1.3
 
 ### Patch Changes
