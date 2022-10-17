@@ -3,7 +3,7 @@ import type {
   MRouterStateI,
   RouteTypeInputI,
 } from "./type";
-import { cloneRoutes, computedNewState } from "./util";
+import { cloneRoutes } from "./util";
 
 function newInputRoutesState(inputRoutes?: RouteTypeInputI[]): {
   inputRoutes: RouteTypeInputI[];

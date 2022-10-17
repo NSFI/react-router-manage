@@ -316,6 +316,11 @@ function App () {
 
 ## Permission routes
 
+### Permission `permissionMode` supports two modes `parent` and `children`. The default is `parent`
+
+- If `permissionMode` is `parent`, if the parent route does not have permission, then the child routes do not have permission
+- If `permissionMode` is `children`, if the child route has permission, the parent route will automatically change to have permission regardless of whether it has permission configured
+
 ### Batch verification of configuration string `code`
 
 - You need to pass in the `permissionList` in the `MRouter` component, and set the `hasAuth` to `true`, which is true by default
