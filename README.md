@@ -366,7 +366,7 @@ const appRouterConfig = defineRouterConfig({
 // `hasAuth` It can not be configured. The default value is `true`
 function App () {
   return (
-    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true}>
+    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true} permissionMode="parent">
       {(children) => children}
     </MRouter>
   )

@@ -375,7 +375,7 @@ const appRouterConfig = defineRouterConfig({
 // hasAuth 可以不配置，默认为true
 function App () {
   return (
-    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true}>
+    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true} permissionMode="parent">
       {(children) => children}
     </MRouter>
   )
