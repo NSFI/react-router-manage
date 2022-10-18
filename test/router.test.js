@@ -75,6 +75,44 @@ describe("MRouter 测试", () => {
     button.click();
   });
 
+  it("测试MRouter配置children", () => {
+    history.pushState({}, "", "/a/page1");
+    const { container } = render(
+      <MRouter
+        routerConfig={appRouterConfig}
+        hasAuth={false}
+      >{(children) => <div data-testid="__router-children">{children}</div>}</MRouter>
+    );
+    const fiber = screen.getByTestId("__router-children");
+    expect(fiber).toBeDefined();
+
+    const button = screen.getByTestId("__test_button");
+
+    button.click();
+  });
+
+  it("测试MRouter配置children 和 wrapComponent, 会报警告", () => {
+    history.pushState({}, "", "/a/page1");
+    const { container } = render(
+      <MRouter
+        wrapComponent={WrapComponent}
+        routerConfig={appRouterConfig}
+        hasAuth={false}
+      >{(children) => <div data-testid="__router-children">{children}</div>}</MRouter>
+    );
+  });
+
+  it("测试MRouter配置children, children不是函数", () => {
+    history.pushState({}, "", "/a/page1");
+    const { container } = render(
+      <MRouter
+        routerConfig={appRouterConfig}
+        hasAuth={false}
+      ><div>aaa</div></MRouter>
+    );
+  });
+
+
   it("路由切换正常渲染", () => {
     history.pushState({}, "", "/a/page2");
     render(
