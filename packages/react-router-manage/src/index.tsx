@@ -163,7 +163,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       updateCurrentRoute(location) {
         const { pathname } = location;
         const prevRoute = state.currentRoute;
-        const currentRoute = getCurrentRoute(pathname, state.routesMap);
+        const currentRoute = getCurrentRoute(pathname, state.routesMap, state.flattenRoutes);
 
         let currentPathRoutes = state.currentPathRoutes;
         if (currentRoute !== state.currentRoute) {
@@ -293,8 +293,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       }
       if (beforeRouterLeaveCbs.length) {
         executeEventCbs({
-          to: getCurrentRoute(to as string, state.routesMap),
-          from: getCurrentRoute(pathname, state.routesMap),
+          to: getCurrentRoute(to as string, state.routesMap, state.flattenRoutes),
+          from: getCurrentRoute(pathname, state.routesMap, state.flattenRoutes),
           callbacks: beforeRouterLeaveCbs,
           finish: () => {
             return historyCb();
@@ -308,7 +308,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       routeHooksRef,
       state.currentRoute.beforeLeave,
       state.currentRoute.path,
-      state.routesMap
+      state.routesMap,
+      state.flattenRoutes
     ]
   );
 

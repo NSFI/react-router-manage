@@ -123,13 +123,13 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
     hasAuth,
     beforeEachMount
   });
-  const flattenRoutes = flattenRoutesFn(authInputRoutes, undefined, true);
-
+  const flattenBranches = flattenRoutesFn(authInputRoutes, undefined, true);
+ 
   /**
    * Calculate routes permission when permissionMode is 'children'
    */
   if (permissionMode === "children" && hasAuth) {
-    flattenRoutes.forEach((_branch) => {
+    flattenBranches.forEach((_branch) => {
       const route = _branch.route;
       const currentIsHasAuth = route._currentIsHasAuth;
       if (!currentIsHasAuth) {
@@ -147,16 +147,18 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
     });
    
   }
-  rankRouteBranches(flattenRoutes);
   // mixin into the notFound page
-  mixinNotFoundPage(flattenRoutes, basename, authInputRoutes);
-  const routesMap = routesMapFn(flattenRoutes);
-  const currentRoute = getCurrentRoute(location.pathname, routesMap);
+  mixinNotFoundPage(flattenBranches, basename, authInputRoutes);
+  rankRouteBranches(flattenBranches);
+
+  const flattenRoutes = flattenBranches.map(i => i.route)
+  const routesMap = routesMapFn(flattenBranches);
+  const currentRoute = getCurrentRoute(location.pathname, routesMap, flattenRoutes);
   const currentPathRoutes = getCurrentPathRoutes(currentRoute);
 
   return {
     authInputRoutes,
-    flattenRoutes: flattenRoutes.map(i => i.route),
+    flattenRoutes: flattenRoutes,
     routesMap,
     currentRoute,
     currentPathRoutes,
@@ -275,11 +277,6 @@ export const routesMapFn = (flattenRoutes: RouteBranchI[]): RoutesMapI => {
 
   const routesMap = {} as RoutesMapI;
   proxyRoutesMapFromTarget(routesMap, routesInterMap);
-  Object.defineProperty(routesMap, "__flattenRoutes", {
-    get: () => {
-      return flattenRoutes;
-    }
-  });
 
   return routesMap;
 };
@@ -298,7 +295,8 @@ function getValidPathname(pathname: string) {
 /** find the current route object through the path */
 export function getCurrentRoute(
   pathname = window.location.pathname,
-  routesMap: RoutesMapI
+  routesMap: RoutesMapI,
+  flattenRoutes: RouteTypeExtendsI[],
 ) {
   // console.log(routesMap);
   // first look from the outermost routesMap
@@ -308,16 +306,15 @@ export function getCurrentRoute(
   // TODO 找通配符的 后续优化
   if (!currentRoute) {
     // 有通配符的路径
-    const { __flattenRoutes } = routesMap;
-    const branch = __flattenRoutes.find(branch => {
-      let match = matchPath({ path: branch.path }, pathname);
+    const route = flattenRoutes.find(_route => {
+      let match = matchPath({ path: _route.path }, pathname);
       if (match) {
         return true;
       }
       return false;
     });
-    if (branch) {
-      return branch.route;
+    if (route) {
+      return route;
     }
   }
   if (!currentRoute) {

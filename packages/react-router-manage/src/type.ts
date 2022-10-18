@@ -256,9 +256,7 @@ export type RoutesMapInterI = Record<
   RouteTypeExtendsI | RouteTypeExtendsI[]
 >
 
-export type RoutesMapI = BaseRoutesMapI & {
-  __flattenRoutes: RouteBranchI[];
-};
+export interface RoutesMapI extends BaseRoutesMapI {}
 
 export interface NewStateQueryI {
   inputRoutes: RouteTypeInputI[];
