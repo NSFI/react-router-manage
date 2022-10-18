@@ -116,7 +116,6 @@ export interface RouteTypeI {
 export interface RouteTypeInputI extends RouteTypeI {
   _relativePath?: string;
   _level: number;
-  _isHasAuth: boolean; // true has permission; false: no permission
   path: string;
   items?: RouteTypeInputI[];
   children?: RouteTypeInputI[];
@@ -130,6 +129,7 @@ export interface RouteTypeExtendsI extends RouteTypeInputI {
   meta: Record<string, any>; // some other information can be customized
   items?: RouteTypeExtendsI[];
   children?: RouteTypeExtendsI[];
+  _isHasAuth: boolean; // true has permission; false: no permission
   _route: RouteTypeInputI;
   _component?: RouteComponentType;
   _currentComponent?: RouteComponentType;

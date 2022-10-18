@@ -25,7 +25,7 @@ import type {
 } from "../type";
 import GeneratorHookCom from "../GeneratorHookCom";
 import NotFound from "../components/NotFound";
-import RedirectChild from '../components/RedirectChild'
+import RedirectChild from "../components/RedirectChild";
 import { setChangeable } from "../changeable";
 import { proxyRoutesMapFromTarget } from "./proxy";
 
@@ -124,12 +124,12 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
     beforeEachMount
   });
   const flattenBranches = flattenRoutesFn(authInputRoutes, undefined, true);
- 
+
   /**
    * Calculate routes permission when permissionMode is 'children'
    */
   if (permissionMode === "children" && hasAuth) {
-    flattenBranches.forEach((_branch) => {
+    flattenBranches.forEach(_branch => {
       const route = _branch.route;
       const currentIsHasAuth = route._currentIsHasAuth;
       if (!currentIsHasAuth) {
@@ -138,22 +138,25 @@ export function computedNewState(config: NewStateQueryI): NewStateI {
       /**
        * If the child route has permission, the parent route also has permission
        */
-      let _currentRoute:RouteTypeExtendsI | undefined = route;
-      while(_currentRoute) {
+      let _currentRoute: RouteTypeExtendsI | undefined = route;
+      while (_currentRoute) {
         _currentRoute._isHasAuth = true;
         _currentRoute._component = _currentRoute._currentComponent;
         _currentRoute = _currentRoute.parent;
       }
     });
-   
   }
   // mixin into the notFound page
   mixinNotFoundPage(flattenBranches, basename, authInputRoutes);
   rankRouteBranches(flattenBranches);
 
-  const flattenRoutes = flattenBranches.map(i => i.route)
+  const flattenRoutes = flattenBranches.map(i => i.route);
   const routesMap = routesMapFn(flattenBranches);
-  const currentRoute = getCurrentRoute(location.pathname, routesMap, flattenRoutes);
+  const currentRoute = getCurrentRoute(
+    location.pathname,
+    routesMap,
+    flattenRoutes
+  );
   const currentPathRoutes = getCurrentPathRoutes(currentRoute);
 
   return {
@@ -296,7 +299,7 @@ function getValidPathname(pathname: string) {
 export function getCurrentRoute(
   pathname = window.location.pathname,
   routesMap: RoutesMapI,
-  flattenRoutes: RouteTypeExtendsI[],
+  flattenRoutes: RouteTypeExtendsI[]
 ) {
   // console.log(routesMap);
   // first look from the outermost routesMap
@@ -320,15 +323,25 @@ export function getCurrentRoute(
   if (!currentRoute) {
     // 默认404
     currentRoute = {
+      _isHasAuth: true,
+      _relativePath: "",
+      _level: 0,
       name: "404",
       path: pathname,
       title: "404",
-      _isHasAuth: false,
-      _relativePath: "",
-      _level: 0,
       meta: {},
       component: () => {
-        return <NoAuth />;
+        return <NoAuth code="404" />;
+      },
+      _route: {
+        _level: 0,
+        _relativePath: "",
+        name: "404",
+        path: pathname,
+        title: "404",
+        component: () => {
+          return <NoAuth code="404" />;
+        }
       }
     };
   }
@@ -385,11 +398,10 @@ function getIsHasAuthByFnCode(code: FnCodeType, route: RouteTypeI) {
   return code(route);
 }
 
-
-  /**
-   * if `children` is  mode,
-   * isHasAuth are calculated after generating `flattroutes`
-   */
+/**
+ * if `children` is  mode,
+ * isHasAuth are calculated after generating `flattroutes`
+ */
 export function getIsHasAuth({
   code,
   permissionList,
@@ -463,7 +475,7 @@ export function computeRoutesConfig(config: {
     if (!CurrentComponent) {
       CurrentComponent = RedirectChild;
     }
-    
+
     const props = {} as RouteTypePropsI;
     if (beforeEnter || beforeEachMount) {
       props.beforeEnter = beforeEnter;
@@ -474,7 +486,6 @@ export function computeRoutesConfig(config: {
       props.Component = CurrentComponent;
       CurrentComponent = GeneratorHookCom;
     }
-
 
     const currentIsHasAuth = getIsHasAuth({
       code,
@@ -524,7 +535,6 @@ export function computeRoutesConfig(config: {
       });
     }
     const _itemsAndChildren = [..._items, ..._children];
-
 
     if (!isHasAuth) {
       const returnRoute = {
