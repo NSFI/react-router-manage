@@ -137,7 +137,7 @@ describe("MRouter 测试", () => {
       ></MRouter>
     );
 
-    const result = screen.getByText(/页面不存在/);
+    const result = screen.getByText(/404 NOT FOUND/);
     expect(result).toBeInTheDocument();
   });
 
@@ -207,7 +207,7 @@ describe("MRouter 测试", () => {
       ></MRouter>
     );
 
-    const result = screen.getByText(/无权限/);
+    const result = screen.getByText(/401 NO PERMISSION/);
     expect(result).toBeInTheDocument();
   });
 
