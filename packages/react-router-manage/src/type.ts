@@ -254,12 +254,9 @@ export interface BaseRoutesMapI extends Record<string, RouteTypeExtendsI> {}
 export type RoutesMapInterI = Record<
   string,
   RouteTypeExtendsI | RouteTypeExtendsI[]
-> & {
-  __paramsRoutesMap: Record<string, RouteTypeExtendsI | RouteTypeExtendsI[]>;
-};
+>
 
 export type RoutesMapI = BaseRoutesMapI & {
-  __paramsRoutesMap: Record<string, RouteTypeExtendsI>;
   __flattenRoutes: RouteBranchI[];
 };
 
