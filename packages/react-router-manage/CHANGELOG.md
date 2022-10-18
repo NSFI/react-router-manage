@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.4-beta.1
+
+### Patch Changes
+
+- remove routesMap's **paramsRoutesMap and **flattenRoutess property
+
 ## 1.1.4-beta.0
 
 ### Patch Changes
