@@ -682,12 +682,12 @@ export const handleRedirectPath = (
 };
 
 export function mixinNotFoundPage(
-  flattenRoutes: RouteBranchI[],
+  flattenBranches: RouteBranchI[],
   basename: string,
   authInputRoutes: RouteTypeExtendsI[]
 ) {
   const notFoundPath = getWholePath("*", basename);
-  const hasNotFoundPage = flattenRoutes.some(({ path }) => {
+  const hasNotFoundPage = flattenBranches.some(({ path }) => {
     if (path === notFoundPath) {
       return true;
     }
@@ -697,20 +697,30 @@ export function mixinNotFoundPage(
     return;
   }
 
-  const notFoundPage = {
+  const notFoundPage: RouteTypeExtendsI = {
     name: "notFound",
     title: "notFound",
     meta: {},
     path: notFoundPath,
     component: NotFound,
+    _isHasAuth: true,
     _component: NotFound,
     _relativePath: notFoundPath,
-    _level: 0
+    _level: 0,
+    _route: {
+      _relativePath: notFoundPath,
+      _level: 0,
+      name: "notFound",
+      title: "notFound",
+      meta: {},
+      path: notFoundPath,
+      component: NotFound,
+    } 
   };
   authInputRoutes.push(notFoundPage);
-  flattenRoutes.push({
+  flattenBranches.push({
     path: notFoundPath,
-    score: flattenRoutes.length,
+    score: flattenBranches.length,
     route: notFoundPage
   });
 }
