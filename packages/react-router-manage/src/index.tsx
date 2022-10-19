@@ -33,7 +33,8 @@ import type {
   RouterBaseConfigI,
   RouteTypeInputI,
   NewStateI,
-  PermissionModeType
+  PermissionModeType,
+  RoutesMapI
 } from "./type";
 import { RouterActionEnum } from "./type";
 import MRouterContext, {
@@ -49,7 +50,7 @@ import {
 } from "./Context/MRouterHistoryContext";
 import { changeable } from "./changeable";
 
-export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI } from "./type";
+export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI, RoutesMapI } from "./type";
 
 export { defineRouterConfig } from "./util";
 export { useBeforeLeave, useNavigate, useRouter } from "./hooks";
@@ -560,5 +561,6 @@ export {
   useAddRoutes,
   useRemoveRoutes,
   useUpdateRoutes,
-  useHistory
+  useHistory,
 };
+

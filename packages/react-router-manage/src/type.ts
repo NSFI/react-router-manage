@@ -249,14 +249,12 @@ export interface RouteHistoryObject {
   routeHooksRef: React.MutableRefObject<RouteCbI[]>;
 }
 
-export interface BaseRoutesMapI extends Record<string, RouteTypeExtendsI> {}
-
 export type RoutesMapInterI = Record<
   string,
   RouteTypeExtendsI | RouteTypeExtendsI[]
 >
 
-export interface RoutesMapI extends BaseRoutesMapI {}
+export interface RoutesMapI extends Record<string, RouteTypeExtendsI> {}
 
 export interface NewStateQueryI {
   inputRoutes: RouteTypeInputI[];
