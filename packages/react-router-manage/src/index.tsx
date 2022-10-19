@@ -34,7 +34,6 @@ import type {
   RouteTypeInputI,
   NewStateI,
   PermissionModeType,
-  RoutesMapI
 } from "./type";
 import { RouterActionEnum } from "./type";
 import MRouterContext, {
