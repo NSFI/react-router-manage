@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.4-beta.3
+
+### Patch Changes
+
+- inputRoutes change add to MRouterContext
+
 ## 1.1.4-beta.2
 
 ### Patch Changes
