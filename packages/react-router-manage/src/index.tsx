@@ -237,7 +237,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
         currentRoute,
         currentPathRoutes,
         basename,
-        beforeEachMount
+        beforeEachMount,
+        inputRoutes: _inputRoutes,
       }
     });
   }, [
