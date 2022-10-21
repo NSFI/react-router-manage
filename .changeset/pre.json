@@ -5,6 +5,7 @@
     "react-router-manage": "1.1.3"
   },
   "changesets": [
+    "beige-kangaroos-deny",
     "happy-timers-refuse",
     "poor-news-serve"
   ]

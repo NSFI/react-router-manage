@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.4-beta.2
+
+### Patch Changes
+
+- fix: export interface RoutesMapI
+
 ## 1.1.4-beta.1
 
 ### Patch Changes
