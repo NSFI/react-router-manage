@@ -322,6 +322,11 @@ function App () {
 
 ## 权限路由
 
+### 权限`permissionMode`支持两种模式 `parent` adn `children`, 默认是`parent`
+
+- 如果 `permissionMode` 是 `parent`，如果父路由没有权限，那么子路由都没有权限
+- 如果 `permissionMode` 是 `children`，如果子路由有权限，那么父路由不管配置的有无权限，都会自动转为有权限
+
 ### 配置字符串code的批量校验
 
 - 需要在`MRouter`组件中传入`permissionList`，并设置 `hasAuth` 为 `true`， 默认为true
@@ -370,7 +375,7 @@ const appRouterConfig = defineRouterConfig({
 // hasAuth 可以不配置，默认为true
 function App () {
   return (
-    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true}>
+    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true} permissionMode="parent">
       {(children) => children}
     </MRouter>
   )

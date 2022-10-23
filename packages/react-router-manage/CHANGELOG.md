@@ -1,5 +1,29 @@
 # react-router-manage
 
+## 1.1.4-beta.3
+
+### Patch Changes
+
+- inputRoutes change add to MRouterContext
+
+## 1.1.4-beta.2
+
+### Patch Changes
+
+- fix: export interface RoutesMapI
+
+## 1.1.4-beta.1
+
+### Patch Changes
+
+- remove routesMap's **paramsRoutesMap and **flattenRoutess property
+
+## 1.1.4-beta.0
+
+### Patch Changes
+
+- core add permissionMode `parent` and `children` supports permission
+
 ## 1.1.3
 
 ### Patch Changes

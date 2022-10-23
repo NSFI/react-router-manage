@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import {
-  MRouter,
+  MHRouter,
   defineRouterConfig,
   useRouter
 } from "../packages/react-router-manage/index";
@@ -57,15 +57,15 @@ const beforeEachJumpConfig = defineRouterConfig({
 
 const permissionList = ["staff"];
 
-describe("MRouter 测试", () => {
+describe("MHRouter 测试", () => {
   it("组件正常渲染", () => {
-    history.pushState({}, "", "/a/page1");
+    history.pushState({}, "", "/#/a/page1");
     const { container } = render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
     const fiber = screen.getByTestId("__router-children");
     expect(fiber).toBeDefined();
@@ -74,53 +74,15 @@ describe("MRouter 测试", () => {
 
     button.click();
   });
-
-  it("测试MRouter配置children", () => {
-    history.pushState({}, "", "/a/page1");
-    const { container } = render(
-      <MRouter
-        routerConfig={appRouterConfig}
-        hasAuth={false}
-      >{(children) => <div data-testid="__router-children">{children}</div>}</MRouter>
-    );
-    const fiber = screen.getByTestId("__router-children");
-    expect(fiber).toBeDefined();
-
-    const button = screen.getByTestId("__test_button");
-
-    button.click();
-  });
-
-  it("测试MRouter配置children 和 wrapComponent, 会报警告", () => {
-    history.pushState({}, "", "/a/page1");
-    const { container } = render(
-      <MRouter
-        wrapComponent={WrapComponent}
-        routerConfig={appRouterConfig}
-        hasAuth={false}
-      >{(children) => <div data-testid="__router-children">{children}</div>}</MRouter>
-    );
-  });
-
-  it("测试MRouter配置children, children不是函数", () => {
-    history.pushState({}, "", "/a/page1");
-    const { container } = render(
-      <MRouter
-        routerConfig={appRouterConfig}
-        hasAuth={false}
-      ><div>aaa</div></MRouter>
-    );
-  });
-
 
   it("路由切换正常渲染", () => {
-    history.pushState({}, "", "/a/page2");
+    history.pushState({}, "", "/#/a/page2");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面2/);
@@ -128,13 +90,13 @@ describe("MRouter 测试", () => {
   });
 
   it("路由跳转到404不存在页面", () => {
-    history.pushState({}, "", "/a/page3/404");
+    history.pushState({}, "", "/#/a/page3/404");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/404 NOT FOUND/);
@@ -142,13 +104,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了beforeEnter组件显示加载中", () => {
-    history.pushState({}, "", "/a/page2/noJump");
+    history.pushState({}, "", "/#/a/page2/noJump");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/加载中/);
@@ -156,13 +118,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了beforeEnter组件显示正常跳转渲染", () => {
-    history.pushState({}, "", "/a/page2/jump");
+    history.pushState({}, "", "/#/a/page2/jump");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面/);
@@ -170,13 +132,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了beforeEachMount 不跳转渲染", () => {
-    history.pushState({}, "", "/a/page1");
+    history.pushState({}, "", "/#/a/page1");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={beforeEachNoJumpConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/加载中/);
@@ -184,13 +146,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了beforeEachMount 跳转渲染", () => {
-    history.pushState({}, "", "/a/page1");
+    history.pushState({}, "", "/#/a/page1");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={beforeEachJumpConfig}
         hasAuth={false}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面1/);
@@ -198,13 +160,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了权限无权限显示无权限页面", () => {
-    history.pushState({}, "", "/a/page2");
+    history.pushState({}, "", "/#/a/page2");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={beforeEachJumpConfig}
         permissionList={permissionList}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/401 NO PERMISSION/);
@@ -212,13 +174,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了权限有权限正常渲染", () => {
-    history.pushState({}, "", "/a/page1");
+    history.pushState({}, "", "/#/a/page1");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={beforeEachJumpConfig}
         permissionList={permissionList}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面1/);
@@ -226,13 +188,13 @@ describe("MRouter 测试", () => {
   });
 
   it("配置了basename", () => {
-    history.pushState({}, "", "/app/a/page1");
+    history.pushState({}, "", "/#/app/a/page1");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent2}
         routerConfig={appRouterConfig2}
         permissionList={permissionList}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面1/);
@@ -240,13 +202,13 @@ describe("MRouter 测试", () => {
   });
 
   it("正常跳转配置了params的页面", () => {
-    history.pushState({}, "", "/a/page1");
+    history.pushState({}, "", "/#/a/page1");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         permissionList={permissionList}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const button = screen.getByTestId("__test_button_params");
@@ -255,13 +217,13 @@ describe("MRouter 测试", () => {
   });
 
   it("找有权限的下一级路由", () => {
-    history.pushState({}, "", "/a/page6");
+    history.pushState({}, "", "/#/a/page6");
     render(
-      <MRouter
+      <MHRouter
         wrapComponent={WrapComponent}
         routerConfig={appRouterConfig}
         permissionList={permissionList}
-      ></MRouter>
+      ></MHRouter>
     );
 
     const result = screen.getByText(/页面6/);

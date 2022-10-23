@@ -21,6 +21,7 @@ export interface RouterBaseConfigI {
   autoDocumentTitle?:
     | boolean
     | ((currentPathRoutes: RouteTypeExtendsI[]) => string);
+  
   _isDefined: boolean; // 是否是defined的
   _defineId: number;
 }
@@ -33,6 +34,7 @@ export interface RouterConfigI
 }
 
 export type PermissionListType = string[];
+export type PermissionModeType = "parent" | "children";
 export type CodeType = string | string[] | FnCodeType;
 export type FnCodeType = (route: RouteTypeI) => boolean;
 
@@ -127,10 +129,16 @@ export interface RouteTypeExtendsI extends RouteTypeInputI {
   meta: Record<string, any>; // some other information can be customized
   items?: RouteTypeExtendsI[];
   children?: RouteTypeExtendsI[];
-  _route?: RouteTypeInputI;
+  _isHasAuth: boolean; // true has permission; false: no permission
+  _route: RouteTypeInputI;
   _component?: RouteComponentType;
-  _isHasAuth?: boolean; // true has permission; false: no permission
+  _currentComponent?: RouteComponentType;
   _itemsAndChildren?: RouteTypeExtendsI[];
+  /**
+   * The route permission irrelevant to the parent is used to 
+   * calculate the permission of the parent route for the child route in permissionType is 'children' mode
+   */
+  _currentIsHasAuth?: boolean;
 }
 
 export enum RouterActionEnum {
@@ -159,6 +167,7 @@ export interface MRouterStateI {
   currentPathRoutes: RouteTypeExtendsI[];
   prevRoute?: RouteTypeExtendsI;
   permissionList?: string[];
+  permissionMode: PermissionModeType;
   hasAuth?: boolean;
 
   beforeEachMount?: BeforeEachMountI;
@@ -240,23 +249,17 @@ export interface RouteHistoryObject {
   routeHooksRef: React.MutableRefObject<RouteCbI[]>;
 }
 
-export interface BaseRoutesMapI extends Record<string, RouteTypeExtendsI> {}
-
 export type RoutesMapInterI = Record<
   string,
   RouteTypeExtendsI | RouteTypeExtendsI[]
-> & {
-  __paramsRoutesMap: Record<string, RouteTypeExtendsI | RouteTypeExtendsI[]>;
-};
+>
 
-export type RoutesMapI = BaseRoutesMapI & {
-  __paramsRoutesMap: Record<string, RouteTypeExtendsI>;
-  __flattenRoutes: RouteBranchI[];
-};
+export interface RoutesMapI extends Record<string, RouteTypeExtendsI> {}
 
 export interface NewStateQueryI {
   inputRoutes: RouteTypeInputI[];
-  permissionList?: string[];
+  permissionList?: PermissionListType;
+  permissionMode: PermissionModeType;
   hasAuth: boolean;
   beforeEachMount?: BeforeEachMountI;
   basename: string;

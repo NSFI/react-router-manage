@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   Suspense,
   useCallback,
@@ -11,15 +11,7 @@ import {
   useState
 } from "react";
 import type { Location, To } from "react-router-dom";
-import {
-  generatePath,
-  useLocation,
-  useNavigate as useOldNavigate,
-  useParams,
-  useRoutes
-} from "react-router";
-import { parse, stringify } from "query-string";
-
+import { useLocation, useRoutes } from "react-router";
 import {
   cloneRoutes,
   computedNewState,
@@ -35,23 +27,19 @@ import BrowserRouter from "./BrowserRouter";
 import HashRouter from "./HashRouter";
 import type {
   BeforeLeaveI,
-  ExtraNavigateOptions,
-  RouteCbI,
   RouteConfig,
   RouteTypeExtendsI,
   RouteTypeI,
-  RoutesMapI,
-  RoutesStateStruct,
   RouterBaseConfigI,
   RouteTypeInputI,
-  NewStateI
+  NewStateI,
+  PermissionModeType,
 } from "./type";
 import { RouterActionEnum } from "./type";
 import MRouterContext, {
   MRouterReducer,
   useAddRoutes,
   useRemoveRoutes,
-  useRouterState,
   useUpdateRoutes
 } from "./Context/MRouterContext";
 import {
@@ -61,100 +49,16 @@ import {
 } from "./Context/MRouterHistoryContext";
 import { changeable } from "./changeable";
 
-export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI } from "./type";
+export type { RouterConfigI, RouteTypeI, RouteTypeExtendsI, RoutesMapI } from "./type";
 
 export { defineRouterConfig } from "./util";
+export { useBeforeLeave, useNavigate, useRouter } from "./hooks";
 
 const DEFAULT_PERMISSION_LIST: string[] = [];
 
-function useBeforeLeave(fn: BeforeLeaveI): void {
-  const pathname = window.location.pathname;
-  const routeHooksRef = useRouteHooksRef();
-  useLayoutEffect(() => {
-    const hooks = routeHooksRef.current;
-    const routeHook = {
-      name: "BeforeRouterLeave",
-      pathname,
-      fn
-    } as RouteCbI;
-    hooks.push(routeHook);
-    return () => {
-      const index = hooks.indexOf(routeHook);
-      hooks.splice(index, 1);
-    };
-  }, [fn, pathname, routeHooksRef]);
-}
-export interface NavigateFunction {
-  (to: To, options?: ExtraNavigateOptions): void;
-  (delta: number): void;
-}
-
-const useNavigate = (): NavigateFunction => {
-  const oldNavigate = useOldNavigate();
-  const newCallback = useCallback(
-    (to, options: ExtraNavigateOptions = {}) => {
-      if (options?.params && typeof to === "string") {
-        to = generatePath(to, options.params);
-      }
-      // query写入地址栏
-      if (options?.query && typeof to === "string") {
-        let path = to;
-        const queryStr = stringify(options.query);
-        if (path.includes("?")) {
-          path = `${path}&${queryStr}`;
-        } else {
-          path = `${path}?${queryStr}`;
-        }
-        to = path;
-      }
-
-      return oldNavigate(to, options);
-    },
-    [oldNavigate]
-  );
-  return newCallback;
-};
-
-function useRouter(): RoutesStateStruct {
-  const location = useLocation();
-  const routesMapRef = useRef<RoutesMapI>({} as RoutesMapI);
-  const {
-    routesMap,
-    inputRoutes,
-    currentRoute,
-    flattenRoutes,
-    authInputRoutes,
-    basename
-  } = useRouterState();
-
-  if (routesMapRef.current !== routesMap) {
-    routesMapRef.current = routesMap;
-  }
-
-  const search = useMemo(() => {
-    return parse(location.search);
-  }, [location.search]);
-
-  const routerParams = useParams();
-
-  const newNavigate = useNavigate();
-
-  return {
-    navigate: newNavigate,
-    routesMap,
-    query: search,
-    params: routerParams as Record<string, string | number>,
-    routes: inputRoutes,
-    authRoutes: authInputRoutes,
-    currentRoute,
-    flattenRoutes,
-    location,
-    basename
-  };
-}
-
 interface MRouterContextProviderI {
   permissionList?: string[];
+  permissionMode?: PermissionModeType;
   hasAuth: boolean;
   routerConfig: RouterBaseConfigI;
   children?: (children: React.ReactNode) => React.ReactNode;
@@ -168,7 +72,13 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
   InternalMRouterContextProviderRef,
   MRouterContextProviderI
 > = (
-  { permissionList = DEFAULT_PERMISSION_LIST, routerConfig, hasAuth, children },
+  {
+    permissionList = DEFAULT_PERMISSION_LIST,
+    permissionMode = "parent",
+    routerConfig,
+    hasAuth,
+    children
+  },
   ref
 ) => {
   const history = useHistory();
@@ -198,6 +108,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     getInitialState({
       inputRoutes,
       permissionList,
+      permissionMode,
       hasAuth,
       beforeEachMount,
       basename,
@@ -214,13 +125,21 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       return computedNewState({
         inputRoutes: _inputRoutes,
         permissionList,
+        permissionMode,
         hasAuth,
         beforeEachMount,
         basename,
         location: location
       });
     },
-    [basename, beforeEachMount, hasAuth, location, permissionList]
+    [
+      basename,
+      beforeEachMount,
+      hasAuth,
+      location,
+      permissionList,
+      permissionMode
+    ]
   );
   getNewStateByNewInputRoutesRef.current = _getNewStateByNewInputRoutes;
 
@@ -229,6 +148,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     ...initialState,
     inputRoutes,
     permissionList,
+    permissionMode,
     hasAuth,
     basename,
     _getNewStateByNewInputRoutes: getNewStateByNewInputRoutesRef.current
@@ -243,7 +163,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       updateCurrentRoute(location) {
         const { pathname } = location;
         const prevRoute = state.currentRoute;
-        const currentRoute = getCurrentRoute(pathname, state.routesMap);
+        const currentRoute = getCurrentRoute(pathname, state.routesMap, state.flattenRoutes);
 
         let currentPathRoutes = state.currentPathRoutes;
         if (currentRoute !== state.currentRoute) {
@@ -266,6 +186,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     // used to judge initialization or update. If they are equal, only currentRoute needs to be calculated
     if (
       state.permissionList === permissionList &&
+      state.permissionMode === permissionMode &&
       hasAuth === state.hasAuth &&
       state.inputRoutes === inputRoutes &&
       state.beforeEachMount === beforeEachMount
@@ -277,6 +198,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     if (
       inputRoutesRef.current === inputRoutes &&
       state.permissionList === permissionList &&
+      state.permissionMode === permissionMode &&
       hasAuth === state.hasAuth &&
       state.beforeEachMount === beforeEachMount
     ) {
@@ -297,6 +219,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     } = computedNewState({
       inputRoutes: _inputRoutes,
       permissionList,
+      permissionMode,
       hasAuth,
       beforeEachMount,
       basename,
@@ -307,13 +230,15 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       type: RouterActionEnum.UPDATE_STATE,
       payload: {
         permissionList,
+        permissionMode,
         authInputRoutes,
         routesMap,
         flattenRoutes,
         currentRoute,
         currentPathRoutes,
         basename,
-        beforeEachMount
+        beforeEachMount,
+        inputRoutes: _inputRoutes,
       }
     });
   }, [
@@ -321,6 +246,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     inputRoutes,
     permissionList,
     state.permissionList,
+    permissionMode,
+    state.permissionMode,
     hasAuth,
     state.hasAuth,
     basename,
@@ -367,8 +294,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       }
       if (beforeRouterLeaveCbs.length) {
         executeEventCbs({
-          to: getCurrentRoute(to as string, state.routesMap),
-          from: getCurrentRoute(pathname, state.routesMap),
+          to: getCurrentRoute(to as string, state.routesMap, state.flattenRoutes),
+          from: getCurrentRoute(pathname, state.routesMap, state.flattenRoutes),
           callbacks: beforeRouterLeaveCbs,
           finish: () => {
             return historyCb();
@@ -382,7 +309,8 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
       routeHooksRef,
       state.currentRoute.beforeLeave,
       state.currentRoute.path,
-      state.routesMap
+      state.routesMap,
+      state.flattenRoutes
     ]
   );
 
@@ -516,7 +444,7 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     const _routesConfig = _computeRoutesConfig(state.authInputRoutes);
     return _routesConfig;
   }, [state.authInputRoutes]);
-
+  // console.log(routesConfig);
   const routesChildren = useRoutes(routesConfig);
 
   const renders = useMemo(() => {
@@ -546,6 +474,7 @@ MRouterContextProvider.displayName = "MRouterContextProvider";
 
 interface MRouterPropsI {
   permissionList?: string[];
+  permissionMode?: PermissionModeType;
   wrapComponent?: React.FunctionComponent<any>;
   hasAuth?: boolean;
   routerConfig: RouterBaseConfigI;
@@ -556,6 +485,7 @@ interface CoreRouterPropsI extends MRouterPropsI {
 }
 const CoreRouter: React.FC<CoreRouterPropsI> = ({
   permissionList,
+  permissionMode,
   wrapComponent: WrapComponent,
   hasAuth = true,
   routerConfig,
@@ -607,6 +537,7 @@ const CoreRouter: React.FC<CoreRouterPropsI> = ({
       <MRouterContextProvider
         routerConfig={routerConfig}
         permissionList={permissionList}
+        permissionMode={permissionMode}
         hasAuth={hasAuth}
         ref={syncUpdateCurrentRouteRef}
       >
@@ -630,8 +561,6 @@ export {
   useAddRoutes,
   useRemoveRoutes,
   useUpdateRoutes,
-  useBeforeLeave,
-  useRouter,
   useHistory,
-  useNavigate
 };
+

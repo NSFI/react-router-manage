@@ -121,7 +121,7 @@ describe("路由增删改测试", () => {
       ></MRouter>
     );
 
-    const result = screen.getByText(/页面不存在/);
+    const result = screen.getByText(/404 NOT FOUND/);
     expect(result).toBeInTheDocument();
   });
 
@@ -135,7 +135,7 @@ describe("路由增删改测试", () => {
       ></MRouter>
     );
 
-    const result = screen.getByText(/页面不存在/);
+    const result = screen.getByText(/404 NOT FOUND/);
     expect(result).toBeInTheDocument();
   });
 

@@ -30,6 +30,7 @@ function getInitialState(
     inputRoutes,
     hasAuth,
     permissionList,
+    permissionMode,
     beforeEachMount,
     basename,
     location,
@@ -48,6 +49,7 @@ function getInitialState(
   const _initialState = computedNewState({
     inputRoutes,
     permissionList,
+    permissionMode,
     hasAuth,
     beforeEachMount,
     basename,
