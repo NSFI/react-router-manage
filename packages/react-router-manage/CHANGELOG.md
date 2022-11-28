@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.5
+
+### Patch Changes
+
+- lock react-router version
+
 ## 1.1.4
 
 ### Patch Changes
