@@ -50,7 +50,7 @@ export default function HashRouter({
 
   React.useLayoutEffect(() => {
     let mounted = true;
-    history.listen(routeData => {
+    const removeListenFn = history.listen(routeData => {
       const { location } = routeData;
       if (!mounted) {
         return;
@@ -62,6 +62,7 @@ export default function HashRouter({
     });
     return () => {
       mounted = false;
+      removeListenFn();
     };
   }, [history, syncUpdateCurrentRoute]);
   return (
