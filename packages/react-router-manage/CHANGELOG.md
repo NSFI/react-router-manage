@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 1.1.6
+
+### Patch Changes
+
+- fix HashRouter history listen error
+
 ## 1.1.5
 
 ### Patch Changes
