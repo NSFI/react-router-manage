@@ -7,7 +7,6 @@ export type {
   ActionFunction,
   ActionFunctionArgs,
   AwaitProps,
-  DataMemoryRouterProps,
   DataRouteMatch,
   DataRouteObject,
   Fetcher,
