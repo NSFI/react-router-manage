@@ -46,7 +46,7 @@ export interface NavigateFunction {
 export const useNavigate = (): NavigateFunction => {
   const oldNavigate = useOldNavigate();
   const newCallback = useCallback(
-    (to, options: ExtraNavigateOptions = {}) => {
+    (to: any, options: ExtraNavigateOptions = {}) => {
       if (options?.params && typeof to === "string") {
         to = generatePath(to, options.params);
       }
