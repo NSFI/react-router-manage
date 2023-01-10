@@ -109,6 +109,10 @@ export interface RouteTypeI {
   props?: RouteTypePropsI;
   redirect?: string;
   type?: "real" | "null";
+  breadcrumbs?: {
+    isRoot?: boolean; // Is it the parent route of the first route of breadcrumbs? If so, the next level will be added to the breadcrumbs
+    text?: string | React.ReactNode | ((route: RouteTypeI) => React.ReactNode); // the displayed text will overwrite 'route.title'
+  }
 
   meta?: Record<string, any>; // some other information can be customized
 }

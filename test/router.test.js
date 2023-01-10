@@ -1,6 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import {
   MRouter,
   defineRouterConfig,
@@ -71,8 +71,10 @@ describe("MRouter 测试", () => {
     expect(fiber).toBeDefined();
 
     const button = screen.getByTestId("__test_button");
-
-    button.click();
+    act(() => {
+      button.click();
+    })
+   
   });
 
   it("测试MRouter配置children", () => {
@@ -88,7 +90,9 @@ describe("MRouter 测试", () => {
 
     const button = screen.getByTestId("__test_button");
 
-    button.click();
+    act(() => {
+      button.click();
+    })
   });
 
   it("测试MRouter配置children 和 wrapComponent, 会报警告", () => {
@@ -251,7 +255,9 @@ describe("MRouter 测试", () => {
 
     const button = screen.getByTestId("__test_button_params");
 
-    button.click();
+    act(() => {
+      button.click();
+    })
   });
 
   it("找有权限的下一级路由", () => {

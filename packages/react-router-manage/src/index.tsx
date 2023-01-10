@@ -495,7 +495,7 @@ const CoreRouter: React.FC<CoreRouterPropsI> = ({
   const syncUpdateCurrentRouteRef = useRef<{
     updateCurrentRoute: (location: Location) => void;
   }>(null!);
-  const syncUpdateCurrentRoute = useCallback(location => {
+  const syncUpdateCurrentRoute = useCallback((location: Location) => {
     syncUpdateCurrentRouteRef.current?.updateCurrentRoute?.(location);
   }, []);
 

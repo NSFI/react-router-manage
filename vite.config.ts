@@ -39,7 +39,11 @@ export default defineConfig({
           "react-router-manage": path.join(
             __dirname,
             "./packages/react-router-manage"
-          )
+          ),
+          "@rrm/antd-breadcrumbs": path.join(
+            __dirname,
+            "./packages/antd-breadcrumbs"
+          ),
         }
       }
     : {}
