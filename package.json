@@ -98,7 +98,6 @@
 	"workspaces": {
 		"packages": [
 			"packages/react-router-manage",
-			"packages/breadcrumbs",
 			"packages/antd-breadcrumbs"
 		]
 	},
