@@ -4,7 +4,7 @@ import type { RouteTypeExtendsI } from "react-router-manage";
 import { Breadcrumb } from "antd";
 
 interface AntdRouterBreadcrumbsProps {
-  text?: string; // 面包屑文案，例如新增xx还是编辑xx可以自定义
+  text?: React.ReactNode; // 面包屑文案，例如新增xx还是编辑xx可以自定义
   separator?: string; // 分隔符
 }
 
@@ -56,8 +56,17 @@ const AntdRouterBreadcrumbs: React.FC<AntdRouterBreadcrumbsProps> = ({
     <Breadcrumb separator={separator}>
       {_routes.map((item: RouteTypeExtendsI, index) => {
         const isCanClick = getIsCanClick(item, index);
-        const routeBreadcrumbTittle = item.breadcrumbs?.text || item.title;
-         const title =  index === _routes.length - 1 ? text || routeBreadcrumbTittle : routeBreadcrumbTittle;
+        // let routeBreadcrumbTittle = item.breadcrumbs?.text || item.title;
+        let routeBreadcrumbTittle: string | undefined | React.ReactNode = item.title;
+        if (typeof item.breadcrumbs?.text === 'string') {
+          routeBreadcrumbTittle = item.breadcrumbs?.text
+        } else if (typeof item.breadcrumbs?.text === 'function') {
+          routeBreadcrumbTittle = item.breadcrumbs.text(item);
+        }
+        const title =
+          index === _routes.length - 1
+            ? text || routeBreadcrumbTittle
+            : routeBreadcrumbTittle;
         return (
           <Breadcrumb.Item
             key={item.path}
@@ -75,7 +84,7 @@ const AntdRouterBreadcrumbs: React.FC<AntdRouterBreadcrumbsProps> = ({
                 {title}
               </a>
             ) : (
-              title
+              <>{title}</>
             )}
           </Breadcrumb.Item>
         );

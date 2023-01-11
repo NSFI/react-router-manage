@@ -26,6 +26,9 @@ import { defineRouterConfig } from "react-router-manage";
               title: 'Detail',
               path: 'detail/:id',
               component: lazy(() => import("../pages/dashboard/detail")),
+              breadcrumbs: {
+                text: (item) => `${item.title}测试`
+              }
             }
           ]
         }
