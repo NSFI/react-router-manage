@@ -1,6 +1,6 @@
 ---
-"@rrm/antd-breadcrumbs": minor
+"@rrmc/antd-breadcrumbs": minor
 "react-router-manage": minor
 ---
 
-release package: @rrm/antd-breadcrumbs
+release package: @rrmc/antd-breadcrumbs

@@ -4,7 +4,7 @@ import {
   MRouter,
   MHRouter} from "react-router-manage";
 import routerConfig from "./router";
-import AntdRouterBreadcrumbs from '@rrm/antd-breadcrumbs'
+import AntdRouterBreadcrumbs from '@rrmc/antd-breadcrumbs'
 
 const Router = window.__INITIAL_DATA__.mode === 'hash' ? MHRouter : MRouter;
 

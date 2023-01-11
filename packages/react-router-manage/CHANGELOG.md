@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- release package: @rrm/antd-breadcrumbs
+- release package: @rrmc/antd-breadcrumbs
 
 ## 1.1.6
 

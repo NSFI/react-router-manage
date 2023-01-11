@@ -1,10 +1,10 @@
-# @rrm/antd-breadcrumbs
+# @rrmc/antd-breadcrumbs
 
 ## 1.2.0-beta.0
 
 ### Minor Changes
 
-- release package: @rrm/antd-breadcrumbs
+- release package: @rrmc/antd-breadcrumbs
 
 ### Patch Changes
 

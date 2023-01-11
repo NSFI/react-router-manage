@@ -8,7 +8,7 @@
   "fixed": [
     [
       "react-router-manage",
-      "@rrm/antd-breadcrumbs"
+      "@rrmc/antd-breadcrumbs"
     ]
   ],
   "access": "public",

@@ -40,7 +40,7 @@ export default defineConfig({
             __dirname,
             "./packages/react-router-manage"
           ),
-          "@rrm/antd-breadcrumbs": path.join(
+          "@rrmc/antd-breadcrumbs": path.join(
             __dirname,
             "./packages/antd-breadcrumbs"
           ),
