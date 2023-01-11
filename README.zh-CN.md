@@ -142,6 +142,15 @@ function App () {
 | `fullscreen` |是否全屏，在`base-layout-router`中监测到当前`route` `fullscreen`为`true`,则会隐藏导航栏| `boolean` | 非必填,默认无|
 | `icon` | 用于显示导航的icon| `string` | 非必填, 默认无|
 | `type` | 如果`type`为`null`字符串，则此路由不会真正渲染，但是可以设置正确的currentRoute | `real` \| `null` | 非必填，默认 `real`|
+| `bredcrumbs`| 用于配置路由中面包屑的配置 | [BreadcrumbsI](#BreadcrumbsI) | 非必填 |
+
+#### BreadcrumbsI
+
+| 字段名 | 说明 | 类型 | 是否必填 |
+|---|---|---|---|
+|`isRoot`| 是否是面包屑的根节点，如果是，则从下一级开始算| `boolean` | `false`|
+|`text`| 面包屑的名称，如果不配置，则默认使用`route.title` | `string` \| `React.ReactNode` \| `(route: RouteTypeI) => React.ReactNode` | 非必填 |
+|`hidden`| 是否隐藏本级面包屑显示 | `boolean` | `false` |
 
 **注意事项**
 

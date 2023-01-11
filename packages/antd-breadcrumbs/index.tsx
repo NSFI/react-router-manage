@@ -18,12 +18,13 @@ const AntdRouterBreadcrumbs: React.FC<AntdRouterBreadcrumbsProps> = ({
     const _levelRoutes: RouteTypeExtendsI[] = [];
     let _parentRoute: RouteTypeExtendsI | undefined = currentRoute;
     while (_parentRoute) {
-      // @ts-ignore
       if (_parentRoute.breadcrumbs?.isRoot) {
         // 如果是面包屑的根节点，则不再向上找
         _parentRoute = undefined;
       } else {
-        _levelRoutes.unshift(_parentRoute);
+        if (!_parentRoute.breadcrumbs?.hidden) { // 如果面包屑设置了隐藏，则会跳过这一级别的显示
+          _levelRoutes.unshift(_parentRoute);
+        }
         _parentRoute = _parentRoute.parent;
       }
     }

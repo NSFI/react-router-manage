@@ -144,6 +144,15 @@ function App () {
 | `fullscreen` | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)*| `boolean` | not required |
 | `icon` | Icon for displaying navigation, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `string` | not required |
 | `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `real` \| `null` | not required, default is `real`|
+| `bredcrumbs`| used to configure breadcrumbs in routing | [BreadcrumbsI](#BreadcrumbsI) | not required |
+
+#### BreadcrumbsI
+
+| field name | description | type | is required |
+|---|---|---|---|
+|`isRoot`| Is it the root node of breadcrumbs? If it is, it will be calculated from the next level| `boolean` | `false`|
+|`text`| The name of breadcrumbs. If it is not configured, it will be used by default`route.title` | `string` \| `React.ReactNode` \| `(route: RouteTypeI) => React.ReactNode` | not required |
+|`hidden`| Whether to hide the display of bread crumbs at this level | `boolean` | `false` |
 
 **NOTE**
 
