@@ -1,6 +1,6 @@
 {
   "name": "@rrm/antd-breadcrumbs",
-  "version": "1.1.6",
+  "version": "1.2.0-beta.0",
   "author": "wenxinping@corp.netease.com",
   "description": "react-router breadcrumbs for antd",
   "repository": {
@@ -17,11 +17,11 @@
     "react": ">=16.8",
     "react-dom": ">=16.8",
     "antd": ">=4.0.0",
-    "react-router-manage": "^1.1.5"
+    "react-router-manage": "^1.2.0-beta.0"
   },
   "devDependencies": {
     "antd": "^5.0.3",
-    "react-router-manage": "^1.1.5"
+    "react-router-manage": "^1.2.0-beta.0"
   },
   "files": [
     "dist/",

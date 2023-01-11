@@ -5,5 +5,7 @@
     "react-router-manage": "1.1.6",
     "@rrm/antd-breadcrumbs": "1.1.6"
   },
-  "changesets": []
+  "changesets": [
+    "famous-trainers-call"
+  ]
 }
