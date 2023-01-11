@@ -1,5 +1,5 @@
 {
-  "name": "@rrm/breadcrumbs",
+  "name": "@rrmc/breadcrumbs",
   "version": "1.1.5",
   "author": "wenxinping@corp.netease.com",
   "description": "react-router breadcrumbs for antd",
