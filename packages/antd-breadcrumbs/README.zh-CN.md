@@ -24,7 +24,8 @@ npm i @rrmc/antd-breadcrumbs
 
 ## 如何使用
 
-加入一个路由的配置文件是这样的
+Suppose the configuration file of a route is as follows
+
 
 ```js
 
