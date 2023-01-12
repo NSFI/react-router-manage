@@ -28,62 +28,130 @@ npm i @rrmc/antd-breadcrumbs
 
 ```js
 
-import React from 'React';
-import { MRouter, defineRouterConfig } from "react-router-manage";
+import { useMemo } from "react";
+import { MRouter, defineRouterConfig, useRouter } from "react-router-manage";
 import Breadcrumbs from "@rrmc/antd-breadcrumbs";
+import { Menu, Layout } from "antd";
+
+import "./styles.css";
+
+const { Sider, Content } = Layout;
 
 function A() {
-    return 'A'
+  return "A";
 }
 function ADetail() {
-    return 'ADetail'
+  return "ADetail";
 }
 
 function B() {
-    return 'B'
+  return "B";
 }
 function BDetail() {
-    return 'BDetail'
+  return "BDetail";
 }
 
-function Layout({children}) {
-    return (<div>
-        <Breadcrumbs />
+function Edit() {
+  return "edit";
+}
+
+function getItems(routes) {
+  return routes.map((i) => {
+    const item: any = {
+      key: i.name,
+      label: i.title
+    };
+    if (i.items?.length) {
+      item.children = getItems(i.items);
+    }
+    return item;
+  });
+}
+
+function RouterLayout({ children }) {
+  const { routes, routesMap, navigate } = useRouter();
+
+  const items = useMemo(() => {
+    return getItems(routes);
+  }, [routes]);
+  return (
+    <Layout style={{ height: "100%" }}>
+      <Sider trigger={null} collapsed={false}>
+        <Menu
+          mode="inline"
+          theme="dark"
+          items={items}
+          onSelect={({ key }) => {
+            console.log(key);
+            navigate(routesMap[key]?.path);
+          }}
+        ></Menu>
+      </Sider>
+      <Content style={{ padding: 20 }}>
+        <div style={{marginBottom: 10}}>
+          <Breadcrumbs />
+        </div>
+
         <div>{children}</div>
-    </div>)
+      </Content>
+    </Layout>
+  );
 }
 
 const routerConfig = defineRouterConfig({
-    routes: [
+  routes: [
+    {
+      title: "GroupA",
+      name: "groupA",
+      path: "group-a",
+      items: [
         {
-            title: 'A',
-            name: 'a',
-            component: A,
-            items: [
-                {
-                    title: 'ADetail',
-                    name: 'detail',
-                    component: ADetail,
-                }
-            ]
+          title: "Alist",
+          name: "Alist",
+          path: "list",
+          component: A,
+          items: [
+            {
+              title: "Edit",
+              name: "AEdit",
+              path: "edit",
+              component: Edit
+            }
+          ]
         },
         {
-            title: 'B',
-            name: 'b',
-            component: B,
-            items: [
-                {
-                    title: 'BDetail',
-                    name: 'detail',
-                    component: BDetail,
-                }
-            ]
+          title: "ADetail",
+          name: "aDetail",
+          path: "detail",
+          component: ADetail
         }
-    ]
-})
+      ]
+    },
+    {
+      title: "GroupB",
+      name: "groupB",
+      path: "group-b",
+      items: [
+        {
+          title: "Blist",
+          name: "Blist",
+          path: "list",
+          component: B
+        },
+        {
+          title: "BDetail",
+          name: "bDetail",
+          path: "detail",
+          component: BDetail
+        }
+      ]
+    }
+  ]
+});
 
 export default function App() {
-    return <MRouter routerConfig={defineRouterConfig} />
+  return <MRouter routerConfig={routerConfig} wrapComponent={RouterLayout} />;
 }
+
 
 ```
