@@ -23,6 +23,9 @@
     "react-router-dom": "6.4.3",
     "@remix-run/router": "1.0.3"
   },
+  "devDependencies": {
+    "@types/query-string": "^6.3.0"
+  },
   "files": [
     "dist/",
     "README.md"

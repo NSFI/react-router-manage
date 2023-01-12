@@ -12,7 +12,8 @@
     "query-string": "^7.1.1",
     "react": "^18.0.2",
     "react-dom": "^18.0.2",
-    "react-router-manage": "^1.1.2"
+    "react-router-manage": "latest",
+    "@rrmc/antd-breadcrumbs": "latest"
   },
   "devDependencies": {
     "@rollup/plugin-replace": "^2.2.1",

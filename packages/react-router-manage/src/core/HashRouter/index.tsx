@@ -3,24 +3,24 @@ import { useMemo } from "react";
 import { unstable_batchedUpdates } from "react-dom";
 import type { BrowserRouterProps, Location } from "react-router-dom";
 import { Router } from "react-router-dom";
-import { createBrowserHistory } from "@remix-run/router";
-import type { OldBrowserHistory, RouteCbI, RouteHistoryObject } from "./type";
-import MRouterHistoryContext from "./Context/MRouterHistoryContext";
+import { createHashHistory } from "@remix-run/router";
+import type { OldHashHistory, RouteCbI, RouteHistoryObject } from "../../type";
+import MRouterHistoryContext from "../../Context/MRouterHistoryContext";
 
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.
  */
-export default function BrowserRouter({
+export default function HashRouter({
   basename,
   children,
   syncUpdateCurrentRoute
 }: BrowserRouterProps & {
   syncUpdateCurrentRoute: (location: Location) => void;
 }) {
-  const historyRef = React.useRef<OldBrowserHistory>(null!);
+  const historyRef = React.useRef<OldHashHistory>(null!);
   const routeHooksRef = React.useRef<RouteCbI[]>(null!);
   if (historyRef.current == null) {
-    const history = createBrowserHistory({ window, v5Compat: true });
+    const history = createHashHistory({ window, v5Compat: true });
     historyRef.current = {
       ...history,
       back: () => history.go(-1),
@@ -28,18 +28,15 @@ export default function BrowserRouter({
     };
     routeHooksRef.current = [];
   }
-
   const historyContext = useMemo(() => {
     return {
-      history: historyRef.current as OldBrowserHistory,
+      history: historyRef.current as OldHashHistory,
       routeHooks: routeHooksRef.current as RouteCbI[],
       routeHooksRef,
       historyMethods: {
         push: historyRef.current.push,
         replace: historyRef.current.replace,
-        go: historyRef.current.go,
-        back: historyRef.current.back,
-        forward: historyRef.current.forward
+        go: historyRef.current.go
       }
     } as RouteHistoryObject;
   }, []);

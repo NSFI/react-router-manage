@@ -28,18 +28,7 @@ export default defineConfig({
           "react-router-manage": path.join(
             __dirname,
             "../../packages/react-router-manage/index.tsx"
-          ),
-          "@remix-run/router": path.resolve(
-            __dirname,
-            "./node_modules/@remix-run/router"
-          ),
-          history: path.join(__dirname, "./node_modules/history"),
-          "react-router": path.join(__dirname, "./node_modules/react-router"),
-          "react-router-dom": path.join(
-            __dirname,
-            "./node_modules/react-router-dom"
-          ),
-          "query-string": path.join(__dirname, "./node_modules/query-string")
+          )
         }
       }
     : {}

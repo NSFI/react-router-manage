@@ -241,15 +241,17 @@ export interface RouteConfig {
   children?: RouteConfig[];
 }
 
+export interface HistoryMethodsI {
+  push(to: To, state?: any): void;
+  replace(to: To, state?: any): void;
+  go(delta: number): void;
+  back(): void;
+  forward(): void;
+}
+
 export interface RouteHistoryObject {
   history: OldBrowserHistory;
-  historyMethods: {
-    push(to: To, state?: any): void;
-    replace(to: To, state?: any): void;
-    go(delta: number): void;
-    back(): void;
-    forward(): void;
-  };
+  historyMethods: HistoryMethodsI;
   routeHooks: RouteCbI[];
   routeHooksRef: React.MutableRefObject<RouteCbI[]>;
 }
