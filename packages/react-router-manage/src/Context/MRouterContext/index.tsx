@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { addRoutesAction, removeRoutesAction, updateRoutesAction } from '../actions';
+import { addRoutesAction, removeRoutesAction, updateRoutesAction } from './actions';
 import type {
   Action,
   AddRoutesI,
@@ -7,10 +7,10 @@ import type {
   UpdateRoutesI,
   MRouterContextObject,
   MRouterStateI,
-} from '../type';
+} from '../../type';
 import {
   RouterActionEnum
-} from '../type';
+} from '../../type';
 
 const MRouterContext = React.createContext<MRouterContextObject>({
   state: {

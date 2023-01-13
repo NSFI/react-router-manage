@@ -6,8 +6,7 @@ import {
   useLayoutEffect,
   useMemo,
   useReducer,
-  useRef,
-  useState
+  useRef
 } from "react";
 import { useLocation, useRoutes } from "react-router-dom";
 import type { To, Location } from "react-router-dom";
@@ -21,22 +20,23 @@ import {
   RouteTypeI,
   RouteTypeInputI
 } from "../../type";
-import MRouterContext, { MRouterReducer } from "../../Context/MRouterContext";
+import MRouterContext, { MRouterReducer } from "../../context/MRouterContext";
 import {
   useHistory,
   useHistoryMethods,
   useRouteHooksRef
-} from "../../Context/MRouterHistoryContext";
+} from "../../context/MRouterHistoryContext";
 import {
   cloneRoutes,
   computedNewState,
   executeEventCbs,
   getCurrentPathRoutes,
   getCurrentRoute,
-  getCurrentRouteCbsByEvent} from "../../util";
-import getInitialState from "../../getInitialState";
-import replaceHistoryMethods from './replaceHistoryMethods'
-import computedUseRoutesConfig from './computedUseRoutesConfig'
+  getCurrentRouteCbsByEvent
+} from "../../util";
+import getInitialState from "./getInitialState";
+import replaceHistoryMethods from "./replaceHistoryMethods";
+import computedUseRoutesConfig from "./computedUseRoutesConfig";
 const DEFAULT_PERMISSION_LIST: string[] = [];
 
 interface InternalMRouterContextProviderRef {
@@ -87,18 +87,31 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
 
   const inputRoutesRef = useRef(inputRoutes);
 
-  const [initialState] = useState(
-    getInitialState({
-      inputRoutes,
-      permissionList,
-      permissionMode,
-      hasAuth,
-      beforeEachMount,
-      basename,
-      location: locationRef.current,
-      _defineId: routerConfig._defineId
-    })
-  );
+  const initialStateRef = useRef<NewStateI>(null!);
+
+  const initialState = useMemo(() => {
+    if (!initialStateRef.current) {
+      initialStateRef.current = getInitialState({
+        inputRoutes,
+        permissionList,
+        permissionMode,
+        hasAuth,
+        beforeEachMount,
+        basename,
+        location: locationRef.current,
+        _defineId: routerConfig._defineId
+      });
+    }
+    return initialStateRef.current;
+  }, [
+    basename,
+    beforeEachMount,
+    hasAuth,
+    inputRoutes,
+    permissionList,
+    permissionMode,
+    routerConfig._defineId
+  ]);
 
   const getNewStateByNewInputRoutesRef = useRef<
     (_inputRoutes: RouteTypeInputI[]) => NewStateI
@@ -305,10 +318,9 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
     ]
   );
 
-
   useLayoutEffect(() => {
     // Intercept the methods used in history in useNavigator
-    replaceHistoryMethods(history, allExecuteEventCbs, oldHistoryMethods)
+    replaceHistoryMethods(history, allExecuteEventCbs, oldHistoryMethods);
   }, [allExecuteEventCbs, history, oldHistoryMethods]);
 
   const addRoutes = useCallback((newRoutes: RouteTypeI[]) => {

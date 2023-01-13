@@ -5,7 +5,7 @@ import type { BrowserRouterProps, Location } from "react-router-dom";
 import { Router } from "react-router-dom";
 import { createHashHistory } from "@remix-run/router";
 import type { OldHashHistory, RouteCbI, RouteHistoryObject } from "../../type";
-import MRouterHistoryContext from "../../Context/MRouterHistoryContext";
+import MRouterHistoryContext from "../../context/MRouterHistoryContext";
 
 /**
  * A `<Router>` for use in web browsers. Provides the cleanest URLs.

@@ -5,9 +5,9 @@ import {
   useAddRoutes,
   useRemoveRoutes,
   useUpdateRoutes
-} from "./Context/MRouterContext";
+} from "./context/MRouterContext";
 import {
-  useHistory} from "./Context/MRouterHistoryContext";
+  useHistory} from "./context/MRouterHistoryContext";
 
 import CoreRouter, { MRouterPropsI } from './core/CoreRouter'
 

@@ -1,5 +1,5 @@
-import { NewStateI, NewStateQueryI } from "./type";
-import { computedNewState } from "./util";
+import { NewStateI, NewStateQueryI } from "../../type";
+import { computedNewState } from "../../util";
 
 // Initialized data to prevent double calculation
 // defineRouterConfig may be called multiple times in the same application
