@@ -48,6 +48,7 @@ npm install react-router-manage --save
 - [全局路由守卫`beforeEachMount`](https://codesandbox.io/s/react-router-manage-beforeeachmount-247k3l)
 - [路由操作`useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 - [认证-基础示例](https://codesandbox.io/s/react-router-manage-auth-nww6rp)
+- [基于antd的自动生成面包屑](https://codesandbox.io/s/antd-breadcrumbs-kfq3t0?file=/src/App.tsx), [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.zh-CN.md)
 
 ## 配置项
 
