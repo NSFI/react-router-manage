@@ -1,6 +1,6 @@
 {
   "name": "react-router-manage",
-  "version": "1.2.0-beta.0",
+  "version": "1.2.0-beta.1",
   "author": "wenxinping@corp.netease.com",
   "description": "react-router-manage extends react-router(v6), it Including authentication, configuration, addition, deletion and modification",
   "repository": {

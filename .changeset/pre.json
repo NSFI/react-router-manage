@@ -6,6 +6,7 @@
     "@rrmc/antd-breadcrumbs": "1.1.6"
   },
   "changesets": [
+    "clean-forks-glow",
     "famous-trainers-call"
   ]
 }
