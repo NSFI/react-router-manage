@@ -31,6 +31,7 @@
 - 🔐 [**permission**] - 权限控制：配置路由的code，自动管理路由的权限
 - 👨‍✈️‍ [**Route guard**] - 提供路由进入时的回调 `beforeEnter` and `beforeEachMount`, 路由离开时的钩子 `useBeforeLeave`
 - 🌲 [**navigation**] - 层级导航：支持层级导航，自动实现父子级路由的导航栏生成，例如面包屑、菜单导航
+  - 基于antd自动生成的面包屑导航 [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.zh-CN.md)
 
 ## 安装
 
@@ -142,7 +143,7 @@ function App () {
 | `fullscreen` |是否全屏，在`base-layout-router`中监测到当前`route` `fullscreen`为`true`,则会隐藏导航栏| `boolean` | 非必填,默认无|
 | `icon` | 用于显示导航的icon| `string` | 非必填, 默认无|
 | `type` | 如果`type`为`null`字符串，则此路由不会真正渲染，但是可以设置正确的currentRoute | `real` \| `null` | 非必填，默认 `real`|
-| `bredcrumbs`| 用于配置路由中面包屑的配置, [`antd-breadcrumbs`]() | [BreadcrumbsI](#BreadcrumbsI) | 非必填 |
+| `bredcrumbs`| 用于配置路由中面包屑的配置, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.zh-CN.md) | [BreadcrumbsI](#BreadcrumbsI) | 非必填 |
 
 #### BreadcrumbsI
 
