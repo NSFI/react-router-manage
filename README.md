@@ -49,6 +49,7 @@ npm install react-router-manage --save
 - [global guard `beforeEachMount`](https://codesandbox.io/s/react-router-manage-beforeeachmount-247k3l)
 - [routes operation `useAddRoutes`,`useUpdateRoutes`, `useRemoveRoutes`](https://codesandbox.io/s/react-router-manage-actions-re4qxb?file=/src/App.tsx)
 - [auth-basic](https://codesandbox.io/s/react-router-manage-auth-nww6rp)
+- [@rrmc/antd-breadcrumbs](https://codesandbox.io/s/antd-breadcrumbs-kfq3t0?file=/src/App.tsx)
 
 ## Configuration items
 

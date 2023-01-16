@@ -15,6 +15,9 @@ npm i @rrmc/antd-breadcrumbs
 
 ```
 
+## DEMO
+[@rrmc/antd-breadcrumbs](https://codesandbox.io/s/antd-breadcrumbs-kfq3t0?file=/src/App.tsx)
+
 ## Props
 
 | name | describe                                                           | type     | default     |
