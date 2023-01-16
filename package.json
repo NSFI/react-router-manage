@@ -2,6 +2,8 @@
 	"private": true,
 	"scripts": {
 		"build": "rimraf './packages/*/dist' && cross-env PRETTY=true rollup -c",
+		"build:watch": "cross-env PRETTY=true rollup -c -w",
+		"build:demo": "vite build",
 		"clean": "git clean -fdX .",
 		"format": "prettier --ignore-path .eslintignore --write .",
 		"format:check": "prettier --ignore-path .eslintignore --check .",
@@ -15,7 +17,9 @@
 		"beta": "changeset pre enter beta",
 		"exit": "changeset pre exit",
 		"version": "changeset version",
-		"watch": "rollup -c -w"
+		"watch": "rollup -c -w",
+		"start": "rimraf './examples/*/node_modules' && vite",
+		"dev": "rimraf './examples/*/node_modules' && cross-env USE_SOURCE=1 vite"
 	},
 	"dependencies": {
 		"@ampproject/filesize": "^4.3.0",
@@ -35,18 +39,21 @@
 		"@rollup/plugin-node-resolve": "^13.3.0",
 		"@rollup/plugin-replace": "^2.2.1",
 		"@rollup/plugin-typescript": "^8.5.0",
+		"@rrmc/antd-breadcrumbs": "^1.2.0-beta.0",
 		"@testing-library/jest-dom": "^5.16.4",
-		"@testing-library/react": "12.1.5",
+		"@testing-library/react": "13.4.0",
 		"@testing-library/react-hooks": "^8.0.0",
 		"@types/jest": "26.x",
 		"@types/jsonfile": "^6.0.1",
-		"@types/react": "^17.0.19",
-		"@types/react-dom": "^17.0.9",
+		"@types/react": "^18.0.0",
+		"@types/react-dom": "^18.0.0",
 		"@types/react-native": "*",
 		"@types/react-test-renderer": "16.x",
 		"@types/semver": "^7.3.8",
 		"@typescript-eslint/eslint-plugin": "^4.28.3",
 		"@typescript-eslint/parser": "^4.28.3",
+		"@vitejs/plugin-react": "^3.0.1",
+		"antd": "^5.1.4",
 		"babel-eslint": "^10.1.0",
 		"babel-plugin-dev-expression": "^0.2.2",
 		"babel-plugin-transform-remove-debugger": "^6.9.4",
@@ -70,8 +77,9 @@
 		"ppfish": "^2.2.0",
 		"prettier": "^2.4.1",
 		"prompt-confirm": "^2.0.4",
-		"react": "^17.0.2",
-		"react-dom": "^17.0.2",
+		"react": "^18.0.2",
+		"react-dom": "^18.0.2",
+		"react-router-manage": "^1.2.0-beta.0",
 		"react-test-renderer": "^17.0.2",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.75.5",
@@ -85,16 +93,24 @@
 		"rollup-plugin-terser": "^7.0.2",
 		"semver": "^7.3.5",
 		"ts-jest": "^26.5.6",
-		"typescript": "^4.3.5"
+		"typescript": "^4.3.5",
+		"vite": "^4.0.4"
 	},
 	"workspaces": {
 		"packages": [
-			"packages/react-router-manage"
+			"packages/react-router-manage",
+			"packages/antd-breadcrumbs"
 		]
 	},
 	"jest": {
 		"projects": [
 			"<rootDir>/packages/*"
 		]
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.13",
+		"less": "^4.1.3",
+		"less-loader": "^11.1.0",
+		"vite-plugin-style-import": "^2.0.0"
 	}
 }

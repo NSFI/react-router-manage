@@ -7,7 +7,8 @@
   "commit": false,
   "fixed": [
     [
-      "react-router-manage"
+      "react-router-manage",
+      "@rrmc/antd-breadcrumbs"
     ]
   ],
   "access": "public",

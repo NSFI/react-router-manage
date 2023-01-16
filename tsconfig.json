@@ -1,7 +1,7 @@
 {
-    "files": [],
-    "references": [
-      { "path": "packages/react-router-manage" },
-    ]
-  }
-  
+  "files": [],
+  "references": [
+    { "path": "packages/react-router-manage" },
+    { "path": "packages/antd-breadcrumbs" }
+  ],
+}

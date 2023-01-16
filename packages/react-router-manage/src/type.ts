@@ -109,6 +109,11 @@ export interface RouteTypeI {
   props?: RouteTypePropsI;
   redirect?: string;
   type?: "real" | "null";
+  breadcrumbs?: {
+    isRoot?: boolean; // Is it the parent route of the first route of breadcrumbs? If so, the next level will be added to the breadcrumbs
+    text?: string | React.ReactNode | ((route: RouteTypeI) => React.ReactNode); // the displayed text will overwrite 'route.title'
+    hidden?: boolean; // breadcrumbs will skip
+  }
 
   meta?: Record<string, any>; // some other information can be customized
 }
@@ -236,15 +241,17 @@ export interface RouteConfig {
   children?: RouteConfig[];
 }
 
+export interface HistoryMethodsI {
+  push(to: To, state?: any): void;
+  replace(to: To, state?: any): void;
+  go(delta: number): void;
+  back(): void;
+  forward(): void;
+}
+
 export interface RouteHistoryObject {
   history: OldBrowserHistory;
-  historyMethods: {
-    push(to: To, state?: any): void;
-    replace(to: To, state?: any): void;
-    go(delta: number): void;
-    back(): void;
-    forward(): void;
-  };
+  historyMethods: HistoryMethodsI;
   routeHooks: RouteCbI[];
   routeHooksRef: React.MutableRefObject<RouteCbI[]>;
 }

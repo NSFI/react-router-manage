@@ -15,8 +15,6 @@ const NameRedirect: React.FC<{ name: string; component?: React.ComponentType<any
 
   if (name === currentRoute.name) {
     if (Component) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
       return <Component />;
     }
     return <></>;

@@ -2,8 +2,9 @@ import * as React from "react";
 
 import {
   defineRouterConfig,
-  MRouter as Router,
-  Link
+  Link,
+  MHRouter,
+  MRouter
 } from "react-router-manage";
 
 function Layout({ children }) {
@@ -69,8 +70,10 @@ function NoMatch() {
     </div>
   );
 }
+const Router = window.__INITIAL_DATA__.mode === 'hash' ? MHRouter : MRouter;
 
 const routerConfig = defineRouterConfig({
+  basename:  window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",

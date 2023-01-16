@@ -1,6 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import {
   MHRouter,
   defineRouterConfig,
@@ -72,7 +72,9 @@ describe("MHRouter 测试", () => {
 
     const button = screen.getByTestId("__test_button");
 
-    button.click();
+    act(() => {
+        button.click();
+      })
   });
 
   it("路由切换正常渲染", () => {
@@ -213,7 +215,9 @@ describe("MHRouter 测试", () => {
 
     const button = screen.getByTestId("__test_button_params");
 
-    button.click();
+    act(() => {
+        button.click();
+      })
   });
 
   it("找有权限的下一级路由", () => {
