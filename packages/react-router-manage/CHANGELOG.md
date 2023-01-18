@@ -1,6 +1,17 @@
 # react-router-manage
 
-## 1.2.0-beta.1
+## 2.0.0
+
+### Minor Changes
+
+- bd5a383: release package: @rrmc/antd-breadcrumbs
+
+### Patch Changes
+
+- f04642e: add package @rrmc/antd-breadcrumbs docs
+- release package @rrmc/antd-breadcrumbs
+
+## 1.2.0
 
 ### Patch Changes
 
