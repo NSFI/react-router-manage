@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "query-string": "^7.1.1",
-    "react-router": "6.4.3",
-    "react-router-dom": "6.4.3",
-    "@remix-run/router": "1.0.3"
+    "react-router": "6.9.0",
+    "react-router-dom": "6.9.0",
+    "@remix-run/router": "1.4.0"
   },
   "devDependencies": {
     "@types/query-string": "^6.3.0"

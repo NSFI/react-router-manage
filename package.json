@@ -19,7 +19,8 @@
 		"version": "changeset version",
 		"watch": "rollup -c -w",
 		"start": "rimraf './examples/*/node_modules' && vite",
-		"dev": "rimraf './examples/*/node_modules' && cross-env USE_SOURCE=1 vite"
+		"dev": "rimraf './examples/*/node_modules' && cross-env USE_SOURCE=1 vite",
+		"docs": "cd docs && npm run start"
 	},
 	"dependencies": {
 		"@ampproject/filesize": "^4.3.0",
@@ -79,7 +80,7 @@
 		"prompt-confirm": "^2.0.4",
 		"react": "^18.0.2",
 		"react-dom": "^18.0.2",
-		"react-router-manage": "^1.2.0-beta.1",
+		"react-router-manage": "^2.0",
 		"react-test-renderer": "^17.0.2",
 		"rimraf": "^3.0.2",
 		"rollup": "^2.75.5",

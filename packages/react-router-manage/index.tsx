@@ -1,18 +1,17 @@
 export type {
-  FormEncType,
-  FormMethod,
-  ParamKeyValuePair,
-  SubmitOptions,
-  URLSearchParamsInit,
   ActionFunction,
   ActionFunctionArgs,
   AwaitProps,
+  unstable_Blocker,
+  unstable_BlockerFunction,
   DataRouteMatch,
   DataRouteObject,
   Fetcher,
   Hash,
+  IndexRouteObject,
   IndexRouteProps,
   JsonFunction,
+  LazyRouteFunction,
   LayoutRouteProps,
   LoaderFunction,
   LoaderFunctionArgs,
@@ -23,6 +22,7 @@ export type {
   NavigateProps,
   Navigation,
   Navigator,
+  NonIndexRouteObject,
   OutletProps,
   Params,
   ParamParseKey,
@@ -41,11 +41,10 @@ export type {
   RoutesProps,
   Search,
   ShouldRevalidateFunction,
-  To
-} from "react-router-dom";
+  To,
+} from "react-router";
 
 export {
-  createSearchParams,
   AbortedDeferredError,
   Await,
   MemoryRouter,
@@ -73,13 +72,14 @@ export {
   useActionData,
   useAsyncError,
   useAsyncValue,
+  unstable_useBlocker,
   useHref,
   useInRouterContext,
   useLoaderData,
   useLocation,
   useMatch,
   useMatches,
-  useNavigate,
+  // useNavigate,
   useNavigation,
   useNavigationType,
   useOutlet,
@@ -89,8 +89,9 @@ export {
   useRevalidator,
   useRouteError,
   useRouteLoaderData,
-  useRoutes
-} from "react-router-dom";
+  useRoutes,
+} from 'react-router'
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // DANGER! PLEASE READ ME!
@@ -109,12 +110,11 @@ export {
 export {
   UNSAFE_DataRouterContext,
   UNSAFE_DataRouterStateContext,
-  UNSAFE_DataStaticRouterContext,
   UNSAFE_NavigationContext,
   UNSAFE_LocationContext,
   UNSAFE_RouteContext,
-  UNSAFE_enhanceManualRouteObjects
-} from "react-router-dom";
+} from "react-router";
+//#endregion
 //#endregion
 
 export type {
@@ -126,6 +126,7 @@ export type {
   FormProps,
   SubmitFunction,
   FetcherWithComponents,
+  ScrollRestorationProps,
 } from "react-router-dom";
 
 export {
@@ -135,12 +136,16 @@ export {
   NavLink,
   Form,
   ScrollRestoration,
+  useLinkClickHandler,
   useSearchParams,
+  useSubmit,
   useFormAction,
   useFetcher,
   useFetchers,
+  UNSAFE_useScrollRestoration,
+  useBeforeUnload,
 //   BrowserRouter,
-//   HashRouter
+//   HashRouter,
 } from "react-router-dom";
 
 export * from './src'
