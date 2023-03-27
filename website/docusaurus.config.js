@@ -13,7 +13,7 @@ const config = {
   title: title,
   tagline: "Easy to use react route management",
   url: "https://your-docusaurus-test-site.com",
-  baseUrl: "/",
+  baseUrl: "/react-router-manage/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/rrm-logo.png",
