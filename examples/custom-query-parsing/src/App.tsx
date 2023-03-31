@@ -3,12 +3,16 @@ import * as JSURL from "jsurl";
 import type { NavigateOptions } from "react-router-manage";
 import {
   defineRouterConfig,
-  MRouter as Router,
+  MRouter,
+  MHRouter,
   Link,
   useSearchParams
 } from "react-router-manage";
 
+const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
+
 const routerConfig = defineRouterConfig({
+  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",

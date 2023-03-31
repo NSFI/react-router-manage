@@ -2,18 +2,22 @@ import * as React from "react";
 import { fakeAuthProvider } from "./auth";
 import {
   defineRouterConfig,
-  MRouter as Router,
+  MRouter,
+  MHRouter,
   Link,
   useNavigate,
   useLocation,
   Outlet
 } from "react-router-manage";
 
+const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
+
 const authInfo = {
   isLogin: false
 };
 
 const routerConfig = defineRouterConfig({
+  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",

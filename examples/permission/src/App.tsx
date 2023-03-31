@@ -2,10 +2,14 @@ import * as React from "react";
 
 import {
   defineRouterConfig,
-  MRouter as Router,
+  MRouter,
+  MHRouter,
   Link,
   useRouter
 } from "react-router-manage";
+
+const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
+
 
 function Layout({ children }) {
   return (
@@ -105,6 +109,7 @@ function NoMatch() {
 }
 
 const routerConfig = defineRouterConfig({
+  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",

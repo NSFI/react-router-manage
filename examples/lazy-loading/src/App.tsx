@@ -1,5 +1,7 @@
 import * as React from "react";
-import { defineRouterConfig, MRouter as Router, Outlet, Link } from "react-router-manage";
+import { defineRouterConfig, MRouter, MHRouter, Outlet, Link } from "react-router-manage";
+
+const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
 const About = React.lazy(() => import("./pages/About"));
 const DashboardLayout = React.lazy(() => import("./pages/DashboardLayout"));
@@ -7,6 +9,7 @@ const DashboardIndex = React.lazy(() => import("./pages/DashboardIndex"));
 const Messages = React.lazy(() => import("./pages/Messages"));
 
 const routerConfig = defineRouterConfig({
+  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",
