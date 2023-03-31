@@ -110,8 +110,14 @@
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.13",
+		"husky": "^8.0.3",
 		"less": "^4.1.3",
 		"less-loader": "^11.1.0",
 		"vite-plugin-style-import": "^2.0.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
 	}
 }
