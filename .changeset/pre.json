@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@rrmc/antd-breadcrumbs": "2.0.0",
+    "react-router-manage": "2.0.0"
+  },
+  "changesets": [
+    "fuzzy-pants-drum"
+  ]
+}

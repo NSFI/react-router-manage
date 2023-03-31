@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.1-beta.0
+
+### Patch Changes
+
+- upgrade react-router version to 6.9.0
+
 ## 2.0.0
 
 ### Minor Changes
