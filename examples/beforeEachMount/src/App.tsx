@@ -2,9 +2,12 @@ import * as React from "react";
 
 import {
   defineRouterConfig,
-  MRouter as Router,
+  MRouter,
+  MHRouter,
   Link
 } from "react-router-manage";
+
+const Router = window.__INITIAL_DATA__.mode === "hash" ?  MHRouter: MRouter;
 
 function Layout({ children }) {
   return (
@@ -14,16 +17,16 @@ function Layout({ children }) {
       <nav>
         <ul>
           <li>
-            <Link to="/app/home">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li>
-            <Link to="/app/about">About</Link>
+            <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/app/dashboard">Dashboard</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link to="/app/nothing-here">Nothing Here</Link>
+            <Link to="/nothing-here">Nothing Here</Link>
           </li>
         </ul>
       </nav>
@@ -95,7 +98,7 @@ const routerConfig = defineRouterConfig({
       next(NoJump)
     }
   },
-  basename: "/app",
+  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
   routes: [
     {
       path: "/",

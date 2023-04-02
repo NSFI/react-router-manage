@@ -1,5 +1,23 @@
 # @rrmc/antd-breadcrumbs
 
+## 2.0.1
+
+### Patch Changes
+
+- release v2.0.1
+- ab88d54: upgrade react-router version to 6.9.0
+- Updated dependencies
+- Updated dependencies [ab88d54]
+  - react-router-manage@2.0.1
+
+## 2.0.1-beta.0
+
+### Patch Changes
+
+- upgrade react-router version to 6.9.0
+- Updated dependencies
+  - react-router-manage@2.0.1-beta.0
+
 ## 2.0.0
 
 ### Minor Changes
