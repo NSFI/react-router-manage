@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.2
+
+### Patch Changes
+
+- support configure 'index'
+
 ## 2.0.1
 
 ### Patch Changes

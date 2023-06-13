@@ -1,9 +1,0 @@
-{
-  "mode": "pre",
-  "tag": "beta",
-  "initialVersions": {
-    "@rrmc/antd-breadcrumbs": "2.0.1",
-    "react-router-manage": "2.0.1"
-  },
-  "changesets": []
-}
