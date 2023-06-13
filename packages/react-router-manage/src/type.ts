@@ -93,7 +93,7 @@ export type RoutePathCallNullTypeI = SetOptional<RouteTypeI, 'path'>
 export interface RouteTypeI {
   name: string;
   path: string;
-  // index?: boolean;
+  index?: boolean;
   component?: RouteComponentType;
 
   beforeEnter?: BeforeEnterI;

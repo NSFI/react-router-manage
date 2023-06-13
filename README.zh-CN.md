@@ -131,6 +131,7 @@ function App () {
 | `name` | 路由的名称, **名称全局唯一、不能重复，用于获取路由** |`string` | 必填 |
 | `path`| 路由的路径，**组合后的完整路径全局唯一、不能重复，但是如果是嵌套的子路由，可以不配置, 相当于`Route`组件中设置`index`属性**| `string` | 必填 |
 | `title` | 路由的中文名称，显示的名称，用于自动生成导航和面包屑中| `string`| 非必填 |
+| `index` | 同级有多个路由，会找带index的路由作为进入的路由 | `boolean`| 非必填 |
 | `component` |路由匹配的组件, **如果没有配置，则会跳到下一级有权限的路由**| `React.Component` \| `React.FunctionComponent` | 非必填 |
 | `items` | 视觉上的子级路由，用于导航时的父子级关系，实际为同一级路由| `RouteTypeI[]` | 非必填|
 | `children`| 子级路由、在v6版本中渲染在 `Outlet`组件中| `RouteTypeI[]` | 非必填|
