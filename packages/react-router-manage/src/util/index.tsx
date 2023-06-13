@@ -655,6 +655,11 @@ export const handleRedirectPath = (
   if (!hasAuth) {
     return items[0].path;
   }
+  // 找带有index的路由
+  const indexRoute = items.find(i => i.index);
+  if (indexRoute) {
+    return indexRoute.path;
+  }
   let redirectPath = "";
   // find the first one route with permission
   for (let i = 0; i < items?.length; i++) {
@@ -714,8 +719,8 @@ export function mixinNotFoundPage(
       title: "notFound",
       meta: {},
       path: notFoundPath,
-      component: NotFound,
-    } 
+      component: NotFound
+    }
   };
   authInputRoutes.push(notFoundPage);
   flattenBranches.push({
