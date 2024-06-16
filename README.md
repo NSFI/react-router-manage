@@ -147,7 +147,7 @@ function App () {
 | `fullscreen` | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)*| `boolean` | not required |
 | `icon` | Icon for displaying navigation, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `string` | not required |
 | `type` | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, *the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)* | `real` \| `null` | not required, default is `real`|
-| `bredcrumbs`| used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md) | [BreadcrumbsI](#BreadcrumbsI) | not required |
+| `breadcrumbs`| used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md) | [BreadcrumbsI](#BreadcrumbsI) | not required |
 
 #### BreadcrumbsI
 
