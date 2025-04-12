@@ -73,9 +73,13 @@ export interface BeforeLeaveI {
   ): void;
 }
 export interface RouteTypePropsI {
-  beforeEachMount?: BeforeEachMountI;
-  beforeEnter?: BeforeEnterI;
-  [prop: string]: any;
+  beforeEnter?: BeforeEnterI
+  beforeEachMount?: BeforeEachMountI
+  Component: any
+  props: RouteTypeInputI['props']
+  _route: RouteTypeI
+
+  [prop: string]: any
 }
 
 export type RouteComponentType = React.LazyExoticComponent<any> | React.FC<any>;
@@ -106,7 +110,7 @@ export interface RouteTypeI {
   code?: CodeType; // each menu item has a code, and the route code of the same menu item is the same
   parentName?: string; // parent route name
   fullscreen?: boolean; // if is true, the navigation bar will be hidden
-  props?: RouteTypePropsI;
+  props?: Record<string, any> // props of component
   redirect?: string;
   type?: "real" | "null";
   breadcrumbs?: {
@@ -144,6 +148,7 @@ export interface RouteTypeExtendsI extends RouteTypeInputI {
    * calculate the permission of the parent route for the child route in permissionType is 'children' mode
    */
   _currentIsHasAuth?: boolean;
+  _props?: RouteTypePropsI
 }
 
 export enum RouterActionEnum {

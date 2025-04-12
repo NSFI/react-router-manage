@@ -20,7 +20,7 @@
 		"watch": "rollup -c -w",
 		"start": "rimraf './examples/*/node_modules' && vite",
 		"dev": "rimraf './examples/*/node_modules' && cross-env USE_SOURCE=1 vite",
-		"docs": "cd docs && npm run start"
+		"docs": "cd website && npm run start"
 	},
 	"dependencies": {
 		"@ampproject/filesize": "^4.3.0",
