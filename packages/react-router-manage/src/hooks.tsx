@@ -20,9 +20,19 @@ import type {
   RoutesStateStruct
 } from "./type";
 
-export function useBeforeLeave(fn: BeforeLeaveI): void {
+export function useBeforeLeave(
+  fn: BeforeLeaveI,
+  options?: {
+    beforeunload?: ((event?: Event) => any) | ((event?: Event) => Promise<any>);
+  }
+): void {
   const pathname = window.location.pathname;
   const routeHooksRef = useRouteHooksRef();
+
+  const beforeunload = options?.beforeunload;
+  const beforeunloadRef = useRef(beforeunload);
+  beforeunloadRef.current = beforeunload;
+
   useLayoutEffect(() => {
     const hooks = routeHooksRef.current;
     const routeHook = {
@@ -31,9 +41,24 @@ export function useBeforeLeave(fn: BeforeLeaveI): void {
       fn
     } as RouteCbI;
     hooks.push(routeHook);
+
+    // bind beforeunload
+    const currentBeforeunload = beforeunloadRef.current;
+    const beforeunloadFn = (event: Event) => {
+      return currentBeforeunload?.(event);
+    };
+    if (currentBeforeunload) {
+      window.addEventListener("beforeunload", beforeunloadFn);
+    }
+
     return () => {
       const index = hooks.indexOf(routeHook);
       hooks.splice(index, 1);
+
+      // unbind beforeunload
+      if (currentBeforeunload) {
+        window.removeEventListener("beforeunload", beforeunloadFn);
+      }
     };
   }, [fn, pathname, routeHooksRef]);
 }
