@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface MyPageProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'MyPage';
+const modulePrefix = "MyPage";
 const MyPage: React.FC<MyPageProps> = (props: MyPageProps) => {
-    return (<div className={modulePrefix}>MyPage</div>);
+  return <div className={modulePrefix}>MyPage</div>;
 };
 
 export default MyPage;

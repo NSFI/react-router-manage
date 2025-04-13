@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * 支持的 type 有：
@@ -8,11 +8,11 @@
  */
 
 module.exports = {
-    extends: ["@commitlint/config-conventional"],
-    rules: {
-        'body-leading-blank': [2, 'always'],
-        'footer-leading-blank': [2, 'always'],
-        'subject-case': [0],
-        'scope-case': [0]
-    }
+  extends: ["@commitlint/config-conventional"],
+  rules: {
+    "body-leading-blank": [2, "always"],
+    "footer-leading-blank": [2, "always"],
+    "subject-case": [0],
+    "scope-case": [0]
+  }
 };

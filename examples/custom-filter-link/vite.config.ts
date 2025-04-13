@@ -14,7 +14,7 @@ export default defineConfig({
     }),
     react()
   ],
- 
+
   css: {
     preprocessorOptions: {
       less: {
@@ -25,12 +25,18 @@ export default defineConfig({
   resolve: process.env.USE_SOURCE
     ? {
         alias: {
-          "react-router-manage": path.join(__dirname, "../../packages/react-router-manage"),
-          "history": path.join(__dirname, "./node_modules/history"),
+          "react-router-manage": path.join(
+            __dirname,
+            "../../packages/react-router-manage"
+          ),
+          history: path.join(__dirname, "./node_modules/history"),
           "react-router": path.join(__dirname, "./node_modules/react-router"),
-          "react-router-dom": path.join(__dirname, "./node_modules/react-router-dom"),
-          "query-string": path.join(__dirname, "./node_modules/query-string"),
+          "react-router-dom": path.join(
+            __dirname,
+            "./node_modules/react-router-dom"
+          ),
+          "query-string": path.join(__dirname, "./node_modules/query-string")
         }
       }
-    : {},
+    : {}
 });

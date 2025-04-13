@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface GridViewProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'GridView';
+const modulePrefix = "GridView";
 const GridView: React.FC<GridViewProps> = (props: GridViewProps) => {
-    return (<div className={modulePrefix}>GridView</div>);
+  return <div className={modulePrefix}>GridView</div>;
 };
 
 export default GridView;

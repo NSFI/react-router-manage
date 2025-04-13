@@ -7,12 +7,7 @@
     }
   ],
   "commit": false,
-  "fixed": [
-    [
-      "react-router-manage",
-      "@rrmc/antd-breadcrumbs"
-    ]
-  ],
+  "fixed": [["react-router-manage", "@rrmc/antd-breadcrumbs"]],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",

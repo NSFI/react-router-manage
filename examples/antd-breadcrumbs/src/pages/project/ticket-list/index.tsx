@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface TicketListProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'TicketList';
+const modulePrefix = "TicketList";
 const TicketList: React.FC<TicketListProps> = (props: TicketListProps) => {
-    return (<div className={modulePrefix}>TicketList</div>);
+  return <div className={modulePrefix}>TicketList</div>;
 };
 
 export default TicketList;

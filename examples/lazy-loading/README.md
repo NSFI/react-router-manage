@@ -10,10 +10,7 @@ This example demonstrates how to lazily load both
 - individual route elements
 - entire portions of your route hierarchy
 
-on demand using `React.lazy()` and dynamic `import()`. Using this technique,
-pages that are not required on the home page can be split out into separate
-bundles, thereby decreasing load time on the initial page and improving
-performance.
+on demand using `React.lazy()` and dynamic `import()`. Using this technique, pages that are not required on the home page can be split out into separate bundles, thereby decreasing load time on the initial page and improving performance.
 
 ## Preview
 

@@ -4,7 +4,11 @@ import { unstable_batchedUpdates } from "react-dom";
 import type { BrowserRouterProps, Location } from "react-router-dom";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "@remix-run/router";
-import type { OldBrowserHistory, RouteCbI, RouteHistoryObject } from "../../type";
+import type {
+  OldBrowserHistory,
+  RouteCbI,
+  RouteHistoryObject
+} from "../../type";
 import MRouterHistoryContext from "../../context/MRouterHistoryContext";
 
 /**

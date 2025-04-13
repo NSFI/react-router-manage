@@ -24,11 +24,15 @@ const Dashboard: React.FC<DashboardProps> = (props: DashboardProps) => {
           </Button>
         </li>
         <li>
-          <Button  onClick={() => {
+          <Button
+            onClick={() => {
               navigate(routesMap.DashBoardDetail.path, {
                 params: { id: 2 }
               });
-            }}>view dashboard 2 detail</Button>
+            }}
+          >
+            view dashboard 2 detail
+          </Button>
         </li>
       </ol>
     </div>

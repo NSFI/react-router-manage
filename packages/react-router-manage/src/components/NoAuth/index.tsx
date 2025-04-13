@@ -1,33 +1,38 @@
-import * as React from 'react';
+import * as React from "react";
 
 const PageConfig = {
-  '401': {
-    title: '401 NO PERMISSION',
-    img: '//ysf.qiyukf.net/yx/9c9ce7793b3c0657da5d80e740a89681',
+  "401": {
+    title: "401 NO PERMISSION",
+    img: "//ysf.qiyukf.net/yx/9c9ce7793b3c0657da5d80e740a89681"
   },
-  '404': {
-    title: '404 NOT FOUND',
-    img: 'https://ysf.nosdn.127.net/ysh/6be90dea7806767fe65e7b48982b7a61',
-  },
-} as Record<string, {title: string; img: string}>;
+  "404": {
+    title: "404 NOT FOUND",
+    img: "https://ysf.nosdn.127.net/ysh/6be90dea7806767fe65e7b48982b7a61"
+  }
+} as Record<string, { title: string; img: string }>;
 
-const NoAuth: React.FC<{ code?: '404' | '401' }> = ({ code = '401' }) => {
+const NoAuth: React.FC<{ code?: "404" | "401" }> = ({ code = "401" }) => {
   const config = PageConfig[code];
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'white',
-        height: '100%',
-        flexDirection: 'column',
-        borderRadius: 8,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "white",
+        height: "100%",
+        flexDirection: "column",
+        borderRadius: 8
       }}
     >
       <img alt={config.title} width={200} src={config?.img} />
       <div
-        style={{ color: '#666666', lineHeight: '22px', textAlign: 'center', marginTop: 16 }}
+        style={{
+          color: "#666666",
+          lineHeight: "22px",
+          textAlign: "center",
+          marginTop: 16
+        }}
       >
         {config.title}
       </div>
@@ -35,6 +40,6 @@ const NoAuth: React.FC<{ code?: '404' | '401' }> = ({ code = '401' }) => {
   );
 };
 
-NoAuth.displayName = 'NoAuth';
+NoAuth.displayName = "NoAuth";
 
 export default NoAuth;

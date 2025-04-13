@@ -21,8 +21,7 @@
 
 ## 功能简介
 
-`react-router-manage`基于`react-router` `v6`版本实现，通过配置可实现路由的鉴权、路由守卫、路由的增删改查等功能。
-由于`react-router` `v5`升级到`v6`有较大的成本，`react-router-manage`提供了原来 v5 部分的 api 用于兼容使用 v5 的项目，用于平滑升级 v6
+`react-router-manage`基于`react-router` `v6`版本实现，通过配置可实现路由的鉴权、路由守卫、路由的增删改查等功能。由于`react-router` `v5`升级到`v6`有较大的成本，`react-router-manage`提供了原来 v5 部分的 api 用于兼容使用 v5 的项目，用于平滑升级 v6
 
 - 🛠 [**[`config router`](#routerConfig)**] - 集中配置路由，快捷、方便管理。
 - ＋ [**[`addRoutes`](#useAddRoutes)**] - 动态增加路由：可使用 hook`useAddRoutes`添加路由，自动刷新视图。
@@ -384,12 +383,7 @@ const appRouterConfig = defineRouterConfig({
 // hasAuth 可以不配置，默认为true
 function App() {
   return (
-    <MRouter
-      routeConfig={routeConfig}
-      permissionList={permissionList}
-      hasAuth={true}
-      permissionMode="parent"
-    >
+    <MRouter routeConfig={routeConfig} permissionList={permissionList} hasAuth={true} permissionMode="parent">
       {children => children}
     </MRouter>
   );

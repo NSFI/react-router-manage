@@ -21,7 +21,7 @@ export interface RouterBaseConfigI {
   autoDocumentTitle?:
     | boolean
     | ((currentPathRoutes: RouteTypeExtendsI[]) => string);
-  
+
   _isDefined: boolean; // 是否是defined的
   _defineId: number;
 }
@@ -73,26 +73,26 @@ export interface BeforeLeaveI {
   ): void;
 }
 export interface RouteTypePropsI {
-  beforeEnter?: BeforeEnterI
-  beforeEachMount?: BeforeEachMountI
-  Component: any
-  props: RouteTypeInputI['props']
-  _route: RouteTypeI
+  beforeEnter?: BeforeEnterI;
+  beforeEachMount?: BeforeEachMountI;
+  Component: any;
+  props: RouteTypeInputI["props"];
+  _route: RouteTypeI;
 
-  [prop: string]: any
+  [prop: string]: any;
 }
 
 export type RouteComponentType = React.LazyExoticComponent<any> | React.FC<any>;
 
 type Simplify<T> = {
   [P in keyof T]: T[P];
-}
+};
 
 type SetOptional<T, K extends keyof T> = Simplify<
   Partial<Pick<T, K>> & Pick<T, Exclude<keyof T, K>>
->
+>;
 
-export type RoutePathCallNullTypeI = SetOptional<RouteTypeI, 'path'>
+export type RoutePathCallNullTypeI = SetOptional<RouteTypeI, "path">;
 
 export interface RouteTypeI {
   name: string;
@@ -110,14 +110,14 @@ export interface RouteTypeI {
   code?: CodeType; // each menu item has a code, and the route code of the same menu item is the same
   parentName?: string; // parent route name
   fullscreen?: boolean; // if is true, the navigation bar will be hidden
-  props?: Record<string, any> // props of component
+  props?: Record<string, any>; // props of component
   redirect?: string;
   type?: "real" | "null";
   breadcrumbs?: {
     isRoot?: boolean; // Is it the parent route of the first route of breadcrumbs? If so, the next level will be added to the breadcrumbs
     text?: string | React.ReactNode | ((route: RouteTypeI) => React.ReactNode); // the displayed text will overwrite 'route.title'
     hidden?: boolean; // breadcrumbs will skip
-  }
+  };
 
   meta?: Record<string, any>; // some other information can be customized
 }
@@ -144,11 +144,11 @@ export interface RouteTypeExtendsI extends RouteTypeInputI {
   _currentComponent?: RouteComponentType;
   _itemsAndChildren?: RouteTypeExtendsI[];
   /**
-   * The route permission irrelevant to the parent is used to 
+   * The route permission irrelevant to the parent is used to
    * calculate the permission of the parent route for the child route in permissionType is 'children' mode
    */
   _currentIsHasAuth?: boolean;
-  _props?: RouteTypePropsI
+  _props?: RouteTypePropsI;
 }
 
 export enum RouterActionEnum {
@@ -264,7 +264,7 @@ export interface RouteHistoryObject {
 export type RoutesMapInterI = Record<
   string,
   RouteTypeExtendsI | RouteTypeExtendsI[]
->
+>;
 
 export interface RoutesMapI extends Record<string, RouteTypeExtendsI> {}
 
@@ -290,5 +290,5 @@ export interface NewStateI {
 export interface RouteBranchI {
   path: string;
   score: number;
-  route: RouteTypeExtendsI
+  route: RouteTypeExtendsI;
 }

@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface EmailProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'Email';
+const modulePrefix = "Email";
 const Email: React.FC<EmailProps> = (props: EmailProps) => {
-    return (<div className={modulePrefix}>Email</div>);
+  return <div className={modulePrefix}>Email</div>;
 };
 
 export default Email;

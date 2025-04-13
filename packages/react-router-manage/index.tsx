@@ -41,7 +41,7 @@ export type {
   RoutesProps,
   Search,
   ShouldRevalidateFunction,
-  To,
+  To
 } from "react-router";
 
 export {
@@ -89,9 +89,8 @@ export {
   useRevalidator,
   useRouteError,
   useRouteLoaderData,
-  useRoutes,
-} from 'react-router'
-
+  useRoutes
+} from "react-router";
 
 ///////////////////////////////////////////////////////////////////////////////
 // DANGER! PLEASE READ ME!
@@ -112,7 +111,7 @@ export {
   UNSAFE_DataRouterStateContext,
   UNSAFE_NavigationContext,
   UNSAFE_LocationContext,
-  UNSAFE_RouteContext,
+  UNSAFE_RouteContext
 } from "react-router";
 //#endregion
 //#endregion
@@ -126,7 +125,7 @@ export type {
   FormProps,
   SubmitFunction,
   FetcherWithComponents,
-  ScrollRestorationProps,
+  ScrollRestorationProps
 } from "react-router-dom";
 
 export {
@@ -143,9 +142,9 @@ export {
   useFetcher,
   useFetchers,
   UNSAFE_useScrollRestoration,
-  useBeforeUnload,
-//   BrowserRouter,
-//   HashRouter,
+  useBeforeUnload
+  //   BrowserRouter,
+  //   HashRouter,
 } from "react-router-dom";
 
-export * from './src'
+export * from "./src";

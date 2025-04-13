@@ -11,7 +11,7 @@
     "jsx": "react",
 
     "skipLibCheck": true,
-    
+
     "outDir": ".",
     "rootDir": "."
   }

@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface ClientProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'Client';
+const modulePrefix = "Client";
 const Client: React.FC<ClientProps> = (props: ClientProps) => {
-    return (<div className={modulePrefix}>Client</div>);
+  return <div className={modulePrefix}>Client</div>;
 };
 
 export default Client;
