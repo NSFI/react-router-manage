@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface ListViewProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'ListView';
+const modulePrefix = "ListView";
 const ListView: React.FC<ListViewProps> = (props: ListViewProps) => {
-    return (<div className={modulePrefix}>ListView</div>);
+  return <div className={modulePrefix}>ListView</div>;
 };
 
 export default ListView;

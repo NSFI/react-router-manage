@@ -31,7 +31,7 @@ function getComponent(
       // @ts-ignore
       return <Navigate to={options.path!} />;
     };
-     // @ts-ignore
+    // @ts-ignore
   } else if (isString(options.name)) {
     // if there is no path, use name
     ReplaceComponent = function Redirect() {

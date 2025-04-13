@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface TaskBoardProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'TaskBoard';
+const modulePrefix = "TaskBoard";
 const TaskBoard: React.FC<TaskBoardProps> = (props: TaskBoardProps) => {
-    return (<div className={modulePrefix}>TaskBoard</div>);
+  return <div className={modulePrefix}>TaskBoard</div>;
 };
 
 export default TaskBoard;

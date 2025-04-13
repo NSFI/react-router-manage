@@ -1,8 +1,11 @@
 import { lazy } from "react";
 import { defineRouterConfig } from "react-router-manage";
 
- const routerConfig = defineRouterConfig({
-  basename:  window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+const routerConfig = defineRouterConfig({
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       title: "Main",
@@ -22,12 +25,12 @@ import { defineRouterConfig } from "react-router-manage";
           component: lazy(() => import("../pages/dashboard")),
           items: [
             {
-              name: 'DashBoardDetail',
-              title: 'Detail',
-              path: 'detail/:id',
+              name: "DashBoardDetail",
+              title: "Detail",
+              path: "detail/:id",
               component: lazy(() => import("../pages/dashboard/detail")),
               breadcrumbs: {
-                text: (item) => `${item.title}测试`
+                text: item => `${item.title}测试`
               }
             }
           ]
@@ -93,4 +96,4 @@ import { defineRouterConfig } from "react-router-manage";
   ]
 });
 
-export default routerConfig
+export default routerConfig;

@@ -3,7 +3,7 @@ import { useCallback, useMemo, useRef } from "react";
 import type { Location } from "react-router-dom";
 import BrowserRouter from "./BrowserRouter";
 import HashRouter from "./HashRouter";
-import MRouterContextProvider from './MRouterContextProvider'
+import MRouterContextProvider from "./MRouterContextProvider";
 import { PermissionModeType, RouterBaseConfigI } from "../type";
 
 export interface MRouterPropsI {

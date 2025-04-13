@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface ProjectProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'Project';
+const modulePrefix = "Project";
 const Project: React.FC<ProjectProps> = (props: ProjectProps) => {
-    return (<div className={modulePrefix}>Project</div>);
+  return <div className={modulePrefix}>Project</div>;
 };
 
 export default Project;

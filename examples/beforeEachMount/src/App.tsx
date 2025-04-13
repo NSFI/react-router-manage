@@ -7,7 +7,7 @@ import {
   Link
 } from "react-router-manage";
 
-const Router = window.__INITIAL_DATA__.mode === "hash" ?  MHRouter: MRouter;
+const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
 function Layout({ children }) {
   return (
@@ -82,23 +82,26 @@ function Login() {
 }
 
 function NoJump() {
-  return <h2>you can't jump</h2>
+  return <h2>you can't jump</h2>;
 }
 
 const routerConfig = defineRouterConfig({
   beforeEachMount: (to, next) => {
-    if(to.name === 'home') {
+    if (to.name === "home") {
       next();
       return;
     }
-    const isCallJump = window.confirm('is can jump?')
+    const isCallJump = window.confirm("is can jump?");
     if (isCallJump) {
       next();
-    }else {
-      next(NoJump)
+    } else {
+      next(NoJump);
     }
   },
-  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       path: "/",
@@ -151,7 +154,9 @@ export default function App() {
       </p>
 
       <p>
-      if <code>StrictMode</code> is used in react, the <code>beforeEachMount</code> function may be called twice, which is normal
+        if <code>StrictMode</code> is used in react, the{" "}
+        <code>beforeEachMount</code> function may be called twice, which is
+        normal
       </p>
 
       {/* Routes nest inside one another. Nested route paths build upon

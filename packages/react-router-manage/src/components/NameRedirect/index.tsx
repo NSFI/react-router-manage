@@ -1,8 +1,11 @@
-import * as React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useRouter } from '../../index';
+import * as React from "react";
+import { Navigate } from "react-router-dom";
+import { useRouter } from "../../index";
 
-const NameRedirect: React.FC<{ name: string; component?: React.ComponentType<any> }> = ({ name, component: Component }) => {
+const NameRedirect: React.FC<{
+  name: string;
+  component?: React.ComponentType<any>;
+}> = ({ name, component: Component }) => {
   const { routesMap, currentRoute } = useRouter();
 
   const targetRoute = routesMap[name];
@@ -20,7 +23,7 @@ const NameRedirect: React.FC<{ name: string; component?: React.ComponentType<any
     return <></>;
   }
 
-  return <Navigate to={targetRoute.path || ''} />;
+  return <Navigate to={targetRoute.path || ""} />;
 };
 
 export default NameRedirect;

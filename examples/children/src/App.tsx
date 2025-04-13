@@ -11,7 +11,6 @@ import {
 
 const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
-
 function Layout({ children }) {
   return (
     <div>
@@ -100,15 +99,15 @@ function Params() {
   const route = routesMap?.paramsDetail?.path;
   return (
     <div>
-    <ul>
-      <li>
-        <Link to={route?.replace(':id', '12345')}>params为12345</Link>
-      </li>
-      <li>
-        <Link to={route?.replace(':id', '34567')} >params为34567</Link>
-      </li>
-    </ul>
-    <Outlet />
+      <ul>
+        <li>
+          <Link to={route?.replace(":id", "12345")}>params为12345</Link>
+        </li>
+        <li>
+          <Link to={route?.replace(":id", "34567")}>params为34567</Link>
+        </li>
+      </ul>
+      <Outlet />
     </div>
   );
 }
@@ -118,7 +117,10 @@ function Children() {
 }
 
 const routerConfig = defineRouterConfig({
-  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       path: "/",

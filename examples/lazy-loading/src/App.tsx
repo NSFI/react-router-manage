@@ -1,5 +1,11 @@
 import * as React from "react";
-import { defineRouterConfig, MRouter, MHRouter, Outlet, Link } from "react-router-manage";
+import {
+  defineRouterConfig,
+  MRouter,
+  MHRouter,
+  Outlet,
+  Link
+} from "react-router-manage";
 
 const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
@@ -9,7 +15,10 @@ const DashboardIndex = React.lazy(() => import("./pages/DashboardIndex"));
 const Messages = React.lazy(() => import("./pages/Messages"));
 
 const routerConfig = defineRouterConfig({
-  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       path: "/",
@@ -19,38 +28,40 @@ const routerConfig = defineRouterConfig({
         {
           path: "/home",
           name: "home",
-          component: Home,
+          component: Home
         },
         {
           path: "/about",
           name: "about",
-          component: About,
+          component: About
         },
         {
           path: "/dashboard",
           name: "DashboardLayout",
           component: DashboardLayout,
           // redirect: '/dashboard/index',
-          children: [{
-            path: 'index',
-            component: DashboardIndex,
-            name: 'DashboardIndex'
-          }, {
-            path: 'messages',
-            component: Messages,
-            name: 'messages'
-          }]
+          children: [
+            {
+              path: "index",
+              component: DashboardIndex,
+              name: "DashboardIndex"
+            },
+            {
+              path: "messages",
+              component: Messages,
+              name: "messages"
+            }
+          ]
         },
         {
           path: "*",
           name: "all",
-          component: NoMatch,
+          component: NoMatch
         }
       ]
     }
   ]
 });
-
 
 export default function App() {
   return (
@@ -82,9 +93,7 @@ export default function App() {
         this case.
       </p>
 
-      <Router routerConfig={routerConfig}>
-            {(children) => children}
-      </Router>
+      <Router routerConfig={routerConfig}>{children => children}</Router>
 
       {/* <Routes>
         <Route path="/" element={<Layout />}>
