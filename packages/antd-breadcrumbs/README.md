@@ -16,21 +16,21 @@ npm i @rrmc/antd-breadcrumbs
 ```
 
 ## DEMO
+
 [@rrmc/antd-breadcrumbs](https://codesandbox.io/s/antd-breadcrumbs-kfq3t0?file=/src/App.tsx)
 
 ## Props
 
-| name | describe                                                           | type     | default     |
-| ---- | ------------------------------------------------------------------ | -------- | ----------- |
-| `text` | You may need to customize the name of bread crumbs, which will override the`breadcrumbs.text` | `string` | `undefined` |
-| `separator`| `props.separator` in the`breadcrumbs` component of `antd`| `string` | `undefined`|
+| name        | describe                                                                                      | type     | default     |
+| ----------- | --------------------------------------------------------------------------------------------- | -------- | ----------- |
+| `text`      | You may need to customize the name of bread crumbs, which will override the`breadcrumbs.text` | `string` | `undefined` |
+| `separator` | `props.separator` in the`breadcrumbs` component of `antd`                                     | `string` | `undefined` |
 
 ## 如何使用
 
 假如一个路由的配置文件是这样的
 
 ```js
-
 import { useMemo } from "react";
 import { MRouter, defineRouterConfig, useRouter } from "react-router-manage";
 import Breadcrumbs from "@rrmc/antd-breadcrumbs";
@@ -59,7 +59,7 @@ function Edit() {
 }
 
 function getItems(routes) {
-  return routes.map((i) => {
+  return routes.map(i => {
     const item: any = {
       key: i.name,
       label: i.title
@@ -91,7 +91,7 @@ function RouterLayout({ children }) {
         ></Menu>
       </Sider>
       <Content style={{ padding: 20 }}>
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           <Breadcrumbs />
         </div>
 
@@ -155,6 +155,4 @@ const routerConfig = defineRouterConfig({
 export default function App() {
   return <MRouter routerConfig={routerConfig} wrapComponent={RouterLayout} />;
 }
-
-
 ```

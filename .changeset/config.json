@@ -2,7 +2,9 @@
   "$schema": "https://unpkg.com/@changesets/config@2.1.1/schema.json",
   "changelog": [
     "@changesets/cli/changelog",
-    { "repo": "NSFI/react-router-manage" }
+    {
+      "repo": "NSFI/react-router-manage"
+    }
   ],
   "commit": false,
   "fixed": [

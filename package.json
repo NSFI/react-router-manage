@@ -120,5 +120,7 @@
 		"hooks": {
 			"pre-commit": "lint-staged"
 		}
-	}
+	},
+	"name": "react-router-manage-main",
+	"version": "1.0"
 }
