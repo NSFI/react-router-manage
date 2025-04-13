@@ -25,12 +25,12 @@
 `react-router-manage` is based on `react-router` `v6`. It can realize the function of authentication, guard, add, delete and check of route by configuration.
 Because `react-router` `v5` upgrades to `v6` have a high cost, `react-router-manage` provides the API from the original `v5` section for compatible projects that use `v5` for smooth upgrades to `v6`
 
-- 🛠 [**[`config router`](#routerConfig)**] - Centralized router configuration, fast and convenient management.
-- ＋ [**[`addRoutes`](#useAddRoutes)**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
-- ➖ [**[`removeRoutes`](#useRemoveRoutes)**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
-- 🖇 [**[`updateRoutes`](#useUpdateRoutes)**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
+- 🛠 [**[`config router`](#routerconfig)**] - Centralized router configuration, fast and convenient management.
+- ＋ [**[`addRoutes`](#useaddroutes)**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
+- ➖ [**[`removeRoutes`](#useremoveroutes)**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
+- 🖇 [**[`updateRoutes`](#useupdateroutes)**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
 - 🔐 [**permission**] - Permission control: configure the code of the route and automatically manage the permission of the route
-- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeEachMount)**, route exit hook **[`useBeforeLeave`](#useBeforeLeave)**
+- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeeachmount)**, route exit hook **[`useBeforeLeave`](#usebeforeleave)**
 - 🌲 [**navigation**] - level navigation: supports level navigation, and automatically generates navigation bars for parent-child routes, such as breadcrumbs and menu navigation
   - Breadcrumb navigation based on `antd` automatic generation [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)
 
@@ -55,13 +55,13 @@ npm install react-router-manage --save
 
 ### routerConfig
 
-| field name                                | description                                                                                                         | type                                                                               | is required                               |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------- | -------------- |
-| `basename`                                | the routing prefix of the route                                                                                     | `string`                                                                           | `not required`, default is `/`            |
-| **[`routes`](#routeConfig)**              | hierarchical configuration of routes                                                                                | [`RouteTypeI[]`](#RouteTypeI)                                                      | `required`                                |
-| **[`beforeEachMount`](#beforeEachMount)** | each route is called before rendering                                                                               | `(to: [RouteTypeI](#RouteTypeI) \| undefined, next: ({path?: string; name: string} | React.ComponentType<any>) => void): void` | `not required` |
-| `autoDocumentTitle`                       | the title of the document changes depending on the route switch                                                     | `boolean` \| `(RouteTypeI[]) => string`                                            | `not required`, default is `false`        |
-| `LoadingComponent`                        | Used for react `Suspend` component to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any>                                                       | `not required`                            |
+| field name                                | description                                                                                                         | type                                                                                                                            | is required                        |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `basename`                                | the routing prefix of the route                                                                                     | `string`                                                                                                                        | `not required`, default is `/`     |
+| **[`routes`](#routeConfig)**              | hierarchical configuration of routes                                                                                | [`RouteTypeI[]`](#routetypei)                                                                                                   | `required`                         |
+| **[`beforeEachMount`](#beforeeachmount)** | each route is called before rendering                                                                               | `(to: [RouteTypeI](#RouteTypeI) \| undefined, next: ({path?: string; name: string} \| React.ComponentType<any>) => void): void` | `not required`                     |
+| `autoDocumentTitle`                       | the title of the document changes depending on the route switch                                                     | `boolean` \| `(RouteTypeI[]) => string`                                                                                         | `not required`, default is `false` |
+| `LoadingComponent`                        | Used for react `Suspend` component to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any>                                                                                                    | `not required`                     |
 
 #### router modes
 
@@ -147,7 +147,7 @@ function App () {
 | `fullscreen`  | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                                                   | `boolean`                                                                             | not required                              |
 | `icon`        | Icon for displaying navigation, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                                                                                               | `string`                                                                              | not required                              |
 | `type`        | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                       | `real` \| `null`                                                                      | not required, default is `real`           |
-| `bredcrumbs`  | used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)                                                                                        | [BreadcrumbsI](#BreadcrumbsI)                                                         | not required                              |
+| `bredcrumbs`  | used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)                                                                                        | [BreadcrumbsI](#breadcrumbsi)                                                         | not required                              |
 
 #### BreadcrumbsI
 
@@ -428,11 +428,11 @@ const appRouterConfig = defineRouterConfig({
 
 | `hook` name                               | type                                                                              | describe                                                                                                                |
 | ----------------------------------------- | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **[`useAddRoutes`](#useAddRoutes)**       | `() => (routes: RouteTypeI[]) => void`                                            | Dynamically add routes                                                                                                  |
-| **[`useRemoveRoutes`](#useRemoveRoutes)** | `() => (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]) => void` | Dynamically update routes                                                                                               |
-| **[`useUpdateRoutes`](#useUpdateRoutes)** | `() => (routeNames: string[]) => void`                                            | Dynamically remove routes                                                                                               |
-| **[`useBeforeLeave`](#useBeforeLeave)**   | (`fn: BeforeLeaveI, options: {beforeunload?: ((event?: Event) => any)}) => void`  | The guard when the route leaves needs to call next to jump normally                                                     |
-| **[`useRouter`](#useRouter)**             | `() => RoutesStateStruct`                                                         | state of route storage                                                                                                  |
+| **[`useAddRoutes`](#useaddroutes)**       | `() => (routes: RouteTypeI[]) => void`                                            | Dynamically add routes                                                                                                  |
+| **[`useRemoveRoutes`](#useremoveroutes)** | `() => (routes: { routeName: string; routeData: Partial<RouteTypeI> }[]) => void` | Dynamically update routes                                                                                               |
+| **[`useUpdateRoutes`](#useupdateroutes)** | `() => (routeNames: string[]) => void`                                            | Dynamically remove routes                                                                                               |
+| **[`useBeforeLeave`](#usebeforeleave)**   | (`fn: BeforeLeaveI, options: {beforeunload?: ((event?: Event) => any)}) => void`  | The guard when the route leaves needs to call next to jump normally                                                     |
+| **[`useRouter`](#userouter)**             | `() => RoutesStateStruct`                                                         | state of route storage                                                                                                  |
 | `useHistory`                              | `() => BrowserHistory`                                                            | get `history`，`react-router v6` There is no exposure. The user's V5 upgrade to V6 is too smooth. It is not recommended |
 
 ### useRouter
@@ -445,7 +445,7 @@ Route navigation by `useRouter`
 
 | field name                          | describe                                                                  | type                                                                                           |
 | ----------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **[`currentRoute`](#currentRoute)** | Current route object                                                      | `RouteTypeI`                                                                                   |
+| **[`currentRoute`](#currentroute)** | Current route object                                                      | `RouteTypeI`                                                                                   |
 | `routesMap`                         | All routes corresponding to route name and path are stored in this object | `Record<string, RouteTypeI>`                                                                   |
 | `navigate`                          | Used to jump route                                                        | `(to: string, {query: Record<string, any>; params: Record<string, any>; state: any}) => void}` |
 | `authRoutes`                        | Routes objects with permission after authentication                       | `RouteTypeI[]`                                                                                 |

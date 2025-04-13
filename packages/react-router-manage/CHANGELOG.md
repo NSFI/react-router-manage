@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.3
+
+### Patch Changes
+
+- useBeforeLeave adds beforeunload options
+
 ## 2.0.2
 
 ### Patch Changes

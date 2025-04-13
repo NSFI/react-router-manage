@@ -21,18 +21,16 @@ npm i @rrmc/antd-breadcrumbs
 
 ## Props
 
-| name | describe                                                           | type     | default     |
-| ---- | ------------------------------------------------------------------ | -------- | ----------- |
-| `text` | 可能需要自定义面包屑的名称，这会覆盖路由配置中的`breadcrumbs.text` | `string` | `undefined` |
-| `separator`| `antd`中`breadcrumbs`组件中的`props.separator`| `string` | `undefined`
+| name        | describe                                                           | type     | default     |
+| ----------- | ------------------------------------------------------------------ | -------- | ----------- |
+| `text`      | 可能需要自定义面包屑的名称，这会覆盖路由配置中的`breadcrumbs.text` | `string` | `undefined` |
+| `separator` | `antd`中`breadcrumbs`组件中的`props.separator`                     | `string` | `undefined` |
 
 ## 如何使用
 
 Suppose the configuration file of a route is as follows
 
-
 ```js
-
 import { useMemo } from "react";
 import { MRouter, defineRouterConfig, useRouter } from "react-router-manage";
 import Breadcrumbs from "@rrmc/antd-breadcrumbs";
@@ -61,7 +59,7 @@ function Edit() {
 }
 
 function getItems(routes) {
-  return routes.map((i) => {
+  return routes.map(i => {
     const item: any = {
       key: i.name,
       label: i.title
@@ -93,7 +91,7 @@ function RouterLayout({ children }) {
         ></Menu>
       </Sider>
       <Content style={{ padding: 20 }}>
-        <div style={{marginBottom: 10}}>
+        <div style={{ marginBottom: 10 }}>
           <Breadcrumbs />
         </div>
 
@@ -157,6 +155,4 @@ const routerConfig = defineRouterConfig({
 export default function App() {
   return <MRouter routerConfig={routerConfig} wrapComponent={RouterLayout} />;
 }
-
-
 ```
