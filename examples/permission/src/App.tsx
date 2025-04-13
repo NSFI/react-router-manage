@@ -10,7 +10,6 @@ import {
 
 const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
-
 function Layout({ children }) {
   return (
     <div>
@@ -109,7 +108,10 @@ function NoMatch() {
 }
 
 const routerConfig = defineRouterConfig({
-  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       path: "/",

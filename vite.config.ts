@@ -43,7 +43,7 @@ export default defineConfig({
           "@rrmc/antd-breadcrumbs": path.join(
             __dirname,
             "./packages/antd-breadcrumbs"
-          ),
+          )
         }
       }
     : {}

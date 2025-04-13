@@ -1,5 +1,5 @@
-import * as React from 'react';
-import NoAuth from '../NoAuth';
+import * as React from "react";
+import NoAuth from "../NoAuth";
 
 const NotFound: React.FC = () => {
   return <NoAuth code="404" />;

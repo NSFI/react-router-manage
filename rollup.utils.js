@@ -66,5 +66,5 @@ function createBanner(packageName, version) {
 module.exports = {
   getBuildDirectories,
   createBanner,
-  PRETTY,
+  PRETTY
 };

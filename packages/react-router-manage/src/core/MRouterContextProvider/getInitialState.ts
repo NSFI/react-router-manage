@@ -19,7 +19,7 @@ function getSameQueryData(
     prevData.basename === currentData.basename &&
     prevData.hasAuth === currentData.hasAuth &&
     prevData.beforeEachMount === currentData.beforeEachMount &&
-    prevData.inputRoutes === currentData.inputRoutes && 
+    prevData.inputRoutes === currentData.inputRoutes &&
     prevData.permissionList === currentData.permissionList
   );
 }

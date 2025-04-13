@@ -129,7 +129,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const hasNavRoutes = useMemo(() => {
     return routesMap.index.items || [];
   }, [routesMap]);
-  
+
   const onAdd = useCallback(() => {
     addIndex = addIndex + 1;
     addRoutes([
@@ -152,13 +152,17 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const onEdit = useCallback(
     i => {
-       const text = window.prompt('please enter the title you want to modify', i.title) || i.title
-       updateRoutes([{
-        routeName: i.name,
-        routeData: {
-          title: text
+      const text =
+        window.prompt("please enter the title you want to modify", i.title) ||
+        i.title;
+      updateRoutes([
+        {
+          routeName: i.name,
+          routeData: {
+            title: text
+          }
         }
-       }])
+      ]);
     },
     [updateRoutes]
   );

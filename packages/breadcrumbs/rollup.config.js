@@ -14,7 +14,7 @@ const {
 } = require("../../rollup.utils");
 const { name: packageName, version } = require("./package.json");
 
-const name = packageName.replace(/@rrmc\//, '')
+const name = packageName.replace(/@rrmc\//, "");
 
 module.exports = function rollup() {
   const { ROOT_DIR, SOURCE_DIR, OUTPUT_DIR } = getBuildDirectories(name);

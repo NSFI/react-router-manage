@@ -11,7 +11,7 @@ const { Sider, Content } = Layout;
 const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
 function getItems(routes) {
-  return routes.map((i) => {
+  return routes.map(i => {
     const item: any = {
       key: i.name,
       label: i.title
@@ -22,7 +22,6 @@ function getItems(routes) {
     return item;
   });
 }
-
 
 function RouterLayout({ children }) {
   const { routes, routesMap, navigate } = useRouter();

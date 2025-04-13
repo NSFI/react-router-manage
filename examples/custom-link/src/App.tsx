@@ -10,12 +10,13 @@ import {
   useResolvedPath
 } from "react-router-manage";
 
-
 const Router = window.__INITIAL_DATA__.mode === "hash" ? MHRouter : MRouter;
 
-
 const routerConfig = defineRouterConfig({
-  basename: window.__INITIAL_DATA__.mode !== 'hash' ? window.__INITIAL_DATA__.basename : '/',
+  basename:
+    window.__INITIAL_DATA__.mode !== "hash"
+      ? window.__INITIAL_DATA__.basename
+      : "/",
   routes: [
     {
       path: "",

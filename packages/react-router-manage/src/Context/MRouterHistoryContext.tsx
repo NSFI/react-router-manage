@@ -1,22 +1,22 @@
-import * as React from 'react';
-import type { RouteHistoryObject } from '../type';
+import * as React from "react";
+import type { RouteHistoryObject } from "../type";
 
 const MRouterHistoryContext = React.createContext<RouteHistoryObject>(null!);
-MRouterHistoryContext.displayName = 'MRouterHistoryContext';
+MRouterHistoryContext.displayName = "MRouterHistoryContext";
 
-export function useHistory () {
+export function useHistory() {
   return React.useContext(MRouterHistoryContext).history;
 }
 
-export function useRouteHooks () {
+export function useRouteHooks() {
   return React.useContext(MRouterHistoryContext).routeHooks;
 }
 
-export function useRouteHooksRef () {
+export function useRouteHooksRef() {
   return React.useContext(MRouterHistoryContext).routeHooksRef;
 }
 
-export function useHistoryMethods () {
+export function useHistoryMethods() {
   return React.useContext(MRouterHistoryContext).historyMethods;
 }
 

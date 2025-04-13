@@ -1,8 +1,4 @@
-import type {
-  RouteTypeI,
-  MRouterStateI,
-  RouteTypeInputI,
-} from "../../type";
+import type { RouteTypeI, MRouterStateI, RouteTypeInputI } from "../../type";
 import { cloneRoutes } from "../../util";
 
 function newInputRoutesState(inputRoutes?: RouteTypeInputI[]): {

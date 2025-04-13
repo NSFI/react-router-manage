@@ -1,11 +1,11 @@
 {
   "name": "@rrmc/antd-breadcrumbs",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "author": "wenxinping@corp.netease.com",
   "description": "react-router breadcrumbs for antd",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NSFI/react-router-manage.git",
+    "url": "git+https://github.com/NSFI/react-router-manage.git",
     "directory": "packages/antd-breadcrumbs"
   },
   "license": "MIT",
@@ -17,11 +17,11 @@
     "react": ">=16.8",
     "react-dom": ">=16.8",
     "antd": ">=4.0.0",
-    "react-router-manage": "^2.0.1"
+    "react-router-manage": "^2.0.3"
   },
   "devDependencies": {
     "antd": "^5.0.3",
-    "react-router-manage": "^2.0.1"
+    "react-router-manage": "^2.0.3"
   },
   "files": [
     "dist/",

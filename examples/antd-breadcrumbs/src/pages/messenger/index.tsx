@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface MessengerProps {
-    id?: number;
+  id?: number;
 }
 
-const modulePrefix = 'Messenger';
+const modulePrefix = "Messenger";
 const Messenger: React.FC<MessengerProps> = (props: MessengerProps) => {
-    return (<div className={modulePrefix}>Messenger</div>);
+  return <div className={modulePrefix}>Messenger</div>;
 };
 
 export default Messenger;

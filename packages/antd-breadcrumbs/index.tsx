@@ -22,7 +22,8 @@ const AntdRouterBreadcrumbs: React.FC<AntdRouterBreadcrumbsProps> = ({
         // 如果是面包屑的根节点，则不再向上找
         _parentRoute = undefined;
       } else {
-        if (!_parentRoute.breadcrumbs?.hidden) { // 如果面包屑设置了隐藏，则会跳过这一级别的显示
+        if (!_parentRoute.breadcrumbs?.hidden) {
+          // 如果面包屑设置了隐藏，则会跳过这一级别的显示
           _levelRoutes.unshift(_parentRoute);
         }
         _parentRoute = _parentRoute.parent;
@@ -58,10 +59,11 @@ const AntdRouterBreadcrumbs: React.FC<AntdRouterBreadcrumbsProps> = ({
       {_routes.map((item: RouteTypeExtendsI, index) => {
         const isCanClick = getIsCanClick(item, index);
         // let routeBreadcrumbTittle = item.breadcrumbs?.text || item.title;
-        let routeBreadcrumbTittle: string | undefined | React.ReactNode = item.title;
-        if (typeof item.breadcrumbs?.text === 'string') {
-          routeBreadcrumbTittle = item.breadcrumbs?.text
-        } else if (typeof item.breadcrumbs?.text === 'function') {
+        let routeBreadcrumbTittle: string | undefined | React.ReactNode =
+          item.title;
+        if (typeof item.breadcrumbs?.text === "string") {
+          routeBreadcrumbTittle = item.breadcrumbs?.text;
+        } else if (typeof item.breadcrumbs?.text === "function") {
           routeBreadcrumbTittle = item.breadcrumbs.text(item);
         }
         const title =

@@ -4,7 +4,7 @@ const path = require("path");
 module.exports = function rollup(options) {
   return fs
     .readdirSync("packages")
-    .flatMap((dir) => {
+    .flatMap(dir => {
       let configPath = path.join("packages", dir, "rollup.config.js");
       try {
         fs.readFileSync(configPath);
@@ -14,5 +14,5 @@ module.exports = function rollup(options) {
       let packageBuild = require(`.${path.sep}${configPath}`);
       return packageBuild(options);
     })
-    .filter((p) => p);
+    .filter(p => p);
 };

@@ -6,10 +6,9 @@ import {
   useRemoveRoutes,
   useUpdateRoutes
 } from "./context/MRouterContext";
-import {
-  useHistory} from "./context/MRouterHistoryContext";
+import { useHistory } from "./context/MRouterHistoryContext";
 
-import CoreRouter, { MRouterPropsI } from './core/CoreRouter'
+import CoreRouter, { MRouterPropsI } from "./core/CoreRouter";
 
 export type {
   RouterConfigI,
@@ -20,7 +19,6 @@ export type {
 
 export { defineRouterConfig } from "./util";
 export { useBeforeLeave, useNavigate, useRouter } from "./hooks";
-
 
 const MRouter: React.FC<MRouterPropsI> = props => {
   return <CoreRouter {...props} RouterComponent={BrowserRouter} />;

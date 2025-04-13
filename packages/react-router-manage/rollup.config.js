@@ -6,7 +6,7 @@ const prettier = require("rollup-plugin-prettier");
 const replace = require("@rollup/plugin-replace");
 const { terser } = require("rollup-plugin-terser");
 const typescript = require("@rollup/plugin-typescript");
-const dts = require('rollup-plugin-dts')
+const dts = require("rollup-plugin-dts");
 const {
   createBanner,
   getBuildDirectories,
@@ -247,10 +247,10 @@ module.exports = function rollup() {
       output: {
         file: `${OUTPUT_DIR}/main.js`,
         format: "cjs",
-        banner: createBanner("React Router Manage", version),
+        banner: createBanner("React Router Manage", version)
       },
-      plugins: [].concat(PRETTY ? prettier({ parser: "babel" }) : []),
-    },
+      plugins: [].concat(PRETTY ? prettier({ parser: "babel" }) : [])
+    }
     // {
     //   input: `${SOURCE_DIR}/server.tsx`,
     //   output: [
@@ -350,9 +350,9 @@ module.exports = function rollup() {
       plugins: [dts.default()],
       output: {
         format: "esm",
-        file: `${OUTPUT_DIR}/index.d.ts`,
-      },
-    },
+        file: `${OUTPUT_DIR}/index.d.ts`
+      }
+    }
   ];
 
   return [...modules, ...webModules, ...globals, ...node, ...declares];
