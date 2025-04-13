@@ -619,10 +619,10 @@ const appRouterConfig = {
 
 ### part route guard
 
-| name          | describe                                                                                                                  | type                                                                                              |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------- |
-| `beforeEnter` | Called before rendering the current route (after `beforeEachMount`), `next` must be called before rendering the component | `(to: RouteTypeI \| undefined, next: {name?: string; path?: string}                               | React.ComponentType<any>): void` |
-| `beforeLeave` | The callback called before leaving the route needs to actively call 'next' to jump normally                               | `(to: RouteTypeI \| undefined,from: RouteTypeI \| undefined, next: {name?: string; path?: string} | React.ComponentType<any>): void` |
+| name          | describe                                                                                                                  | type                                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `beforeEnter` | Called before rendering the current route (after `beforeEachMount`), `next` must be called before rendering the component | `(to: RouteTypeI \| undefined, next: {name?: string; path?: string} \| React.ComponentType<any>): void`                               |
+| `beforeLeave` | The callback called before leaving the route needs to actively call 'next' to jump normally                               | `(to: RouteTypeI \| undefined,from: RouteTypeI \| undefined, next: {name?: string; path?: string} \| React.ComponentType<any>): void` |
 
 ```js
 import NoAuth from './NoAuth', // No permission component
