@@ -53,7 +53,7 @@ npm install react-router-manage --save
 
 ## Configuration items
 
-### routerConfig
+### defineRouterConfig 返回额外属性
 
 | field name                                | description                                                                                                         | type                                                                                                                            | is required                        |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
@@ -62,6 +62,12 @@ npm install react-router-manage --save
 | **[`beforeEachMount`](#beforeeachmount)** | each route is called before rendering                                                                               | `(to: [RouteTypeI](#RouteTypeI) \| undefined, next: ({path?: string; name: string} \| React.ComponentType<any>) => void): void` | `not required`                     |
 | `autoDocumentTitle`                       | the title of the document changes depending on the route switch                                                     | `boolean` \| `(RouteTypeI[]) => string`                                                                                         | `not required`, default is `false` |
 | `LoadingComponent`                        | Used for react `Suspend` component to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any>                                                                                                    | `not required`                     |
+
+### defineRouterConfig 返回额外属性
+
+| 字段名     | 说明                                                                                                  | 类型                                                                                           |
+| ---------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | --- | -------------- |
+| `navigate` | Used for navigating routes outside the `Router`, it can be called after initializing the `<Router />` | `(to: string, {query: Record<string, any>; params: Record<string, any>; state: any}) => void}` |     | `not required` |
 
 #### router modes
 

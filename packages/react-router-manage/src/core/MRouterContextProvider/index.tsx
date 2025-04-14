@@ -37,6 +37,7 @@ import {
 import getInitialState from "./getInitialState";
 import replaceHistoryMethods from "./replaceHistoryMethods";
 import computedUseRoutesConfig from "./computedUseRoutesConfig";
+import { useNavigate } from "../../hooks";
 const DEFAULT_PERMISSION_LIST: string[] = [];
 
 interface InternalMRouterContextProviderRef {
@@ -71,12 +72,20 @@ const InternalMRouterContextProvider: React.ForwardRefRenderFunction<
   const oldHistoryMethods = useHistoryMethods();
   const routeHooksRef = useRouteHooksRef();
 
+  const navigate = useNavigate();
+
   const {
     routes = [],
     basename = "/",
     beforeEachMount,
-    autoDocumentTitle = false
+    autoDocumentTitle = false,
+    _navigateRef
   } = routerConfig;
+
+  // expose navigate to external use
+  if (_navigateRef) {
+    _navigateRef.current = navigate;
+  }
 
   const inputRoutes = useMemo(() => {
     return cloneRoutes({
