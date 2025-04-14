@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.4
+
+### Patch Changes
+
+- Add external call jumps, such as initializing micro frontend applications outside of<Router/>
+
 ## 2.0.3
 
 ### Patch Changes
