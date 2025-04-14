@@ -24,10 +24,14 @@ export interface RouterBaseConfigI {
 
   _isDefined: boolean; // 是否是defined的
   _defineId: number;
+  navigate: NavigateFunction
+  _navigateRef: {
+    current: NavigateFunction | null
+  }
 }
 
 export interface RouterConfigI
-  extends Omit<RouterBaseConfigI, "_isDefined" | "_defineId"> {
+  extends Omit<RouterBaseConfigI, "_isDefined" | "_defineId" | "navigate" | "_navigateRef"> {
   /** Lazy component or before next called */
   LoadingComponent?: React.FunctionComponent<any>;
   // beforeEachEnter?: BeforeEachEnterI;

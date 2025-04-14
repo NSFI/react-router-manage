@@ -51,7 +51,7 @@ npm install react-router-manage --save
 
 ## 配置项
 
-### routerConfig
+### defineRouterConfig(routerConfig)
 
 路由的全局配置
 
@@ -61,7 +61,13 @@ npm install react-router-manage --save
 | **[`routes`](#routeConfig)**              | 路由的层级配置                                                                          | [`RouteTypeI[]`](#RouteTypeI)                                                                                    | 必填                 |
 | **[`beforeEachMount`](#beforeEachMount)** | 每个路由在渲染前调用                                                                    | `(to: RouteTypeI \| undefined, next: ({path?: string; name: string} \| React.ComponentType<any>) => void): void` | 非必填               |
 | `autoDocumentTitle`                       | 文档的 title 会根据路由切换而改变                                                       | `boolean` \| `(RouteTypeI[]) => string`                                                                          | 非必填, 默认 `false` |
-| `LoadingComponent`                        | 用于 Suspense 加载异步组件时配置 fallback 或在有 beforeEnter 钩子的`next`时，显示加载中 | React.FunctionComponent<any>                                                                                     | `not required`       |
+| `LoadingComponent`                        | 用于 Suspense 加载异步组件时配置 fallback 或在有 beforeEnter 钩子的`next`时，显示加载中 | React.FunctionComponent<any>                                                                                     |
+
+### defineRouterConfig 返回额外属性
+
+| 字段名     | 说明                                                         | 类型                                                                                           |
+| ---------- | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | --- | -------------- |
+| `navigate` | 用于在`Router`外进行跳转路由，需初始化 `<Router />` 后可调用 | `(to: string, {query: Record<string, any>; params: Record<string, any>; state: any}) => void}` |     | `not required` |
 
 #### 路由模式
 

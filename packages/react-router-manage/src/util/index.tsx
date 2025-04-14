@@ -21,7 +21,8 @@ import type {
   RoutesMapInterI,
   RoutePathCallNullTypeI,
   RouteBranchI,
-  PermissionModeType
+  PermissionModeType,
+  NavigateFunction
 } from "../type";
 import GeneratorHookCom from "../GeneratorHookCom";
 import NotFound from "../components/NotFound";
@@ -760,6 +761,11 @@ let _defineId = 0;
 export function defineRouterConfig(
   routerConfig: RouterConfigI
 ): RouterBaseConfigI {
+  const navigateRef: {
+    current: NavigateFunction | null;
+  } = {
+    current: null
+  };
   const { LoadingComponent, ..._config } = routerConfig;
   _defineId = _defineId + 1;
   if (LoadingComponent) {
@@ -769,8 +775,25 @@ export function defineRouterConfig(
   const config: RouterBaseConfigI = {
     ..._config,
     _isDefined: true,
-    _defineId: _defineId
+    _defineId: _defineId,
+    // Placeholder
+    navigate: () => {
+      throw new Error("YSRouter navigate is not initialized");
+    },
+    _navigateRef: navigateRef
   };
+
+  Object.defineProperty(config, "navigate", {
+    get() {
+      return (
+        navigateRef.current ||
+        (() => {
+          throw new Error("YSRouter navigate is not initialized");
+        })
+      );
+    }
+  });
+
   return config;
 }
 
