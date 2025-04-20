@@ -127,13 +127,13 @@ const routerConfig = defineRouterConfig({
         {
           path: "dashboard",
           name: "dashboard",
-          code: "GLOBAL2",
+          code: "GLOBAL",
           component: Dashboard,
           items: [
             {
               path: "detail/:id",
               name: "dashboardDetail",
-              code: "GLOBAL",
+              code: "GLOBAL2",
               component: DashboardDetail
             }
           ]
@@ -184,7 +184,7 @@ export default function App() {
         permissionList={permission}
         routerConfig={routerConfig}
         wrapComponent={Layout}
-        permissionMode="children"
+        permissionMode="parent"
       />
     </div>
   );

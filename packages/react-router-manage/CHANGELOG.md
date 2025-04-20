@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.5-beta.0
+
+### Patch Changes
+
+- Fixed the issue of props transparent transmission failure caused by configuring beforeEnter
+
 ## 2.0.4
 
 ### Patch Changes

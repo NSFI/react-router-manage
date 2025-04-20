@@ -1,0 +1,11 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@rrmc/antd-breadcrumbs": "2.0.4",
+    "react-router-manage": "2.0.4"
+  },
+  "changesets": [
+    "yellow-phones-work"
+  ]
+}

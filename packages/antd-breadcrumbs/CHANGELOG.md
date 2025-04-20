@@ -1,5 +1,12 @@
 # @rrmc/antd-breadcrumbs
 
+## 2.0.5-beta.0
+
+### Patch Changes
+
+- Updated dependencies
+  - react-router-manage@2.0.5-beta.0
+
 ## 2.0.4
 
 ### Patch Changes

@@ -467,7 +467,8 @@ export function computeRoutesConfig(config: {
       beforeEnter,
       redirect,
       meta,
-      type
+      type,
+      props
     } = route;
     let _children: RouteTypeExtendsI[] = [];
     let _items: RouteTypeExtendsI[] = [];
@@ -477,14 +478,16 @@ export function computeRoutesConfig(config: {
       CurrentComponent = RedirectChild;
     }
 
-    const props = {} as RouteTypePropsI;
+    let _props: RouteTypePropsI | undefined;
     if (beforeEnter || beforeEachMount) {
-      props.beforeEnter = beforeEnter;
-      props.beforeEachMount = beforeEachMount;
-      props.key = route.name; // users switch between routes to avoid incorrect rendering due to the same key after route switching
-      props._route = route;
-
-      props.Component = CurrentComponent;
+      _props = {
+        key: route.name, // users switch between routes to avoid incorrect rendering due to the same key after route switching
+        beforeEnter,
+        beforeEachMount,
+        Component,
+        _route: route,
+        props
+      };
       CurrentComponent = GeneratorHookCom;
     }
 
@@ -508,7 +511,8 @@ export function computeRoutesConfig(config: {
       _route: route,
       _isHasAuth: isHasAuth,
       _currentComponent: CurrentComponent,
-      _currentIsHasAuth: currentIsHasAuth
+      _currentIsHasAuth: currentIsHasAuth,
+      _props
     };
 
     // Process of sub routes

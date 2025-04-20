@@ -2,12 +2,7 @@ import * as React from "react";
 import { useLayoutEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import NameRedirect from "./components/NameRedirect";
-import type {
-  BeforeEachMountI,
-  BeforeEnterI,
-  NextOptionsType,
-  RouteTypeI
-} from "./type";
+import type { NextOptionsType, RouteTypePropsI } from "./type";
 
 import { useRouter } from "./index";
 import { isComponent, isString } from "./util";
@@ -42,12 +37,13 @@ function getComponent(
   return ReplaceComponent;
 }
 
-export const GeneratorHookCom: React.FC<{
-  beforeEnter?: BeforeEnterI;
-  beforeEachMount?: BeforeEachMountI;
-  Component: any;
-  _route: RouteTypeI;
-}> = ({ beforeEnter, Component, beforeEachMount }) => {
+interface GeneratorHookComProps extends RouteTypePropsI {}
+export const GeneratorHookCom: React.FC<GeneratorHookComProps> = ({
+  beforeEnter,
+  Component,
+  beforeEachMount,
+  props
+}) => {
   /**
    * since setCurrentComponent(Component) Component may be a function
    * react by default, if the preState is a function, the function will be executed and an error will occur
@@ -109,9 +105,10 @@ export const GeneratorHookCom: React.FC<{
       isActive = false;
     };
   }, [Component, currentRoute, beforeEnter, beforeEachMount]);
+
   const LoadingCmp = changeable.LoadingComponent;
   return CurrentComponent.Component ? (
-    <CurrentComponent.Component />
+    <CurrentComponent.Component {...props} />
   ) : (
     <LoadingCmp />
   );
