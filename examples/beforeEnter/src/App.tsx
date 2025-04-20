@@ -52,10 +52,12 @@ function About() {
   );
 }
 
-function Dashboard() {
+function Dashboard(props) {
+  console.log(props);
   return (
     <div>
       <h2>Dashboard</h2>
+      <p>{props.age}</p>
     </div>
   );
 }
@@ -88,19 +90,30 @@ const routerConfig = defineRouterConfig({
           name: "home",
           component: React.lazy(() => import("./Home")),
           beforeEnter(to, next) {
-            console.log("beforeEnter", to, next);
-            // next();
+            // alert("beforeEnter");
+            // debugger;
+            next();
+          },
+          props: {
+            name: "home"
           }
         },
         {
           path: "dashboard",
           name: "dashboard",
-          component: Dashboard
+          component: Dashboard,
+          props: {
+            name: "dashboard",
+            age: 18
+          }
         },
         {
           path: "about",
           name: "about",
-          component: About
+          component: About,
+          props: {
+            name: "about"
+          }
         },
         {
           path: "*",

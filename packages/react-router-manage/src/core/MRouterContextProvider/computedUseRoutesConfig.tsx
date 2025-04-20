@@ -14,8 +14,12 @@ export default function computedUseRoutesConfig(routes: RouteTypeExtendsI[]) {
       items,
       children,
       _isHasAuth,
+      _props,
       props
     } = route;
+
+    // _props is the user interceptor hook, if there is no hook, use props
+    const needInputProps = _props || props;
     if (Component) {
       const LoadingCmp = changeable.LoadingComponent;
       if (!_isHasAuth) {
@@ -24,7 +28,7 @@ export default function computedUseRoutesConfig(routes: RouteTypeExtendsI[]) {
           path: path.endsWith("*") ? path : `${path}/*`,
           element: (
             <Suspense fallback={<LoadingCmp />}>
-              <Component {...props} />
+              <Component {...needInputProps} />
             </Suspense>
           )
         } as RouteConfig;
@@ -33,7 +37,7 @@ export default function computedUseRoutesConfig(routes: RouteTypeExtendsI[]) {
         path,
         element: (
           <Suspense fallback={<LoadingCmp />}>
-            <Component {...props} />
+            <Component {...needInputProps} />
           </Suspense>
         )
       } as RouteConfig;
