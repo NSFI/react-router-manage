@@ -1,5 +1,11 @@
 # react-router-manage
 
+## 2.0.5-beta.1
+
+### Patch Changes
+
+- fix tag error
+
 ## 2.0.5-beta.0
 
 ### Patch Changes

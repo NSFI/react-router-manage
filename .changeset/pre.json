@@ -6,6 +6,7 @@
     "react-router-manage": "2.0.4"
   },
   "changesets": [
+    "smooth-ladybugs-design",
     "yellow-phones-work"
   ]
 }

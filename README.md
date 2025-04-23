@@ -25,12 +25,12 @@
 
 `react-router-manage` is based on `react-router` `v6`. It can realize the function of authentication, guard, add, delete and check of route by configuration. Because `react-router` `v5` upgrades to `v6` have a high cost, `react-router-manage` provides the API from the original `v5` section for compatible projects that use `v5` for smooth upgrades to `v6`
 
-- 🛠 [**[`config router`](#routerconfig)**] - Centralized router configuration, fast and convenient management.
-- ＋ [**[`addRoutes`](#useaddroutes)**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
-- ➖ [**[`removeRoutes`](#useremoveroutes)**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
-- 🖇 [**[`updateRoutes`](#useupdateroutes)**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
-- 🔐 [**permission**] - Permission control: configure the code of the route and automatically manage the permission of the route
-- 👨‍✈️‍ [**route guard**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeeachmount)**, route exit hook **[`useBeforeLeave`](#usebeforeleave)**
+- 🛠 [**[config router](#defineRouterConfig)**] - Centralized router configuration, fast and convenient management.
+- ＋ [**[addRoutes](#useaddroutes)**] - Dynamically add `routes`: you can use hook `useAddRoutes` to add routes and automatically refresh the view.
+- ➖ [**[removeRoutes](#useremoveroutes)**] - Dynamically delete routes: you can use hook `useRemoveRoutes` to delete routes and automatically refresh the view.
+- 🖇 [**[updateRoutes](#useupdateroutes)**] - Dynamically modify routes: you can use hook `useUpdateRoutes` to modify routes.
+- 🔐 [**[permission routes](#PermissionRoutes)**] - Permission control: configure the code of the route and automatically manage the permission of the route
+- 👨‍✈️‍ [**[route guard](#RouteGuard)**] - Provide hooks for route entry config `beforeEnter` and **[`beforeEachMount`](#beforeeachmount)**, route exit hook **[`useBeforeLeave`](#usebeforeleave)**
 - 🌲 [**navigation**] - level navigation: supports level navigation, and automatically generates navigation bars for parent-child routes, such as breadcrumbs and menu navigation
   - Breadcrumb navigation based on `antd` automatic generation [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)
 
@@ -53,7 +53,7 @@ npm install react-router-manage --save
 
 ## Configuration items
 
-### defineRouterConfig 返回额外属性
+### defineRouterConfig
 
 | field name                                | description                                                                                                         | type                                                                                                                            | is required                        |
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
@@ -63,7 +63,7 @@ npm install react-router-manage --save
 | `autoDocumentTitle`                       | the title of the document changes depending on the route switch                                                     | `boolean` \| `(RouteTypeI[]) => string`                                                                                         | `not required`, default is `false` |
 | `LoadingComponent`                        | Used for react `Suspend` component to configure fallback when loading asynchronous components or before next called | React.FunctionComponent<any>                                                                                                    | `not required`                     |
 
-### defineRouterConfig 返回额外属性
+### The return value of executing defineRouterConfig
 
 | 字段名     | 说明                                                                                                  | 类型                                                                                           | required      |
 | ---------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------- |
@@ -134,7 +134,6 @@ function App () {
 
 ### RouteTypeI
 
-
 | field name    | description                                                                                                                                                                                                                                      | type                                                                                                                        | is required                      |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `name`        | the name of the route, **the name is globally unique and non-repeatable, and is used to obtain the route info**                                                                                                                                  | `string`                                                                                                                    | required                         |
@@ -154,7 +153,7 @@ function App () {
 | `fullscreen`  | You can hidden navigation ui, `fullscreen` set `true`,navigation is hidden, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                                                   | `boolean`                                                                                                                   | not required                     |
 | `icon`        | Icon for displaying navigation, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                                                                                               | `string`                                                                                                                    | not required                     |
 | `type`        | if `type` is `null` string, this route is not really rendered, but the correct currentRoute can be set, _the current configuration is use in [`router-base-nav`](https://github.com/NSFI/router-base-nav)_                                       | `real` \| `null`                                                                                                            | not required, default is `real`  |
-| `breadcrumbs`  | used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)                                                                                        | [BreadcrumbsI](#breadcrumbsi)                                                                                               | not required                     |
+| `breadcrumbs` | used to configure breadcrumbs in routing, [`antd-breadcrumbs`](https://github.com/NSFI/react-router-manage/blob/main/packages/antd-breadcrumbs/README.md)                                                                                        | [BreadcrumbsI](#breadcrumbsi)                                                                                               | not required                     |
 
 #### BreadcrumbsI
 
@@ -326,7 +325,7 @@ function App() {
 }
 ```
 
-## Permission routes
+## PermissionRoutes
 
 ### Permission `permissionMode` supports two modes `parent` and `children`. The default is `parent`
 
@@ -577,13 +576,13 @@ const RemoveRoutesWrapComponent = ({ children }) => {
 };
 ```
 
-## Route guard
+## RouteGuard
 
 ### Global route guard
 
-| name              | describe                                                                          | type                                                                |
-| ----------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------- |
-| `beforeEachMount` | Called before each route rendering, `next` Must be called to render the component | `(to: RouteTypeI \| undefined, next: {name?: string; path?: string} | React.ComponentType<any>) =void` |
+| name              | describe                                                                          | type                                                                                                    |
+| ----------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `beforeEachMount` | Called before each route rendering, `next` Must be called to render the component | `(to: RouteTypeI \| undefined, next: {name?: string; path?: string} \| React.ComponentType<any>) =void` |
 
 #### beforeEachMount
 
