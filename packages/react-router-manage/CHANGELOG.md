@@ -1,5 +1,18 @@
 # react-router-manage
 
+## 2.0.5
+
+### Patch Changes
+
+- 62c1693: fix tag error
+- 064b691: Fixed the issue of props transparent transmission failure caused by configuring beforeEnter
+
+## 2.0.5-beta.1
+
+### Patch Changes
+
+- fix tag error
+
 ## 2.0.5-beta.0
 
 ### Patch Changes
